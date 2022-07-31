@@ -9,7 +9,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import whattoeat.dinner.databinding.ActivityMainBinding
-import whattoeat.dinner.ui.BreakfastViewModel
+import whattoeat.dinner.ui.MainViewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,8 +23,8 @@ class MainActivity : AppCompatActivity() {
 
         val navView: BottomNavigationView = binding.navView
 
-        val breakfastViewModel =
-            ViewModelProvider(this).get(BreakfastViewModel::class.java)
+        val mainViewModel =
+            ViewModelProvider(this).get(MainViewModel::class.java)
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         // Passing each menu ID as a set of Ids because each

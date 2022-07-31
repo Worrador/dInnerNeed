@@ -10,7 +10,7 @@ import android.widget.ListView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import whattoeat.dinner.databinding.FragmentHomeBinding
-import whattoeat.dinner.ui.BreakfastViewModel
+import whattoeat.dinner.ui.MainViewModel
 
 
 class BreakfastFragment : Fragment(whattoeat.dinner.R.layout.fragment_home) {
@@ -27,15 +27,15 @@ class BreakfastFragment : Fragment(whattoeat.dinner.R.layout.fragment_home) {
         savedInstanceState: Bundle?
     ): View {
 
-        val breakfastViewModel = activity?.run {
-            ViewModelProvider(this)[BreakfastViewModel::class.java]
+        val mainViewModel = activity?.run {
+            ViewModelProvider(this)[MainViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val listView: ListView = binding.breakfastListView
-        val listOfItem: ArrayList<String> = breakfastViewModel.setMultipleListView()
+        val listOfItem: ArrayList<String> = mainViewModel.setMultipleListView()
 
         getContext()?.let { val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(it, android.R.layout.simple_list_item_multiple_choice, listOfItem)
             listView.adapter = arrayAdapter
@@ -45,13 +45,13 @@ class BreakfastFragment : Fragment(whattoeat.dinner.R.layout.fragment_home) {
 
         listView.onItemClickListener =
             OnItemClickListener { _, _, position, _ ->
-                if(breakfastViewModel.positionClickedArrayList.contains(position))
-                    breakfastViewModel.positionClickedArrayList.remove(position)
+                if(mainViewModel.positionClickedArrayList.contains(position))
+                    mainViewModel.positionClickedArrayList.remove(position)
                 else
-                    breakfastViewModel.positionClickedArrayList.add(position)
+                    mainViewModel.positionClickedArrayList.add(position)
             }
 
-        for (pos in breakfastViewModel.positionClickedArrayList)
+        for (pos in mainViewModel.positionClickedArrayList)
             listView.setItemChecked(pos, true)
 
         return root

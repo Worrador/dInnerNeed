@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class BreakfastViewModel : ViewModel() {
+class MainViewModel : ViewModel() {
 
     companion object var positionClickedArrayList: ArrayList<Int> = ArrayList()
 
