@@ -1,13 +1,23 @@
 package whattoeat.dinner.ui.breakfast
 
+import android.view.View
+import android.widget.AdapterView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class BreakfastViewModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is breakfast Fragment"
+    companion object var positionClickedArrayList: ArrayList<Int> = ArrayList()
+
+    fun setMultipleListView(): ArrayList<String>{
+        val arrayList: ArrayList<String> = ArrayList()
+
+        arrayList.add("Avokádós kenyér")
+        arrayList.add("Melegszendvics")
+        arrayList.add("Kása")
+        arrayList.add("Müzli")
+
+        return arrayList
     }
-    val text: LiveData<String> = _text
 }
