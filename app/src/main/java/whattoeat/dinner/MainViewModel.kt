@@ -1,4 +1,4 @@
-package whattoeat.dinner.ui.breakfast
+package whattoeat.dinner.ui
 
 import android.view.View
 import android.widget.AdapterView

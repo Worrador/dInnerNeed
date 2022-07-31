@@ -9,7 +9,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import whattoeat.dinner.databinding.ActivityMainBinding
-import whattoeat.dinner.ui.breakfast.BreakfastViewModel
+import whattoeat.dinner.ui.BreakfastViewModel
 
 class MainActivity : AppCompatActivity() {
 
