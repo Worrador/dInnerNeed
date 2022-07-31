@@ -47,7 +47,10 @@ class BreakfastFragment : Fragment(whattoeat.dinner.R.layout.fragment_home) {
 
         listView.onItemClickListener =
             OnItemClickListener { _, _, position, _ ->
-                breakfastViewModel.positionClickedArrayList.add(position)
+                if(breakfastViewModel.positionClickedArrayList.contains(position))
+                    breakfastViewModel.positionClickedArrayList.remove(position)
+                else
+                    breakfastViewModel.positionClickedArrayList.add(position)
             }
 
         for (pos in breakfastViewModel.positionClickedArrayList)
