@@ -5,18 +5,17 @@ import android.widget.AdapterView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import whattoeat.dinner.ui.breakfast.BreakfastList
 
 class MainViewModel : ViewModel() {
-
-    companion object var positionClickedArrayList: ArrayList<Int> = ArrayList()
+    var positionClickedArrayList: ArrayList<Int> = ArrayList()
+    var BreakfastList: MutableSet<String> = mutableSetOf<String>()
 
     fun setMultipleListView(): ArrayList<String>{
         val arrayList: ArrayList<String> = ArrayList()
 
-        arrayList.add("Avokádós kenyér")
-        arrayList.add("Melegszendvics")
-        arrayList.add("Kása")
-        arrayList.add("Müzli")
+        for (element in BreakfastList)
+            arrayList.add(element)
 
         return arrayList
     }

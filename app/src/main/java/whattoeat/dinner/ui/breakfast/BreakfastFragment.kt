@@ -1,12 +1,12 @@
 package whattoeat.dinner.ui.breakfast
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
-import android.widget.ArrayAdapter
-import android.widget.ListView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import whattoeat.dinner.databinding.FragmentHomeBinding
@@ -34,7 +34,22 @@ class BreakfastFragment : Fragment(whattoeat.dinner.R.layout.fragment_home) {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        val textView: TextView = binding.textView
+        val saveBtn: Button = binding.saveBtn
+
         val listView: ListView = binding.breakfastListView
+
+        saveBtn.setOnClickListener {
+            mainViewModel.BreakfastList.add(textView.text.toString())
+
+            val listOfItem: ArrayList<String> = mainViewModel.setMultipleListView()
+
+            getContext()?.let { val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(it, android.R.layout.simple_list_item_multiple_choice, listOfItem)
+                listView.adapter = arrayAdapter
+            }
+        }
+
+
         val listOfItem: ArrayList<String> = mainViewModel.setMultipleListView()
 
         getContext()?.let { val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(it, android.R.layout.simple_list_item_multiple_choice, listOfItem)
