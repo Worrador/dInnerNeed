@@ -11,7 +11,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import whattoeat.dinner.databinding.ActivityMainBinding
 import whattoeat.dinner.ui.MainViewModel
-import whattoeat.dinner.ui.MyViewModelFactory
 
 
 class MainActivity : AppCompatActivity() {
@@ -27,10 +26,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         getLists()
+
         mainViewModel =
-            ViewModelProvider(this, MyViewModelFactory(BreakfastList)).get(
-                MainViewModel::class.java
-            )
+            ViewModelProvider(this).get(MainViewModel::class.java)
 
         val navView: BottomNavigationView = binding.navView
 

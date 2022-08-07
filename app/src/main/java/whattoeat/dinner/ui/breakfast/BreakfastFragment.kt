@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModelProvider
 import whattoeat.dinner.MainActivity
 import whattoeat.dinner.databinding.FragmentHomeBinding
 import whattoeat.dinner.ui.MainViewModel
-import whattoeat.dinner.ui.MyViewModelFactory
 
 
 class BreakfastFragment : Fragment(whattoeat.dinner.R.layout.fragment_home) {
@@ -33,10 +32,10 @@ class BreakfastFragment : Fragment(whattoeat.dinner.R.layout.fragment_home) {
         val myActivity = (activity as MainActivity?)!!
         myActivity.getLists()
 
-        var mainViewModel =
-            ViewModelProvider(this, MyViewModelFactory(myActivity.BreakfastList)).get(
-                MainViewModel::class.java
-            )
+
+        val mainViewModel = activity?.run {
+            ViewModelProvider(this)[MainViewModel::class.java]
+        } ?: throw Exception("Invalid Activity")
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
