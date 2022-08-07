@@ -11,6 +11,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import whattoeat.dinner.databinding.ActivityMainBinding
 import whattoeat.dinner.ui.MainViewModel
+import whattoeat.dinner.ui.MyViewModelFactory
 
 
 class MainActivity : AppCompatActivity() {
@@ -18,15 +19,18 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     lateinit var mainViewModel : MainViewModel
+    var BreakfastList: MutableSet<String> = mutableSetOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        getLists()
         mainViewModel =
-            ViewModelProvider(this).get(MainViewModel::class.java)
+            ViewModelProvider(this, MyViewModelFactory(BreakfastList)).get(
+                MainViewModel::class.java
+            )
 
         val navView: BottomNavigationView = binding.navView
 
@@ -42,10 +46,14 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
     }
 
+    fun getLists(){
+        val sh = getPreferences(Context.MODE_APPEND)
+        BreakfastList = sh.getStringSet("name", BreakfastList) as MutableSet<String>
+    }
+
     override fun onResume() {
         super.onResume()
-        val sh = getPreferences(Context.MODE_APPEND)
-        mainViewModel.BreakfastList = sh.getStringSet("name", mainViewModel.BreakfastList) as MutableSet<String>
+        getLists()
     }
 
     override fun onPause() {
@@ -54,7 +62,7 @@ class MainActivity : AppCompatActivity() {
         val myEdit = sharedPreferences.edit()
         myEdit.remove("name")
         myEdit.commit()
-        myEdit.putStringSet("name", mainViewModel.BreakfastList)
+        myEdit.putStringSet("name", BreakfastList)
         myEdit.commit()
     }
 }
