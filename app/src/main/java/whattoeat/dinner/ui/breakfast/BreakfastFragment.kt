@@ -1,7 +1,5 @@
 package whattoeat.dinner.ui.breakfast
 
-import android.app.Activity
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -66,13 +64,13 @@ class BreakfastFragment : Fragment(whattoeat.dinner.R.layout.fragment_home) {
 
         listView.onItemClickListener =
             OnItemClickListener { _, _, position, _ ->
-                if(mainViewModel.positionClickedArrayList.contains(position))
-                    mainViewModel.positionClickedArrayList.remove(position)
+                if(mainViewModel.clickedPosListBreakfast.contains(position))
+                    mainViewModel.clickedPosListBreakfast.remove(position)
                 else
-                    mainViewModel.positionClickedArrayList.add(position)
+                    mainViewModel.clickedPosListBreakfast.add(position)
             }
 
-        for (pos in mainViewModel.positionClickedArrayList)
+        for (pos in mainViewModel.clickedPosListBreakfast)
             listView.setItemChecked(pos, true)
 
         return root

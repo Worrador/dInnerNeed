@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Mit együnk? :)</string>
-    <string name="title_breakfast">Breakfast</string>
-    <string name="title_snack">Snacks</string>
-    <string name="title_results">Results</string>
+    <string name="title_breakfast">Reggeli</string>
+    <string name="title_lunch">Ebéd</string>
+    <string name="title_snack">Nasi</string>
+    <string name="title_results">Vacsi</string>
 </resources>

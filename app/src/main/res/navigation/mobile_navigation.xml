@@ -18,6 +18,11 @@
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
+        android:id="@+id/navigation_lunch"
+        android:name="whattoeat.dinner.ui.snacks.SnacksFragment"
+        android:label="@string/title_snack"
+        tools:layout="@layout/fragment_dashboard" />
+    <fragment
         android:id="@+id/navigation_notifications"
         android:name="whattoeat.dinner.ui.results.ResultsFragment"
         android:label="@string/title_results"

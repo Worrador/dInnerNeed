@@ -3,10 +3,14 @@ import androidx.lifecycle.ViewModel
 
 
 class MainViewModel : ViewModel() {
-    var positionClickedArrayList: ArrayList<Int> = ArrayList()
-    fun setMultipleListView(BreakfastList: MutableSet<String>): ArrayList<String>{
+    var clickedPosListBreakfast: ArrayList<Int> = ArrayList()
+    var clickedPosListLunch: ArrayList<Int> = ArrayList()
+    var clickedPosListSnack: ArrayList<Int> = ArrayList()
+
+
+    fun setMultipleListView(FoodList: MutableSet<String>): ArrayList<String>{
         val arrayList: ArrayList<String> = ArrayList()
-        for (element in BreakfastList)
+        for (element in FoodList)
             arrayList.add(element)
         return arrayList
     }

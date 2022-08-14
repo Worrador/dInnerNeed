@@ -1,8 +1,13 @@
 package whattoeat.dinner
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -19,9 +24,13 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var mainViewModel : MainViewModel
     var BreakfastList: MutableSet<String> = mutableSetOf<String>()
+    var LunchList: MutableSet<String> = mutableSetOf<String>()
+    var SnackList: MutableSet<String> = mutableSetOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        hideSystemUI()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -37,16 +46,32 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
+                R.id.navigation_home, R.id.navigation_lunch, R.id.navigation_dashboard, R.id.navigation_notifications
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
 
+    @RequiresApi(Build.VERSION_CODES.R)
+    private fun hideSystemUI() {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        WindowInsetsControllerCompat(window,
+            window.decorView.findViewById(android.R.id.content)).let { controller ->
+            controller.hide(WindowInsetsCompat.Type.systemBars())
+
+            // When the screen is swiped up at the bottom
+            // of the application, the navigationBar shall
+            // appear for some time
+            controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        }
+    }
+
     fun getLists(){
         val sh = getPreferences(Context.MODE_APPEND)
-        BreakfastList = sh.getStringSet("name", BreakfastList) as MutableSet<String>
+        BreakfastList = sh.getStringSet("breakfast", BreakfastList) as MutableSet<String>
+        LunchList = sh.getStringSet("lunch", LunchList) as MutableSet<String>
+        SnackList = sh.getStringSet("snack", SnackList) as MutableSet<String>
     }
 
     override fun onResume() {
@@ -58,9 +83,20 @@ class MainActivity : AppCompatActivity() {
         super.onPause()
         val sharedPreferences = getPreferences(Context.MODE_APPEND)
         val myEdit = sharedPreferences.edit()
-        myEdit.remove("name")
+        myEdit.remove("breakfast")
         myEdit.commit()
-        myEdit.putStringSet("name", BreakfastList)
+        myEdit.putStringSet("breakfast", BreakfastList)
         myEdit.commit()
+
+        myEdit.remove("lunch")
+        myEdit.commit()
+        myEdit.putStringSet("lunch", LunchList)
+        myEdit.commit()
+
+        myEdit.remove("snack")
+        myEdit.commit()
+        myEdit.putStringSet("snack", SnackList)
+        myEdit.commit()
+
     }
 }
