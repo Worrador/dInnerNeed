@@ -1,4 +1,4 @@
-package whattoeat.dinner.ui.breakfast
+package whattoeat.dinner.ui.Foods
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,13 +9,14 @@ import android.widget.AdapterView.OnItemClickListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import whattoeat.dinner.MainActivity
-import whattoeat.dinner.databinding.FragmentHomeBinding
+import whattoeat.dinner.R
+import whattoeat.dinner.databinding.FragmentBreakfastBinding
 import whattoeat.dinner.ui.MainViewModel
 
 
-class BreakfastFragment : Fragment(whattoeat.dinner.R.layout.fragment_home) {
+class BreakfastFragment : Fragment(R.layout.fragment_breakfast) {
 
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentBreakfastBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -35,7 +36,7 @@ class BreakfastFragment : Fragment(whattoeat.dinner.R.layout.fragment_home) {
             ViewModelProvider(this)[MainViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
 
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentBreakfastBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textView: TextView = binding.textView

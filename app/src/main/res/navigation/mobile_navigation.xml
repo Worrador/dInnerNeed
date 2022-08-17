@@ -3,28 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_breakfast">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="whattoeat.dinner.ui.breakfast.BreakfastFragment"
+        android:id="@+id/navigation_breakfast"
+        android:name="whattoeat.dinner.ui.Foods.BreakfastFragment"
         android:label="@string/title_breakfast"
-        tools:layout="@layout/fragment_home" />
-
-    <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="whattoeat.dinner.ui.snacks.SnacksFragment"
-        android:label="@string/title_snack"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_breakfast" />
 
     <fragment
         android:id="@+id/navigation_lunch"
-        android:name="whattoeat.dinner.ui.snacks.SnacksFragment"
-        android:label="@string/title_snack"
-        tools:layout="@layout/fragment_dashboard" />
+        android:name="whattoeat.dinner.ui.Foods.LunchFragment"
+        android:label="@string/title_lunch"
+        tools:layout="@layout/fragment_lunch" />
+
     <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_snacks"
+        android:name="whattoeat.dinner.ui.Foods.SnacksFragment"
+        android:label="@string/title_snack"
+        tools:layout="@layout/fragment_snacks" />
+
+
+
+    <fragment
+        android:id="@+id/navigation_results"
         android:name="whattoeat.dinner.ui.results.ResultsFragment"
         android:label="@string/title_results"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_results" />
 </navigation>
