@@ -1,8 +1,11 @@
 <resources>
-    <string name="app_name">Mit együnk? :)</string>
+    <string name="app_name">Mi legyen a vacsi?</string>
     <string name="title_breakfast">Reggeli</string>
     <string name="title_lunch">Ebéd</string>
     <string name="title_snack">Nasi</string>
     <string name="title_results">Vacsi</string>
-    <string name="add_button_title">Add</string>
+    <string name="done_button_title">Kész</string>
+    <string name="inputFoodName_title">Név</string>
+    <string name="inputFoodCalories_title">Kalória</string>
+    <string name="inputFoodProtein_title">Fehérje</string>
 </resources>

@@ -3,6 +3,7 @@ package whattoeat.dinner
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
@@ -58,7 +59,7 @@ class MainActivity : AppCompatActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         WindowInsetsControllerCompat(window,
             window.decorView.findViewById(android.R.id.content)).let { controller ->
-            controller.hide(WindowInsetsCompat.Type.systemBars())
+            controller.hide(WindowInsetsCompat.Type.navigationBars())
 
             // When the screen is swiped up at the bottom
             // of the application, the navigationBar shall

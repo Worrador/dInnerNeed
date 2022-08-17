@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import whattoeat.dinner.MainActivity
 import whattoeat.dinner.databinding.FragmentSnacksBinding
 import whattoeat.dinner.ui.MainViewModel
@@ -37,13 +38,33 @@ class SnacksFragment : Fragment() {
         _binding = FragmentSnacksBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textView
+        val nameText: TextView = binding.textView
+        val caloriesText: TextView = binding.textViewCalories
+        val proteinsText: TextView = binding.textViewProteins
         val saveBtn: Button = binding.saveBtn
+        val addBtn: FloatingActionButton = binding.addBtn
 
         val listView: ListView = binding.breakfastListView
 
+        addBtn.setOnClickListener {
+            nameText.setVisibility(View.VISIBLE)
+            caloriesText.setVisibility(View.VISIBLE)
+            proteinsText.setVisibility(View.VISIBLE)
+            addBtn.visibility = View.INVISIBLE
+            saveBtn.visibility = View.VISIBLE
+        }
+
         saveBtn.setOnClickListener {
-            myActivity.SnackList.add(textView.text.toString())
+            nameText.setVisibility(View.INVISIBLE)
+            nameText.setText("")
+            caloriesText.setVisibility(View.INVISIBLE)
+            caloriesText.setText("")
+            proteinsText.setVisibility(View.INVISIBLE)
+            proteinsText.setText("")
+            saveBtn.visibility = View.INVISIBLE
+            addBtn.visibility = View.VISIBLE
+
+            myActivity.SnackList.add(nameText.text.toString())
 
             val listOfItem: ArrayList<String> = mainViewModel.setMultipleListView(myActivity.SnackList)
 
