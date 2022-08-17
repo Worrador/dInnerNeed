@@ -23,8 +23,6 @@
         android:label="@string/title_snack"
         tools:layout="@layout/fragment_snacks" />
 
-
-
     <fragment
         android:id="@+id/navigation_results"
         android:name="whattoeat.dinner.ui.results.ResultsFragment"
