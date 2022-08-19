@@ -3,7 +3,9 @@ package whattoeat.dinner
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
@@ -98,6 +100,10 @@ class MainActivity : AppCompatActivity() {
         myEdit.commit()
         myEdit.putStringSet("snack", SnackList)
         myEdit.commit()
-
     }
+}
+
+fun View.hideKeyboard() {
+    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.hideSoftInputFromWindow(windowToken, 0)
 }
