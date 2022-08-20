@@ -16,6 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginTop="35dp"
+            android:layout_marginBottom="150dp"
             android:divider="@color/black"
             android:dividerHeight="2dp"
             android:textSize="20sp"
@@ -27,21 +28,27 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textView"
             android:layout_width="wrap_content"
-            android:layout_height="56dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:maxEms="5"
+            android:maxLines="2"
             android:layout_marginStart="12dp"
             android:layout_marginBottom="85dp"
             android:hint="@string/inputFoodName_title"
+            app:autoSizeTextType="uniform"
             android:visibility="invisible"
             app:layout_constraintTop_toBottomOf="@+id/breakfast_list_view" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textView_calories"
             android:layout_width="wrap_content"
-            android:layout_height="56dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="6dp"
+            android:maxLines="2"
+            android:maxEms="4"
             android:layout_marginBottom="85dp"
+            app:autoSizeTextType="uniform"
             android:layout_toEndOf="@+id/textView"
             android:hint="@string/inputFoodCalories_title"
             android:visibility="invisible"
@@ -50,10 +57,13 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textView_proteins"
             android:layout_width="wrap_content"
-            android:layout_height="56dp"
+            android:layout_height="wrap_content"
+            android:maxEms="4"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="6dp"
             android:layout_marginBottom="85dp"
+            android:maxLines="2"
+            app:autoSizeTextType="uniform"
             android:layout_toEndOf="@+id/textView_calories"
             android:hint="@string/inputFoodProtein_title"
             android:visibility="invisible"
@@ -70,17 +80,31 @@
             android:backgroundTint="?attr/colorSecondaryVariant"
             app:srcCompat="@android:drawable/ic_input_add" />
 
-        <Button
-            android:id="@+id/saveBtn"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/cancelBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="70dp"
+            android:layout_marginBottom="85dp"
+            android:visibility="invisible"
+            app:tint="@color/white"
+            android:backgroundTint="?attr/colorPrimaryVariant"
+            app:srcCompat="@drawable/ic_cancel" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/checkBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_marginBottom="85dp"
             android:layout_marginEnd="12dp"
-            android:backgroundTint="@color/red2"
             android:visibility="invisible"
-            android:text="@string/done_button_title" />
+            app:tint="@color/white"
+            android:backgroundTint="?attr/colorPrimaryVariant"
+            app:srcCompat="@drawable/ic_check" />
 
     </RelativeLayout>
 

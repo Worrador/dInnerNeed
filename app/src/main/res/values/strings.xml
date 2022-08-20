@@ -8,4 +8,5 @@
     <string name="inputFoodName_title">Név</string>
     <string name="inputFoodCalories_title">Kalória</string>
     <string name="inputFoodProtein_title">Fehérje</string>
+    <string name="result_title">Mutasd mit hamizzak!</string>
 </resources>

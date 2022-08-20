@@ -40,7 +40,8 @@ class SnacksFragment : Fragment() {
         val nameText: TextView = binding.textView
         val caloriesText: TextView = binding.textViewCalories
         val proteinsText: TextView = binding.textViewProteins
-        val saveBtn: Button = binding.saveBtn
+        val cancelBtn: FloatingActionButton = binding.cancelBtn
+        val checkBtn: FloatingActionButton = binding.checkBtn
         val addBtn: FloatingActionButton = binding.addBtn
         val listView: ListView = binding.breakfastListView
         val listOfItem: ArrayList<String> = mainViewModel.setMultipleListView(myActivity.SnackList)
@@ -51,10 +52,11 @@ class SnacksFragment : Fragment() {
             caloriesText.setVisibility(View.VISIBLE)
             proteinsText.setVisibility(View.VISIBLE)
             addBtn.visibility = View.INVISIBLE
-            saveBtn.visibility = View.VISIBLE
+            checkBtn.visibility = View.VISIBLE
+            cancelBtn.visibility = View.VISIBLE
         }
 
-        saveBtn.setOnClickListener {
+        checkBtn.setOnClickListener {
             val isGoodInputs = TextUtils.isDigitsOnly(caloriesText.getText()) && TextUtils.isDigitsOnly(proteinsText.getText()) &&
                 !TextUtils.isEmpty(nameText.getText()) && !TextUtils.isEmpty(caloriesText.getText()) && !TextUtils.isEmpty(proteinsText.getText())
             if(isGoodInputs){
@@ -67,7 +69,8 @@ class SnacksFragment : Fragment() {
                 caloriesText.setText("")
                 proteinsText.setVisibility(View.INVISIBLE)
                 proteinsText.setText("")
-                saveBtn.visibility = View.INVISIBLE
+                checkBtn.visibility = View.INVISIBLE
+                cancelBtn.visibility = View.INVISIBLE
                 addBtn.visibility = View.VISIBLE
                 val listOfItem: ArrayList<String> = mainViewModel.setMultipleListView(myActivity.SnackList)
                 getContext()?.let { val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(it, R.layout.simple_list_item_multiple_choice, listOfItem)
@@ -78,6 +81,20 @@ class SnacksFragment : Fragment() {
                 Toast.makeText(getContext(),
                     "Helytelen értékek!", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        cancelBtn.setOnClickListener {
+            myActivity.SnackList.add(nameText.text.toString())
+            nameText.setVisibility(View.INVISIBLE)
+            nameText.setText("")
+            caloriesText.setVisibility(View.INVISIBLE)
+            caloriesText.setText("")
+            proteinsText.setVisibility(View.INVISIBLE)
+            proteinsText.setText("")
+            checkBtn.visibility = View.INVISIBLE
+            cancelBtn.visibility = View.INVISIBLE
+            addBtn.visibility = View.VISIBLE
+            root.hideKeyboard()
         }
 
         getContext()?.let { val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(it, R.layout.simple_list_item_multiple_choice, listOfItem)
