@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import whattoeat.dinner.MainActivity
 import whattoeat.dinner.databinding.FragmentLunchBinding
 import whattoeat.dinner.ui.MainViewModel
+import whattoeat.dinner.R as R2
 
 class LunchFragment : Fragment() {
 
@@ -47,7 +48,7 @@ class LunchFragment : Fragment() {
 
             val listOfItem: ArrayList<String> = mainViewModel.setMultipleListView(myActivity.LunchList)
 
-            getContext()?.let { val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(it, R.layout.simple_list_item_multiple_choice, listOfItem)
+            getContext()?.let { val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(it, R2.layout.list_text_view, listOfItem)
                 listView.adapter = arrayAdapter
             }
         }
@@ -55,7 +56,7 @@ class LunchFragment : Fragment() {
 
         val listOfItem: ArrayList<String> = mainViewModel.setMultipleListView(myActivity.LunchList)
 
-        getContext()?.let { val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(it, R.layout.simple_list_item_multiple_choice, listOfItem)
+        getContext()?.let { val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(it, R2.layout.list_text_view, listOfItem)
             listView.adapter = arrayAdapter
         }
 

@@ -8,7 +8,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="-78dp"
+        tools:layout_editor_absoluteY="396dp">
 
         <ListView
             android:id="@+id/breakfast_list_view"
@@ -17,11 +19,11 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="35dp"
             android:layout_marginBottom="150dp"
-            android:divider="@color/black"
+            android:divider="@color/grey"
             android:dividerHeight="2dp"
-            android:textSize="20sp"
             android:focusableInTouchMode="false"
             android:isScrollContainer="false"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,13 +32,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:maxEms="5"
-            android:maxLines="2"
             android:layout_marginStart="12dp"
             android:layout_marginBottom="85dp"
             android:hint="@string/inputFoodName_title"
-            app:autoSizeTextType="uniform"
+            android:maxEms="5"
+            android:maxLines="2"
             android:visibility="invisible"
+            app:autoSizeTextType="uniform"
             app:layout_constraintTop_toBottomOf="@+id/breakfast_list_view" />
 
         <com.google.android.material.textfield.TextInputEditText
@@ -45,40 +47,52 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="6dp"
-            android:maxLines="2"
-            android:maxEms="4"
             android:layout_marginBottom="85dp"
-            app:autoSizeTextType="uniform"
             android:layout_toEndOf="@+id/textView"
             android:hint="@string/inputFoodCalories_title"
+            android:maxEms="4"
+            android:maxLines="2"
             android:visibility="invisible"
+            app:autoSizeTextType="uniform"
             app:layout_constraintTop_toBottomOf="@+id/breakfast_list_view" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textView_proteins"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxEms="4"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="6dp"
             android:layout_marginBottom="85dp"
-            android:maxLines="2"
-            app:autoSizeTextType="uniform"
             android:layout_toEndOf="@+id/textView_calories"
             android:hint="@string/inputFoodProtein_title"
+            android:maxEms="4"
+            android:maxLines="2"
             android:visibility="invisible"
+            app:autoSizeTextType="uniform"
             app:layout_constraintTop_toBottomOf="@+id/breakfast_list_view" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/deleteBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="70dp"
+            android:layout_marginBottom="85dp"
+            android:backgroundTint="?attr/colorSecondaryVariant"
+            app:srcCompat="@drawable/ic_delete"
+            app:tint="@color/black" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/addBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginBottom="85dp"
+            android:layout_alignParentBottom="true"
             android:layout_marginEnd="12dp"
+            android:layout_marginBottom="85dp"
             android:backgroundTint="?attr/colorSecondaryVariant"
-            app:srcCompat="@android:drawable/ic_input_add" />
+            app:srcCompat="@drawable/ic_add" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/cancelBtn"
@@ -88,23 +102,23 @@
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="70dp"
             android:layout_marginBottom="85dp"
-            android:visibility="invisible"
-            app:tint="@color/white"
             android:backgroundTint="?attr/colorPrimaryVariant"
-            app:srcCompat="@drawable/ic_cancel" />
+            android:visibility="invisible"
+            app:srcCompat="@drawable/ic_cancel"
+            app:tint="@color/white" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/checkBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginBottom="85dp"
+            android:layout_alignParentBottom="true"
             android:layout_marginEnd="12dp"
-            android:visibility="invisible"
-            app:tint="@color/white"
+            android:layout_marginBottom="85dp"
             android:backgroundTint="?attr/colorPrimaryVariant"
-            app:srcCompat="@drawable/ic_check" />
+            android:visibility="invisible"
+            app:srcCompat="@drawable/ic_check"
+            app:tint="@color/white" />
 
     </RelativeLayout>
 

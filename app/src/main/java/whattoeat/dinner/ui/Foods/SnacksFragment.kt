@@ -14,12 +14,14 @@ import whattoeat.dinner.MainActivity
 import whattoeat.dinner.databinding.FragmentSnacksBinding
 import whattoeat.dinner.hideKeyboard
 import whattoeat.dinner.ui.MainViewModel
+import whattoeat.dinner.R as R2
 
 
 class SnacksFragment : Fragment() {
 
     private var _binding: FragmentSnacksBinding? = null
     private val binding get() = _binding!!
+    private var isDataAddition: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,17 +45,45 @@ class SnacksFragment : Fragment() {
         val cancelBtn: FloatingActionButton = binding.cancelBtn
         val checkBtn: FloatingActionButton = binding.checkBtn
         val addBtn: FloatingActionButton = binding.addBtn
+        val delBtn: FloatingActionButton = binding.deleteBtn
         val listView: ListView = binding.breakfastListView
         val listOfItem: ArrayList<String> = mainViewModel.setMultipleListView(myActivity.SnackList)
 
-        /* Set object properties */
-        addBtn.setOnClickListener {
-            nameText.setVisibility(View.VISIBLE)
-            caloriesText.setVisibility(View.VISIBLE)
-            proteinsText.setVisibility(View.VISIBLE)
+        fun setDefaultVisivility(){
+            nameText.setVisibility(View.INVISIBLE)
+            nameText.setText("")
+            caloriesText.setVisibility(View.INVISIBLE)
+            caloriesText.setText("")
+            proteinsText.setVisibility(View.INVISIBLE)
+            proteinsText.setText("")
+            checkBtn.visibility = View.INVISIBLE
+            cancelBtn.visibility = View.INVISIBLE
+            addBtn.visibility = View.VISIBLE
+            delBtn.visibility = View.VISIBLE
+        }
+
+        fun setModifyingVisivility(){
+            if(isDataAddition){
+                nameText.setVisibility(View.VISIBLE)
+                caloriesText.setVisibility(View.VISIBLE)
+                proteinsText.setVisibility(View.VISIBLE)
+            }
+
             addBtn.visibility = View.INVISIBLE
+            delBtn.visibility = View.INVISIBLE
             checkBtn.visibility = View.VISIBLE
             cancelBtn.visibility = View.VISIBLE
+        }
+
+        /* Set object properties */
+        addBtn.setOnClickListener {
+            isDataAddition = true
+            setModifyingVisivility()
+        }
+
+        delBtn.setOnClickListener {
+            isDataAddition = false
+            setModifyingVisivility()
         }
 
         checkBtn.setOnClickListener {
@@ -63,17 +93,10 @@ class SnacksFragment : Fragment() {
                 Toast.makeText(getContext(),
                     "Hozzáadva!", Toast.LENGTH_SHORT).show()
                 myActivity.SnackList.add(nameText.text.toString())
-                nameText.setVisibility(View.INVISIBLE)
-                nameText.setText("")
-                caloriesText.setVisibility(View.INVISIBLE)
-                caloriesText.setText("")
-                proteinsText.setVisibility(View.INVISIBLE)
-                proteinsText.setText("")
-                checkBtn.visibility = View.INVISIBLE
-                cancelBtn.visibility = View.INVISIBLE
-                addBtn.visibility = View.VISIBLE
+                setDefaultVisivility()
                 val listOfItem: ArrayList<String> = mainViewModel.setMultipleListView(myActivity.SnackList)
-                getContext()?.let { val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(it, R.layout.simple_list_item_multiple_choice, listOfItem)
+                getContext()?.let {
+                    val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(it, R2.layout.list_text_view, listOfItem)
                     listView.adapter = arrayAdapter
                 }
                 root.hideKeyboard()
@@ -84,20 +107,11 @@ class SnacksFragment : Fragment() {
         }
 
         cancelBtn.setOnClickListener {
-            myActivity.SnackList.add(nameText.text.toString())
-            nameText.setVisibility(View.INVISIBLE)
-            nameText.setText("")
-            caloriesText.setVisibility(View.INVISIBLE)
-            caloriesText.setText("")
-            proteinsText.setVisibility(View.INVISIBLE)
-            proteinsText.setText("")
-            checkBtn.visibility = View.INVISIBLE
-            cancelBtn.visibility = View.INVISIBLE
-            addBtn.visibility = View.VISIBLE
+            setDefaultVisivility()
             root.hideKeyboard()
         }
 
-        getContext()?.let { val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(it, R.layout.simple_list_item_multiple_choice, listOfItem)
+        getContext()?.let { val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(it, R2.layout.list_text_view, listOfItem)
             listView.adapter = arrayAdapter
         }
 

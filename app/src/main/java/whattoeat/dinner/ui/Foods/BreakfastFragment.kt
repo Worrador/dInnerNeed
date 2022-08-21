@@ -49,7 +49,7 @@ class BreakfastFragment : Fragment(R.layout.fragment_breakfast) {
 
             val listOfItem: ArrayList<String> = mainViewModel.setMultipleListView(myActivity.BreakfastList)
 
-            getContext()?.let { val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(it, android.R.layout.simple_list_item_multiple_choice, listOfItem)
+            getContext()?.let { val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(it, R.layout.list_text_view, listOfItem)
                 listView.adapter = arrayAdapter
             }
         }
@@ -57,7 +57,7 @@ class BreakfastFragment : Fragment(R.layout.fragment_breakfast) {
 
         val listOfItem: ArrayList<String> = mainViewModel.setMultipleListView(myActivity.BreakfastList)
 
-        getContext()?.let { val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(it, android.R.layout.simple_list_item_multiple_choice, listOfItem)
+        getContext()?.let { val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(it, R.layout.list_text_view, listOfItem)
             listView.adapter = arrayAdapter
         }
 
