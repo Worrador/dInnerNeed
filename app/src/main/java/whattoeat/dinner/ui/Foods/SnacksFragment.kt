@@ -1,6 +1,7 @@
 package whattoeat.dinner.ui.Foods
 
 import android.R
+import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -47,7 +48,6 @@ class SnacksFragment : Fragment() {
         val addBtn: FloatingActionButton = binding.addBtn
         val delBtn: FloatingActionButton = binding.deleteBtn
         val listView: ListView = binding.breakfastListView
-        val listOfItem: ArrayList<String> = mainViewModel.setMultipleListView(myActivity.SnackList)
 
         fun setDefaultVisivility(){
             nameText.setVisibility(View.INVISIBLE)
@@ -60,6 +60,7 @@ class SnacksFragment : Fragment() {
             cancelBtn.visibility = View.INVISIBLE
             addBtn.visibility = View.VISIBLE
             delBtn.visibility = View.VISIBLE
+            root.hideKeyboard()
         }
 
         fun setModifyingVisivility(){
@@ -75,6 +76,13 @@ class SnacksFragment : Fragment() {
             cancelBtn.visibility = View.VISIBLE
         }
 
+        fun generateListView(){
+            val listOfItem: ArrayList<String> = mainViewModel.setMultipleListView(myActivity.SnackList)
+            getContext()?.let {
+                val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(it, R2.layout.list_text_view, listOfItem)
+                listView.adapter = arrayAdapter
+            }
+        }
         /* Set object properties */
         addBtn.setOnClickListener {
             isDataAddition = true
@@ -84,36 +92,44 @@ class SnacksFragment : Fragment() {
         delBtn.setOnClickListener {
             isDataAddition = false
             setModifyingVisivility()
+            for (pos in mainViewModel.clickedPosListSnack)
+                listView.setItemChecked(pos, false)
+            mainViewModel.clickedPosListSnack.clear()
         }
 
         checkBtn.setOnClickListener {
-            val isGoodInputs = TextUtils.isDigitsOnly(caloriesText.getText()) && TextUtils.isDigitsOnly(proteinsText.getText()) &&
-                !TextUtils.isEmpty(nameText.getText()) && !TextUtils.isEmpty(caloriesText.getText()) && !TextUtils.isEmpty(proteinsText.getText())
-            if(isGoodInputs){
-                Toast.makeText(getContext(),
-                    "Hozzáadva!", Toast.LENGTH_SHORT).show()
-                myActivity.SnackList.add(nameText.text.toString())
-                setDefaultVisivility()
-                val listOfItem: ArrayList<String> = mainViewModel.setMultipleListView(myActivity.SnackList)
-                getContext()?.let {
-                    val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(it, R2.layout.list_text_view, listOfItem)
-                    listView.adapter = arrayAdapter
+            if(isDataAddition){
+                val isGoodInputs = TextUtils.isDigitsOnly(caloriesText.getText()) && TextUtils.isDigitsOnly(proteinsText.getText()) &&
+                        !TextUtils.isEmpty(nameText.getText()) && !TextUtils.isEmpty(caloriesText.getText()) && !TextUtils.isEmpty(proteinsText.getText())
+                if(isGoodInputs){
+                    Toast.makeText(getContext(),
+                        "Hozzáadva!", Toast.LENGTH_SHORT).show()
+                    myActivity.SnackList.add(nameText.text.toString())
+                    setDefaultVisivility()
+                    generateListView()
+                }else{
+                    Toast.makeText(getContext(),
+                        "Helytelen értékek!", Toast.LENGTH_SHORT).show()
                 }
-                root.hideKeyboard()
             }else{
-                Toast.makeText(getContext(),
-                    "Helytelen értékek!", Toast.LENGTH_SHORT).show()
+                for (pos in mainViewModel.clickedPosListSnack)
+                    myActivity.SnackList.remove(listView.getItemAtPosition(pos))
+
+                if(!mainViewModel.clickedPosListSnack.isEmpty()){
+                    Toast.makeText(getContext(),
+                        "Törölve!", Toast.LENGTH_SHORT).show()
+                    mainViewModel.clickedPosListSnack.clear()
+                    generateListView()
+                }
+                setDefaultVisivility()
             }
         }
 
         cancelBtn.setOnClickListener {
             setDefaultVisivility()
-            root.hideKeyboard()
         }
 
-        getContext()?.let { val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(it, R2.layout.list_text_view, listOfItem)
-            listView.adapter = arrayAdapter
-        }
+        generateListView()
 
         listView.choiceMode = ListView.CHOICE_MODE_MULTIPLE
 
