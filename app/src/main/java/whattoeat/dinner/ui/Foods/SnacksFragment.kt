@@ -47,7 +47,7 @@ class SnacksFragment : Fragment() {
         val checkBtn: FloatingActionButton = binding.checkBtn
         val addBtn: FloatingActionButton = binding.addBtn
         val delBtn: FloatingActionButton = binding.deleteBtn
-        val listView: ListView = binding.breakfastListView
+        val listView: ListView = binding.snacksListView
 
         /* Local functions */
         fun setDefaultVisivility(){
@@ -83,6 +83,8 @@ class SnacksFragment : Fragment() {
                 val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(it, R2.layout.list_text_view, listOfItem)
                 listView.adapter = arrayAdapter
             }
+            for (pos in mainViewModel.clickedPosListSnack)
+                listView.setItemChecked(pos, true)
         }
 
         /* Set object callbacks */
@@ -141,8 +143,7 @@ class SnacksFragment : Fragment() {
                 else
                     mainViewModel.clickedPosListSnack.add(position)
             }
-        for (pos in mainViewModel.clickedPosListSnack)
-            listView.setItemChecked(pos, true)
+
 
         return root
     }

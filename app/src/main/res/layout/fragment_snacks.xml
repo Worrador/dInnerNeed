@@ -11,7 +11,7 @@
         android:layout_height="match_parent">
 
         <ListView
-            android:id="@+id/breakfast_list_view"
+            android:id="@+id/snacks_list_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -37,7 +37,7 @@
             android:maxLines="2"
             android:visibility="invisible"
             app:autoSizeTextType="uniform"
-            app:layout_constraintTop_toBottomOf="@+id/breakfast_list_view" />
+            app:layout_constraintTop_toBottomOf="@+id/snacks_list_view" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textView_calories"
@@ -52,7 +52,7 @@
             android:maxLines="2"
             android:visibility="invisible"
             app:autoSizeTextType="uniform"
-            app:layout_constraintTop_toBottomOf="@+id/breakfast_list_view" />
+            app:layout_constraintTop_toBottomOf="@+id/snacks_list_view" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textView_proteins"
@@ -67,7 +67,7 @@
             android:maxLines="2"
             android:visibility="invisible"
             app:autoSizeTextType="uniform"
-            app:layout_constraintTop_toBottomOf="@+id/breakfast_list_view" />
+            app:layout_constraintTop_toBottomOf="@+id/snacks_list_view" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/deleteBtn"
