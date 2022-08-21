@@ -49,6 +49,7 @@ class SnacksFragment : Fragment() {
         val delBtn: FloatingActionButton = binding.deleteBtn
         val listView: ListView = binding.breakfastListView
 
+        /* Local functions */
         fun setDefaultVisivility(){
             nameText.setVisibility(View.INVISIBLE)
             nameText.setText("")
@@ -83,7 +84,8 @@ class SnacksFragment : Fragment() {
                 listView.adapter = arrayAdapter
             }
         }
-        /* Set object properties */
+
+        /* Set object callbacks */
         addBtn.setOnClickListener {
             isDataAddition = true
             setModifyingVisivility()
@@ -129,10 +131,9 @@ class SnacksFragment : Fragment() {
             setDefaultVisivility()
         }
 
+        /* Set listView */
         generateListView()
-
         listView.choiceMode = ListView.CHOICE_MODE_MULTIPLE
-
         listView.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position, _ ->
                 if (mainViewModel.clickedPosListSnack.contains(position))
@@ -140,7 +141,6 @@ class SnacksFragment : Fragment() {
                 else
                     mainViewModel.clickedPosListSnack.add(position)
             }
-
         for (pos in mainViewModel.clickedPosListSnack)
             listView.setItemChecked(pos, true)
 
