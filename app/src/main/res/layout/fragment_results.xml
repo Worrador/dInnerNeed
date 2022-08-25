@@ -31,11 +31,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <CheckedTextView
-        android:id="@+id/checkedTextView"
+    <TextView
+        android:id="@+id/TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CheckedTextView"
-        tools:layout_editor_absoluteX="78dp"
-        tools:layout_editor_absoluteY="123dp" />
+        android:text=""
+        app:layout_constraintBottom_toTopOf="@+id/resultBtn"
+        app:layout_constraintEnd_toEndOf="@+id/text_notifications"
+        app:layout_constraintStart_toStartOf="@+id/text_notifications"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

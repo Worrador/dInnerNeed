@@ -35,12 +35,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        getLists()
 
         hideSystemUI()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        getLists()
 
         mainViewModel =
             ViewModelProvider(this).get(MainViewModel::class.java)

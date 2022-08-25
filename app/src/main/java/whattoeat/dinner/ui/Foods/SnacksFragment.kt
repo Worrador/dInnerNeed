@@ -16,6 +16,7 @@ import whattoeat.dinner.MainActivity
 import whattoeat.dinner.databinding.FragmentSnacksBinding
 import whattoeat.dinner.hideKeyboard
 import whattoeat.dinner.ui.MainViewModel
+import whattoeat.dinner.ui.results.ResultsFragment
 import whattoeat.dinner.R as R2
 
 
@@ -134,8 +135,9 @@ class SnacksFragment : Fragment() {
         }
 
         /* Set listView */
-        generateListView()
         listView.choiceMode = ListView.CHOICE_MODE_MULTIPLE
+        generateListView()
+        //listView.choiceMode = ListView.CHOICE_MODE_MULTIPLE
         listView.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position, _ ->
                 if (mainViewModel.clickedPosListSnack.contains(position))
