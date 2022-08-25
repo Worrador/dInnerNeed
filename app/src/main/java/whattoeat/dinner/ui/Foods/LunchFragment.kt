@@ -11,6 +11,7 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import whattoeat.dinner.Food
 import whattoeat.dinner.MainActivity
 import whattoeat.dinner.databinding.FragmentLunchBinding
 import whattoeat.dinner.hideKeyboard
@@ -32,7 +33,6 @@ class LunchFragment : Fragment() {
 
         /* Set objects */
         val myActivity = (activity as MainActivity?)!!
-        myActivity.getLists()
 
         val mainViewModel = activity?.run {
             ViewModelProvider(this)[MainViewModel::class.java]
@@ -50,7 +50,7 @@ class LunchFragment : Fragment() {
         val listView: ListView = binding.lunchListView
 
         /* Local functions */
-        fun setDefaultVisivility(){
+        fun setDefaultVisibility(){
             nameText.setVisibility(View.INVISIBLE)
             nameText.setText("")
             caloriesText.setVisibility(View.INVISIBLE)
@@ -64,7 +64,7 @@ class LunchFragment : Fragment() {
             root.hideKeyboard()
         }
 
-        fun setModifyingVisivility(){
+        fun setModifyingVisibility(){
             if(isDataAddition){
                 nameText.setVisibility(View.VISIBLE)
                 caloriesText.setVisibility(View.VISIBLE)
@@ -88,12 +88,12 @@ class LunchFragment : Fragment() {
         /* Set object callbacks */
         addBtn.setOnClickListener {
             isDataAddition = true
-            setModifyingVisivility()
+            setModifyingVisibility()
         }
 
         delBtn.setOnClickListener {
             isDataAddition = false
-            setModifyingVisivility()
+            setModifyingVisibility()
             for (pos in mainViewModel.clickedPosListLunch)
                 listView.setItemChecked(pos, false)
             mainViewModel.clickedPosListLunch.clear()
@@ -106,8 +106,8 @@ class LunchFragment : Fragment() {
                 if(isGoodInputs){
                     Toast.makeText(getContext(),
                         "Hozzáadva!", Toast.LENGTH_SHORT).show()
-                    myActivity.LunchList.add(Food(nameText.text.toString(), caloriesText.text.toInt(), proteinsText.text.toInt()))
-                    setDefaultVisivility()
+                    myActivity.LunchList.add(Food(nameText.text.toString(), caloriesText.text.toString().toInt(), proteinsText.text.toString().toInt()))
+                    setDefaultVisibility()
                     generateListView()
                 }else{
                     Toast.makeText(getContext(),
@@ -123,12 +123,12 @@ class LunchFragment : Fragment() {
                     mainViewModel.clickedPosListLunch.clear()
                     generateListView()
                 }
-                setDefaultVisivility()
+                setDefaultVisibility()
             }
         }
 
         cancelBtn.setOnClickListener {
-            setDefaultVisivility()
+            setDefaultVisibility()
         }
 
         /* Set listView */

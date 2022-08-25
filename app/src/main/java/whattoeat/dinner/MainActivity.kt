@@ -3,14 +3,9 @@ package whattoeat.dinner
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.view.Gravity
 import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -21,8 +16,12 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import whattoeat.dinner.databinding.ActivityMainBinding
 import whattoeat.dinner.ui.MainViewModel
+import com.google.gson.GsonBuilder;
+import java.lang.reflect.Type
 
 
 class MainActivity : AppCompatActivity() {
@@ -30,9 +29,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     lateinit var mainViewModel : MainViewModel
-    var BreakfastList: List<Food> = mutableListOf<Food>()
-    var LunchList: List<Food> = mutableListOf<Food>()
-    var SnackList: List<Food> = mutableListOf<Food>()
+    var BreakfastList: MutableList<Food> = mutableListOf<Food>()
+    var LunchList: MutableList<Food> = mutableListOf<Food>()
+    var SnackList: MutableList<Food> = mutableListOf<Food>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,10 +76,11 @@ class MainActivity : AppCompatActivity() {
     fun getLists(){
         val sh = getPreferences(Context.MODE_APPEND)
         val gson = Gson();
+        val typeOfObjectsList: Type = object : TypeToken<List<Food?>?>() {}.type
 
-        BreakfastList = gson.fromJson(sh.getString("breakfast", BreakfastList), mutableListOf<Food>)
-        LunchList = gson.fromJson(sh.getString("lunch", LunchList), mutableListOf<Food>)
-        SnackList = gson.fromJson(sh.getString("snack", SnackList), mutableListOf<Food>)
+        BreakfastList = gson.fromJson(sh.getString("breakfastList", gson.toJson(BreakfastList).toString()), typeOfObjectsList)
+        LunchList = gson.fromJson(sh.getString("lunchList", gson.toJson(LunchList).toString()), typeOfObjectsList)
+        SnackList = gson.fromJson(sh.getString("snackList", gson.toJson(SnackList)), typeOfObjectsList)
     }
 
     override fun onResume() {
@@ -94,19 +94,19 @@ class MainActivity : AppCompatActivity() {
         val gson = Gson();
         val myEdit = sharedPreferences.edit()
 
-        myEdit.remove("breakfast")
+        myEdit.remove("breakfastList")
         myEdit.commit()
-        myEdit.putString("breakfast", gson.toJson(BreakfastList))
-        myEdit.commit()
-
-        myEdit.remove("lunch")
-        myEdit.commit()
-        myEdit.putString("lunch", gson.toJson(LunchList))
+        myEdit.putString("breakfastList", gson.toJson(BreakfastList))
         myEdit.commit()
 
-        myEdit.remove("snack")
+        myEdit.remove("lunchList")
         myEdit.commit()
-        myEdit.putString("snack", gson.toJson(SnackList))
+        myEdit.putString("lunchList", gson.toJson(LunchList))
+        myEdit.commit()
+
+        myEdit.remove("snackList")
+        myEdit.commit()
+        myEdit.putString("snackList", gson.toJson(SnackList))
         myEdit.commit()
     }
 }
