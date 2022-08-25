@@ -30,9 +30,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     lateinit var mainViewModel : MainViewModel
-    var BreakfastList: MutableSet<String> = mutableSetOf<String>()
-    var LunchList: MutableSet<String> = mutableSetOf<String>()
-    var SnackList: MutableSet<String> = mutableSetOf<String>()
+    var BreakfastList: List<Food> = mutableListOf<Food>()
+    var LunchList: List<Food> = mutableListOf<Food>()
+    var SnackList: List<Food> = mutableListOf<Food>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,9 +76,11 @@ class MainActivity : AppCompatActivity() {
 
     fun getLists(){
         val sh = getPreferences(Context.MODE_APPEND)
-        BreakfastList = sh.getStringSet("breakfast", BreakfastList) as MutableSet<String>
-        LunchList = sh.getStringSet("lunch", LunchList) as MutableSet<String>
-        SnackList = sh.getStringSet("snack", SnackList) as MutableSet<String>
+        val gson = Gson();
+
+        BreakfastList = gson.fromJson(sh.getString("breakfast", BreakfastList), mutableListOf<Food>)
+        LunchList = gson.fromJson(sh.getString("lunch", LunchList), mutableListOf<Food>)
+        SnackList = gson.fromJson(sh.getString("snack", SnackList), mutableListOf<Food>)
     }
 
     override fun onResume() {
@@ -89,20 +91,22 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         val sharedPreferences = getPreferences(Context.MODE_APPEND)
+        val gson = Gson();
         val myEdit = sharedPreferences.edit()
+
         myEdit.remove("breakfast")
         myEdit.commit()
-        myEdit.putStringSet("breakfast", BreakfastList)
+        myEdit.putString("breakfast", gson.toJson(BreakfastList))
         myEdit.commit()
 
         myEdit.remove("lunch")
         myEdit.commit()
-        myEdit.putStringSet("lunch", LunchList)
+        myEdit.putString("lunch", gson.toJson(LunchList))
         myEdit.commit()
 
         myEdit.remove("snack")
         myEdit.commit()
-        myEdit.putStringSet("snack", SnackList)
+        myEdit.putString("snack", gson.toJson(SnackList))
         myEdit.commit()
     }
 }

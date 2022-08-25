@@ -11,10 +11,10 @@ class MainViewModel : ViewModel() {
     var clickedPosListSnack: ArrayList<Int> = ArrayList()
 
 
-    fun setMultipleListView(FoodList: MutableSet<String>): ArrayList<String>{
+    fun setMultipleListView(FoodList: MutableList<Food>): ArrayList<String>{
         val arrayList: ArrayList<String> = ArrayList()
         for (element in FoodList)
-            arrayList.add(element)
+            arrayList.add(element.name)
         return arrayList
     }
 }

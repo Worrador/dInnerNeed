@@ -108,7 +108,7 @@ class SnacksFragment : Fragment() {
                 if(isGoodInputs){
                     Toast.makeText(getContext(),
                         "Hozzáadva!", Toast.LENGTH_SHORT).show()
-                    myActivity.SnackList.add(nameText.text.toString())
+                    myActivity.SnackList.add(Food(nameText.text.toString(), caloriesText.text.toInt(), proteinsText.text.toInt()))
                     setDefaultVisivility()
                     generateListView()
                 }else{

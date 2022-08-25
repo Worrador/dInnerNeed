@@ -106,7 +106,7 @@ class LunchFragment : Fragment() {
                 if(isGoodInputs){
                     Toast.makeText(getContext(),
                         "Hozzáadva!", Toast.LENGTH_SHORT).show()
-                    myActivity.LunchList.add(nameText.text.toString())
+                    myActivity.LunchList.add(Food(nameText.text.toString(), caloriesText.text.toInt(), proteinsText.text.toInt()))
                     setDefaultVisivility()
                     generateListView()
                 }else{
