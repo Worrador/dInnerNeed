@@ -8,9 +8,11 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import whattoeat.dinner.Food
 import whattoeat.dinner.MainActivity
 import whattoeat.dinner.databinding.FragmentResultsBinding
 import whattoeat.dinner.ui.MainViewModel
+import kotlin.math.absoluteValue
 
 class ResultsFragment : Fragment() {
 
@@ -62,16 +64,34 @@ class ResultsFragment : Fragment() {
                 allCalories += myActivity.SnackList[selectedFoodPos].proteins
         }
 
+        fun calculateDiffPercentage(currentFoodCalories: Double, currentFoodProteins: Double) : Double{
+            var possibleCalorieDifference = ((calorieGoal - allCalories - currentFoodCalories).absoluteValue / calorieGoal)
+            var possibleProteinDifference = ((proteinGoal - allProteins - currentFoodProteins).absoluteValue / proteinGoal)
+
+            return (possibleCalorieDifference + possibleProteinDifference)
+        }
+
         fun getDinner() :String{
             calculateNutrition()
 
             var textToBeDisplayed = "A következők közül válassz:\n"
-            for (food in myActivity.LunchList){
-                if ((food.calories + allCalories) >= calorieGoal){
-                    textToBeDisplayed += food.name + "\n"
+            var nameOfBestOption = ""
+
+            var bestDifference = 2.0
+            var allFoodsList: MutableList<Food> = mutableListOf<Food>()
+            allFoodsList.addAll(myActivity.BreakfastList)
+            allFoodsList.addAll(myActivity.LunchList)
+            allFoodsList.addAll(myActivity.SnackList)
+
+            for (food in allFoodsList){
+                var currentFoodDiff = calculateDiffPercentage(food.calories.toDouble(), food.proteins.toDouble())
+                if (bestDifference >= currentFoodDiff){
+                    nameOfBestOption = food.name
+                    bestDifference = currentFoodDiff
                 }
             }
 
+            textToBeDisplayed += nameOfBestOption + "\n"
             return textToBeDisplayed
         }
 
