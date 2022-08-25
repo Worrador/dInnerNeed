@@ -74,24 +74,50 @@ class ResultsFragment : Fragment() {
         fun getDinner() :String{
             calculateNutrition()
 
-            var textToBeDisplayed = "A következők közül válassz:\n"
-            var nameOfBestOption = ""
+            var textToBeDisplayed = "A következők közül válassz:\n\n"
 
-            var bestDifference = 2.0
             var allFoodsList: MutableList<Food> = mutableListOf<Food>()
             allFoodsList.addAll(myActivity.BreakfastList)
             allFoodsList.addAll(myActivity.LunchList)
             allFoodsList.addAll(myActivity.SnackList)
 
+            var first = 2.0
+            var firstName = ""
+            var second = 2.0
+            var secondName = ""
+            var third = 2.0
+            var thirdName = ""
+
             for (food in allFoodsList){
-                var currentFoodDiff = calculateDiffPercentage(food.calories.toDouble(), food.proteins.toDouble())
-                if (bestDifference >= currentFoodDiff){
-                    nameOfBestOption = food.name
-                    bestDifference = currentFoodDiff
+                val current = calculateDiffPercentage(food.calories.toDouble(), food.proteins.toDouble())
+                val currentName = food.name
+
+                if (first > current) {
+                    third = second
+                    thirdName = secondName
+                    second = first
+                    secondName = firstName
+                    first = current
+                    firstName = currentName
+
+
+                } else if (second > current) {
+                    third = second
+                    thirdName = secondName
+                    second = current
+                    secondName = currentName
+
+
+                } else if (third > current) {
+                    third = current
+                    thirdName = currentName
                 }
             }
 
-            textToBeDisplayed += nameOfBestOption + "\n"
+
+            textToBeDisplayed += "1. $firstName\n"
+            textToBeDisplayed += "2. $secondName\n"
+            textToBeDisplayed += "3. $thirdName\n"
             return textToBeDisplayed
         }
 
