@@ -133,10 +133,19 @@ class BreakfastFragment : Fragment() {
         listView.choiceMode = ListView.CHOICE_MODE_MULTIPLE
         listView.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position, _ ->
-                if (mainViewModel.clickedPosListBreakfast.contains(position))
+                if (mainViewModel.clickedPosListBreakfast.contains(position)) {
                     mainViewModel.clickedPosListBreakfast.remove(position)
-                else
+                }
+                else {
                     mainViewModel.clickedPosListBreakfast.add(position)
+                    val clickedCalories = myActivity.BreakfastList[position].calories
+                    val clickedProteins = myActivity.BreakfastList[position].proteins
+                    Toast.makeText(
+                        getContext(),
+                        "Kalória: +$clickedCalories\nFehérje: +$clickedProteins\n",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         for (pos in mainViewModel.clickedPosListBreakfast)
             listView.setItemChecked(pos, true)

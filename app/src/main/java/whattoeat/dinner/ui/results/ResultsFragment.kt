@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import whattoeat.dinner.Food
@@ -13,6 +15,8 @@ import whattoeat.dinner.MainActivity
 import whattoeat.dinner.databinding.FragmentResultsBinding
 import whattoeat.dinner.ui.MainViewModel
 import kotlin.math.absoluteValue
+import whattoeat.dinner.R
+import com.bumptech.glide.Glide
 
 class ResultsFragment : Fragment() {
 
@@ -21,11 +25,12 @@ class ResultsFragment : Fragment() {
     lateinit var myActivity: MainActivity
 
     private val binding get() = _binding!!
-    private var allCalories = 0
-    private var allProteins = 0
+    var allCalories = 0
+    var allProteins = 0
 
     private val calorieGoal = 1800
     private val proteinGoal = 50
+    private val goalDiffMaxPercentage = 0.05
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,6 +48,7 @@ class ResultsFragment : Fragment() {
         val root: View = binding.root
         val resultBtn: Button = binding.resultBtn
         val textView: TextView = binding.TextView
+        val gifView: ImageView = binding.gifView
 
         fun calculateNutrition(){
             allCalories = 0
@@ -51,17 +57,17 @@ class ResultsFragment : Fragment() {
             for (selectedFoodPos in mainViewModel.clickedPosListBreakfast)
                 allCalories += myActivity.BreakfastList[selectedFoodPos].calories
             for (selectedFoodPos in mainViewModel.clickedPosListBreakfast)
-                allCalories += myActivity.BreakfastList[selectedFoodPos].proteins
+                allProteins += myActivity.BreakfastList[selectedFoodPos].proteins
 
             for (selectedFoodPos in mainViewModel.clickedPosListLunch)
                 allCalories += myActivity.LunchList[selectedFoodPos].calories
             for (selectedFoodPos in mainViewModel.clickedPosListLunch)
-                allCalories += myActivity.LunchList[selectedFoodPos].proteins
+                allProteins += myActivity.LunchList[selectedFoodPos].proteins
 
             for (selectedFoodPos in mainViewModel.clickedPosListSnack)
                 allCalories += myActivity.SnackList[selectedFoodPos].calories
             for (selectedFoodPos in mainViewModel.clickedPosListSnack)
-                allCalories += myActivity.SnackList[selectedFoodPos].proteins
+                allProteins += myActivity.SnackList[selectedFoodPos].proteins
         }
 
         fun calculateDiffPercentage(currentFoodCalories: Double, currentFoodProteins: Double) : Double{
@@ -74,12 +80,13 @@ class ResultsFragment : Fragment() {
         fun getDinner() :String{
             calculateNutrition()
 
-            var textToBeDisplayed = "A következők közül válassz:\n\n"
+            var textToBeDisplayed = ""//A következők közül válassz:\n\n"
 
             var allFoodsList: MutableList<Food> = mutableListOf<Food>()
             allFoodsList.addAll(myActivity.BreakfastList)
             allFoodsList.addAll(myActivity.LunchList)
             allFoodsList.addAll(myActivity.SnackList)
+            allFoodsList.add(Food("Semmi",0,0))
 
             var first = 2.0
             var firstName = ""
@@ -100,24 +107,32 @@ class ResultsFragment : Fragment() {
                     first = current
                     firstName = currentName
 
-
                 } else if (second > current) {
                     third = second
                     thirdName = secondName
                     second = current
                     secondName = currentName
 
-
                 } else if (third > current) {
                     third = current
                     thirdName = currentName
                 }
             }
-
-
-            textToBeDisplayed += "1. $firstName\n"
-            textToBeDisplayed += "2. $secondName\n"
-            textToBeDisplayed += "3. $thirdName\n"
+            if(first < 2 * goalDiffMaxPercentage){
+                textToBeDisplayed = "Sikerülhet elérni a célodat!\nEhhez a következő(k) közül válassz:\n\n"
+                textToBeDisplayed += "1. $firstName\n"
+                if(second < 2 * goalDiffMaxPercentage){
+                    textToBeDisplayed += "2. $secondName\n"
+                    if(third < 2 * goalDiffMaxPercentage){
+                        textToBeDisplayed += "3. $thirdName"
+                    }
+                }
+                Glide.with(this).load(R.drawable.bravocado).into(gifView)
+            }else{
+                textToBeDisplayed += "Sajnos ma már nem tudod elérni a célodat.\nMindenesetre a legjobb választás:\n\n$firstName"
+                Glide.with(this).load(R.drawable.nahvocado).into(gifView)
+            }
+            
             return textToBeDisplayed
         }
 
