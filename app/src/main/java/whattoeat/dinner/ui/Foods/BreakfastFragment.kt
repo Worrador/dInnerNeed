@@ -137,7 +137,6 @@ class BreakfastFragment : Fragment() {
                     mainViewModel.clickedPosListBreakfast.remove(position)
                 }
                 else {
-                    mainViewModel.clickedPosListBreakfast.add(position)
                     val clickedCalories = myActivity.BreakfastList[position].calories
                     val clickedProteins = myActivity.BreakfastList[position].proteins
                     Toast.makeText(
@@ -145,6 +144,7 @@ class BreakfastFragment : Fragment() {
                         "Kalória: +$clickedCalories\nFehérje: +$clickedProteins\n",
                         Toast.LENGTH_SHORT
                     ).show()
+                    mainViewModel.clickedPosListBreakfast.add(position)
                 }
             }
         for (pos in mainViewModel.clickedPosListBreakfast)

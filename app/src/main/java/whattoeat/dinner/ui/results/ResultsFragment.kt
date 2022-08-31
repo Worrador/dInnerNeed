@@ -17,6 +17,7 @@ import whattoeat.dinner.ui.MainViewModel
 import kotlin.math.absoluteValue
 import whattoeat.dinner.R
 import com.bumptech.glide.Glide
+import whattoeat.dinner.hideKeyboard
 
 class ResultsFragment : Fragment() {
 
@@ -138,6 +139,7 @@ class ResultsFragment : Fragment() {
 
         resultBtn.setOnClickListener {
             textView.text = getDinner()
+            resultBtn.visibility = View.INVISIBLE
         }
         return root
     }

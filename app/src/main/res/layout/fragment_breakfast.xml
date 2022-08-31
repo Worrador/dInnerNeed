@@ -18,7 +18,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="35dp"
             android:layout_marginBottom="150dp"
-            android:divider="@color/red2"
+            android:divider="@color/dark_blue"
             android:dividerHeight="2dp"
             android:focusableInTouchMode="false"
             android:isScrollContainer="false"
@@ -79,8 +79,9 @@
             android:layout_marginEnd="70dp"
             android:layout_marginBottom="85dp"
             android:backgroundTint="?attr/colorSecondaryVariant"
+            app:backgroundTint="?attr/colorSecondaryVariant"
             app:srcCompat="@drawable/ic_delete"
-            app:tint="@color/black" />
+            app:tint="@color/dark_blue" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/addBtn"
@@ -91,6 +92,8 @@
             android:layout_marginEnd="12dp"
             android:layout_marginBottom="85dp"
             android:backgroundTint="?attr/colorSecondaryVariant"
+            app:backgroundTint="?attr/colorSecondaryVariant"
+            app:tint="@color/dark_blue"
             app:srcCompat="@drawable/ic_add" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -103,8 +106,9 @@
             android:layout_marginBottom="85dp"
             android:backgroundTint="?attr/colorPrimaryVariant"
             android:visibility="invisible"
+            app:backgroundTint="?attr/colorPrimaryVariant"
             app:srcCompat="@drawable/ic_cancel"
-            app:tint="@color/white" />
+            app:tint="@color/dark_blue" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/checkBtn"
@@ -116,8 +120,9 @@
             android:layout_marginBottom="85dp"
             android:backgroundTint="?attr/colorPrimaryVariant"
             android:visibility="invisible"
+            app:backgroundTint="?attr/colorPrimaryVariant"
             app:srcCompat="@drawable/ic_check"
-            app:tint="@color/white" />
+            app:tint="@color/dark_blue" />
 
     </RelativeLayout>
 

@@ -17,7 +17,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="35dp"
             android:layout_marginBottom="150dp"
-            android:divider="@color/red2"
+            android:divider="@color/dark_blue"
             android:dividerHeight="2dp"
             android:focusableInTouchMode="false"
             android:isScrollContainer="false"

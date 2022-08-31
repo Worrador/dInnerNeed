@@ -140,10 +140,19 @@ class SnacksFragment : Fragment() {
         //listView.choiceMode = ListView.CHOICE_MODE_MULTIPLE
         listView.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position, _ ->
-                if (mainViewModel.clickedPosListSnack.contains(position))
+                if (mainViewModel.clickedPosListSnack.contains(position)) {
                     mainViewModel.clickedPosListSnack.remove(position)
-                else
+                }
+                else {
+                    val clickedCalories = myActivity.SnackList[position].calories
+                    val clickedProteins = myActivity.SnackList[position].proteins
+                    Toast.makeText(
+                        getContext(),
+                        "Kalória: +$clickedCalories\nFehérje: +$clickedProteins\n",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     mainViewModel.clickedPosListSnack.add(position)
+                }
             }
 
 
