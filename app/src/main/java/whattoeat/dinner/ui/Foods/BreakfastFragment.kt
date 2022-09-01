@@ -1,4 +1,5 @@
 package whattoeat.dinner.ui.Foods
+import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -111,10 +112,18 @@ class BreakfastFragment : Fragment() {
                         "Helytelen értékek!", Toast.LENGTH_SHORT).show()
                 }
             }else{
-                for (pos in mainViewModel.clickedPosListBreakfast)
-                    myActivity.BreakfastList.remove(listView.getItemAtPosition(pos))
+                var flag: Boolean = false
+                for (pos in mainViewModel.clickedPosListBreakfast){
+                    val foodToDeleteName = listView.getItemAtPosition(pos)
+                    for(food in myActivity.BreakfastList){
+                        if(food.name == foodToDeleteName) {
+                            flag = flag or myActivity.BreakfastList.remove(food)
+                            break
+                        }
+                    }
+                }
 
-                if(!mainViewModel.clickedPosListBreakfast.isEmpty()){
+                if(flag){
                     Toast.makeText(getContext(),
                         "Törölve!", Toast.LENGTH_SHORT).show()
                     mainViewModel.clickedPosListBreakfast.clear()
@@ -132,11 +141,12 @@ class BreakfastFragment : Fragment() {
         generateListView()
         listView.choiceMode = ListView.CHOICE_MODE_MULTIPLE
         listView.onItemClickListener =
-            AdapterView.OnItemClickListener { _, _, position, _ ->
+            AdapterView.OnItemClickListener { _, view, position, _ ->
                 if (mainViewModel.clickedPosListBreakfast.contains(position)) {
                     mainViewModel.clickedPosListBreakfast.remove(position)
                 }
                 else {
+                    view.setBackgroundColor(Color.parseColor("#d1e659"))
                     val clickedCalories = myActivity.BreakfastList[position].calories
                     val clickedProteins = myActivity.BreakfastList[position].proteins
                     Toast.makeText(
