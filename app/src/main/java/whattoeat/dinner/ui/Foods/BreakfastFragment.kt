@@ -1,20 +1,21 @@
 package whattoeat.dinner.ui.Foods
-import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.graphics.alpha
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import whattoeat.dinner.Food
 import whattoeat.dinner.MainActivity
+import whattoeat.dinner.R
 import whattoeat.dinner.databinding.FragmentBreakfastBinding
 import whattoeat.dinner.hideKeyboard
 import whattoeat.dinner.ui.MainViewModel
-import whattoeat.dinner.R as R2
 
 
 class BreakfastFragment : Fragment() {
@@ -22,6 +23,7 @@ class BreakfastFragment : Fragment() {
     private var _binding: FragmentBreakfastBinding? = null
     private val binding get() = _binding!!
     private var isDataAddition: Boolean = false
+    private var isModification: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,6 +62,7 @@ class BreakfastFragment : Fragment() {
             addBtn.visibility = View.VISIBLE
             delBtn.visibility = View.VISIBLE
             root.hideKeyboard()
+            isModification= false
         }
 
         fun setModifyingVisibility(){
@@ -78,7 +81,7 @@ class BreakfastFragment : Fragment() {
         fun generateListView(){
             val listOfItem: ArrayList<String> = mainViewModel.setMultipleListView(myActivity.BreakfastList)
             getContext()?.let {
-                val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(it, R2.layout.list_text_view, listOfItem)
+                val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(it, R.layout.list_text_view, listOfItem)
                 listView.adapter = arrayAdapter
             }
         }
@@ -86,11 +89,13 @@ class BreakfastFragment : Fragment() {
         /* Set object callbacks */
         addBtn.setOnClickListener {
             isDataAddition = true
+            isModification = true
             setModifyingVisibility()
         }
 
         delBtn.setOnClickListener {
             isDataAddition = false
+            isModification = true
             setModifyingVisibility()
             for (pos in mainViewModel.clickedPosListBreakfast)
                 listView.setItemChecked(pos, false)
@@ -144,10 +149,17 @@ class BreakfastFragment : Fragment() {
             AdapterView.OnItemClickListener { _, view, position, _ ->
                 if (mainViewModel.clickedPosListBreakfast.contains(position)) {
                     mainViewModel.clickedPosListBreakfast.remove(position)
+                    val typedValue = TypedValue()
+                    myActivity.theme.resolveAttribute(com.google.android.material.R.attr.colorOnPrimary, typedValue, true)
+                    view.setBackgroundColor(typedValue.data)
                 }
                 else {
-                    if(isDataAddition) {
-                        view.setBackgroundColor(Color.parseColor("#d1e659"))
+                    if(!isModification) {
+
+                        val typedValue = TypedValue()
+                        myActivity.theme.resolveAttribute(com.google.android.material.R.attr.colorPrimaryVariant, typedValue, true)
+                        view.setBackgroundColor(typedValue.data)
+
                         val clickedCalories = myActivity.BreakfastList[position].calories
                         val clickedProteins = myActivity.BreakfastList[position].proteins
                         Toast.makeText(

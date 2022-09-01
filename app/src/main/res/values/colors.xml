@@ -3,12 +3,14 @@
     <color name="red">#dd1324</color>
     <color name="brown">#9e5626</color>
     <color name="green">#d1e659</color>
+    <color name="light_green">#e8f2ac</color>
     <color name="dark_green">#42a543</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#7be7ff</color>
-    <color name="dark_blue">#042054</color>
+    <color name="blue2">#009bbd</color>
+    <color name="dark_blue">#13286e</color>
     <color name="dark_blue_grad">#444a78</color>
-    <color name="dark_blue_grad2">#5e618a</color>
+    <color name="dark_blue_grad2">#5d7ce3</color>
     <color name="grey">#99999999</color>
 </resources>
