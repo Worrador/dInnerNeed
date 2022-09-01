@@ -13,4 +13,5 @@
     <color name="dark_blue_grad">#444a78</color>
     <color name="dark_blue_grad2">#5d7ce3</color>
     <color name="grey">#99999999</color>
+    <color name="darker_grey">#6b6b6b</color>
 </resources>
