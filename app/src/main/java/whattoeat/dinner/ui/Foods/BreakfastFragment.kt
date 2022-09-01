@@ -146,14 +146,16 @@ class BreakfastFragment : Fragment() {
                     mainViewModel.clickedPosListBreakfast.remove(position)
                 }
                 else {
-                    view.setBackgroundColor(Color.parseColor("#d1e659"))
-                    val clickedCalories = myActivity.BreakfastList[position].calories
-                    val clickedProteins = myActivity.BreakfastList[position].proteins
-                    Toast.makeText(
-                        getContext(),
-                        "Kalória: +$clickedCalories\nFehérje: +$clickedProteins\n",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    if(isDataAddition) {
+                        view.setBackgroundColor(Color.parseColor("#d1e659"))
+                        val clickedCalories = myActivity.BreakfastList[position].calories
+                        val clickedProteins = myActivity.BreakfastList[position].proteins
+                        Toast.makeText(
+                            getContext(),
+                            "Kalória: +$clickedCalories\nFehérje: +$clickedProteins\n",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                     mainViewModel.clickedPosListBreakfast.add(position)
                 }
             }

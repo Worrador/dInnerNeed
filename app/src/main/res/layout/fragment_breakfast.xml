@@ -18,7 +18,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="35dp"
             android:layout_marginBottom="150dp"
-            android:divider="@color/dark_blue"
+            android:divider="?attr/colorSecondaryVariant"
             android:dividerHeight="2dp"
             android:focusableInTouchMode="false"
             android:isScrollContainer="false"
@@ -104,11 +104,11 @@
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="70dp"
             android:layout_marginBottom="85dp"
-            android:backgroundTint="?attr/colorPrimaryVariant"
+            android:backgroundTint="@color/dark_blue_grad"
             android:visibility="invisible"
-            app:backgroundTint="?attr/colorPrimaryVariant"
+            app:backgroundTint="@color/dark_blue_grad"
             app:srcCompat="@drawable/ic_cancel"
-            app:tint="@color/dark_blue" />
+            app:tint="@color/blue" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/checkBtn"
@@ -118,11 +118,11 @@
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="12dp"
             android:layout_marginBottom="85dp"
-            android:backgroundTint="?attr/colorPrimaryVariant"
+            android:backgroundTint="@color/dark_blue_grad"
             android:visibility="invisible"
-            app:backgroundTint="?attr/colorPrimaryVariant"
+            app:backgroundTint="@color/dark_blue_grad"
             app:srcCompat="@drawable/ic_check"
-            app:tint="@color/dark_blue" />
+            app:tint="@color/blue" />
 
     </RelativeLayout>
 
