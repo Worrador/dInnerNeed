@@ -171,10 +171,14 @@ class BreakfastFragment : Fragment() {
                     mainViewModel.clickedPosListBreakfast.add(position)
                 }
             }
-        for (pos in mainViewModel.clickedPosListBreakfast)
+        for (pos in mainViewModel.clickedPosListBreakfast) {
             listView.setItemChecked(pos, true)
+            val typedValue = TypedValue()
+            myActivity.theme.resolveAttribute(com.google.android.material.R.attr.colorOnPrimary, typedValue, true)
+            listView.getChildAt(pos).setBackgroundColor(typedValue.data)
+        }
 
-        return root
+        return root 
     }
 
     override fun onDestroyView() {
