@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.graphics.alpha
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -51,12 +50,12 @@ class BreakfastFragment : Fragment() {
 
         /* Local functions */
         fun setDefaultVisibility(){
-            nameText.setVisibility(View.INVISIBLE)
-            nameText.setText("")
-            caloriesText.setVisibility(View.INVISIBLE)
-            caloriesText.setText("")
-            proteinsText.setVisibility(View.INVISIBLE)
-            proteinsText.setText("")
+            nameText.visibility = View.INVISIBLE
+            nameText.text = ""
+            caloriesText.visibility = View.INVISIBLE
+            caloriesText.text = ""
+            proteinsText.visibility = View.INVISIBLE
+            proteinsText.text = ""
             checkBtn.visibility = View.INVISIBLE
             cancelBtn.visibility = View.INVISIBLE
             addBtn.visibility = View.VISIBLE
@@ -67,9 +66,9 @@ class BreakfastFragment : Fragment() {
 
         fun setModifyingVisibility(){
             if(isDataAddition){
-                nameText.setVisibility(View.VISIBLE)
-                caloriesText.setVisibility(View.VISIBLE)
-                proteinsText.setVisibility(View.VISIBLE)
+                nameText.visibility = View.VISIBLE
+                caloriesText.visibility = View.VISIBLE
+                proteinsText.visibility = View.VISIBLE
             }
 
             addBtn.visibility = View.INVISIBLE
@@ -80,7 +79,7 @@ class BreakfastFragment : Fragment() {
 
         fun generateListView(){
             val listOfItem: ArrayList<String> = mainViewModel.setMultipleListView(myActivity.BreakfastList)
-            getContext()?.let {
+            context?.let {
                 val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(it, R.layout.list_text_view, listOfItem)
                 listView.adapter = arrayAdapter
             }
@@ -104,20 +103,22 @@ class BreakfastFragment : Fragment() {
 
         checkBtn.setOnClickListener {
             if(isDataAddition){
-                val isGoodInputs = TextUtils.isDigitsOnly(caloriesText.getText()) && TextUtils.isDigitsOnly(proteinsText.getText()) &&
-                        !TextUtils.isEmpty(nameText.getText()) && !TextUtils.isEmpty(caloriesText.getText()) && !TextUtils.isEmpty(proteinsText.getText())
+                val isGoodInputs = TextUtils.isDigitsOnly(caloriesText.text) && TextUtils.isDigitsOnly(proteinsText.text) &&
+                        !TextUtils.isEmpty(nameText.text) && !TextUtils.isEmpty(caloriesText.text) && !TextUtils.isEmpty(proteinsText.text)
                 if(isGoodInputs){
-                    Toast.makeText(getContext(),
+                    Toast.makeText(
+                        context,
                         "Hozzáadva!", Toast.LENGTH_SHORT).show()
                     myActivity.BreakfastList.add(Food(nameText.text.toString(), caloriesText.text.toString().toInt(), proteinsText.text.toString().toInt()))
                     setDefaultVisibility()
                     generateListView()
                 }else{
-                    Toast.makeText(getContext(),
+                    Toast.makeText(
+                        context,
                         "Helytelen értékek!", Toast.LENGTH_SHORT).show()
                 }
             }else{
-                var flag: Boolean = false
+                var flag = false
                 for (pos in mainViewModel.clickedPosListBreakfast){
                     val foodToDeleteName = listView.getItemAtPosition(pos)
                     for(food in myActivity.BreakfastList){
@@ -129,7 +130,8 @@ class BreakfastFragment : Fragment() {
                 }
 
                 if(flag){
-                    Toast.makeText(getContext(),
+                    Toast.makeText(
+                        context,
                         "Törölve!", Toast.LENGTH_SHORT).show()
                     mainViewModel.clickedPosListBreakfast.clear()
                     generateListView()
@@ -149,21 +151,13 @@ class BreakfastFragment : Fragment() {
             AdapterView.OnItemClickListener { _, view, position, _ ->
                 if (mainViewModel.clickedPosListBreakfast.contains(position)) {
                     mainViewModel.clickedPosListBreakfast.remove(position)
-                    val typedValue = TypedValue()
-                    myActivity.theme.resolveAttribute(com.google.android.material.R.attr.colorOnPrimary, typedValue, true)
-                    view.setBackgroundColor(typedValue.data)
                 }
                 else {
                     if(!isModification) {
-
-                        val typedValue = TypedValue()
-                        myActivity.theme.resolveAttribute(com.google.android.material.R.attr.colorPrimaryVariant, typedValue, true)
-                        view.setBackgroundColor(typedValue.data)
-
                         val clickedCalories = myActivity.BreakfastList[position].calories
                         val clickedProteins = myActivity.BreakfastList[position].proteins
                         Toast.makeText(
-                            getContext(),
+                            context,
                             "Kalória: +$clickedCalories\nFehérje: +$clickedProteins\n",
                             Toast.LENGTH_SHORT
                         ).show()
@@ -173,9 +167,6 @@ class BreakfastFragment : Fragment() {
             }
         for (pos in mainViewModel.clickedPosListBreakfast) {
             listView.setItemChecked(pos, true)
-            val typedValue = TypedValue()
-            myActivity.theme.resolveAttribute(com.google.android.material.R.attr.colorOnPrimary, typedValue, true)
-            listView.getChildAt(pos).setBackgroundColor(typedValue.data)
         }
 
         return root 

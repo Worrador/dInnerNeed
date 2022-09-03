@@ -23,6 +23,7 @@
             android:focusableInTouchMode="false"
             android:isScrollContainer="false"
             android:textSize="20sp"
+            android:drawSelectorOnTop="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -78,8 +79,8 @@
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="70dp"
             android:layout_marginBottom="85dp"
-            android:backgroundTint="?attr/colorSecondaryVariant"
-            app:backgroundTint="?attr/colorSecondaryVariant"
+            android:backgroundTint="@color/dark_green"
+            app:backgroundTint="@color/dark_green"
             app:srcCompat="@drawable/ic_delete"
             app:tint="?attr/colorOnPrimary" />
 
@@ -91,8 +92,8 @@
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="12dp"
             android:layout_marginBottom="85dp"
-            android:backgroundTint="?attr/colorSecondaryVariant"
-            app:backgroundTint="?attr/colorSecondaryVariant"
+            android:backgroundTint="@color/dark_green"
+            app:backgroundTint="@color/dark_green"
             app:tint="?attr/colorOnPrimary"
             app:srcCompat="@drawable/ic_add" />
 
