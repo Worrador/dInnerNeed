@@ -9,4 +9,6 @@
     <string name="inputFoodCalories_title">Kalória</string>
     <string name="inputFoodProtein_title">Fehérje</string>
     <string name="result_title">Mutasd mit hamizzak!</string>
+    <string name="calories_counter_title">cal:</string>
+    <string name="proteins_counter_title">pro:</string>
 </resources>

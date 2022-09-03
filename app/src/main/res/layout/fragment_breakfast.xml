@@ -18,12 +18,11 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="35dp"
             android:layout_marginBottom="150dp"
-            android:divider="?attr/colorSecondaryVariant"
+            android:divider="?attr/colorSecondary"
             android:dividerHeight="2dp"
             android:focusableInTouchMode="false"
             android:isScrollContainer="false"
             android:textSize="20sp"
-            android:drawSelectorOnTop="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.WhatToEat" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/dark_blue_grad</item>
+        <item name="colorPrimaryVariant">@color/brown</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/brown</item> <!-- List view selected text color -->mm
+        <item name="colorSecondaryVariant">@color/dark_green_yellow
+        </item> <!-- List view selected background and divider color -->
+        <item name="colorOnSecondary">@color/black
+        </item> <!-- List view selected background and divider -->
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/dark_blue</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <!-- Customize your theme here. -->
+        <item name="android:listChoiceBackgroundIndicator">@drawable/list_view_background_selector_night</item>
+        <item name="android:colorBackground">@color/black</item>
+    </style>
+</resources>

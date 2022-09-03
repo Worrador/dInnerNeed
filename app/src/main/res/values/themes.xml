@@ -1,13 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.WhatToEat" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.WhatToEat" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/blue</item>
         <item name="colorPrimaryVariant">@color/light_brown</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/brown</item> <!-- List view selected text color -->
-        <item name="colorSecondaryVariant">@color/brown</item> <!-- List view selected background and divider color -->
+        <item name="colorSecondaryVariant">@color/green_yellow</item> <!-- List view selected background and divider color -->
         <item name="colorOnSecondary">@color/black</item> <!-- List view selected background and divider -->
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/blue2</item>

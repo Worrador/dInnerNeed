@@ -7,6 +7,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -20,7 +21,6 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import whattoeat.dinner.databinding.ActivityMainBinding
 import whattoeat.dinner.ui.MainViewModel
-import com.google.gson.GsonBuilder;
 import java.lang.reflect.Type
 
 
@@ -41,6 +41,12 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // assigning ID of the toolbar to a variable
+        val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
+
+        // using toolbar as ActionBar
+        setSupportActionBar(toolbar)
 
         mainViewModel =
             ViewModelProvider(this).get(MainViewModel::class.java)
