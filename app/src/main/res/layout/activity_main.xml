@@ -51,6 +51,8 @@
             android:background="@color/blue2"
             android:minHeight="?attr/actionBarSize"
             android:orientation="horizontal"
+            android:clickable="true"
+            android:focusable="true"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
 
             <TextView
@@ -68,7 +70,6 @@
                 android:id="@+id/goalImage"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_alignParentEnd="true"
                 android:background="@null"
                 android:src="@mipmap/goal_night"
                 app:layout_constraintStart_toEndOf="@+id/goalText" />
@@ -79,7 +80,8 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="50dp"
-            android:layout_gravity="left"
+            android:clickable="true"
+            android:focusable="true"
             android:background="@color/blue2"
             android:minHeight="?attr/actionBarSize"
             android:gravity="center"
@@ -101,7 +103,6 @@
                 android:id="@+id/calendarImage"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_alignParentEnd="true"
                 android:background="@null"
                 android:src="@mipmap/calendar_night"
                 app:layout_constraintStart_toEndOf="@+id/calendarText" />

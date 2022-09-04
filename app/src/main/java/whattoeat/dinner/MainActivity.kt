@@ -61,6 +61,14 @@ class MainActivity : AppCompatActivity() {
         // assigning ID of the toolbar to a variable
         val toolbar = findViewById<View>(R2.id.toolbar) as Toolbar
 
+        val goalMenu: LinearLayout = binding.linLayoutInner1
+
+        val historymenu: LinearLayout = binding.linLayoutInner1
+
+        goalMenu.setOnClickListener{
+            goalMenu.visibility = View.INVISIBLE
+        }
+
         // using toolbar as ActionBar
         setSupportActionBar(toolbar)
         val imageView: ImageButton = binding.avocadoIconMenu
