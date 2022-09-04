@@ -8,11 +8,9 @@ import android.graphics.LightingColorFilter
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -23,7 +21,6 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -33,8 +30,10 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import whattoeat.dinner.databinding.ActivityMainBinding
 import whattoeat.dinner.ui.MainViewModel
-import java.lang.Thread.sleep
+import whattoeat.dinner.ui.results.DatePicker
 import java.lang.reflect.Type
+import java.text.DateFormat
+import java.util.*
 import whattoeat.dinner.R as R2
 
 
@@ -64,9 +63,10 @@ class MainActivity : AppCompatActivity() {
         val goalMenu: LinearLayout = binding.linLayoutInner1
 
         val historymenu: LinearLayout = binding.linLayoutInner1
+        val dialogFragment = DialogFragment()
 
         goalMenu.setOnClickListener{
-            goalMenu.visibility = View.INVISIBLE
+            dialogFragment.show(supportFragmentManager, "My  Fragment")
         }
 
         // using toolbar as ActionBar
