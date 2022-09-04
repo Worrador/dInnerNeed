@@ -36,12 +36,86 @@
     <LinearLayout
         android:id="@+id/linLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="47dp"
         android:minHeight="?attr/actionBarSize"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-        android:visibility="invisible"
-        android:background="?attr/colorSecondary"
-        android:orientation="horizontal" />
+        android:background="?attr/colorOnPrimary"
+        android:weightSum="2"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/linLayoutInner1"
+            android:layout_width="0dp"
+            android:layout_weight="0.995"
+            android:layout_height="47dp"
+            android:gravity="center"
+            android:background="?attr/colorOnPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+
+            <TextView
+                android:id="@+id/goalText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text=" Cél beállítása "
+                android:textSize="20sp"
+                android:gravity="center"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/goalImage"
+                android:layout_width="47dp"
+                android:layout_height="47dp"
+                android:layout_alignParentEnd="true"
+                android:background="@null"
+                android:src="@mipmap/goals"
+                app:layout_constraintStart_toEndOf="@+id/goalText" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="?attr/colorOnSecondary"
+            android:layout_weight="0.01"
+            />
+
+        <LinearLayout
+            android:id="@+id/linLayoutInner2"
+            android:layout_width="0dp"
+            android:layout_weight="0.995"
+            android:layout_height="47dp"
+            android:layout_gravity="left"
+            android:background="?attr/colorOnPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+
+            <TextView
+                android:id="@+id/calendarText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text=" Történet "
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/calendarImage"
+                android:layout_width="47dp"
+                android:layout_height="47dp"
+                android:layout_alignParentEnd="true"
+                android:background="@null"
+                android:src="@drawable/calendar"
+                app:layout_constraintStart_toEndOf="@+id/calendarText" />
+        </LinearLayout>
+
+    </LinearLayout>
 
     <!-- AppBar layout for using Toolbar as AppBar -->
     <com.google.android.material.appbar.AppBarLayout
