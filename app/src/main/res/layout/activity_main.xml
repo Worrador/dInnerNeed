@@ -42,8 +42,10 @@
         <LinearLayout
             android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorSecondary" />
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            android:background="?attr/colorSecondary"
+            android:orientation="horizontal" />
 
         <!-- AppBar layout for using Toolbar as AppBar -->
         <com.google.android.material.appbar.AppBarLayout
