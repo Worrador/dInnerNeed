@@ -1,7 +1,6 @@
 package whattoeat.dinner.ui.Foods
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +22,9 @@ class BreakfastFragment : Fragment() {
     private val binding get() = _binding!!
     private var isDataAddition: Boolean = false
     private var isModification: Boolean = false
+
+    private var addedCalories = 0
+    private var addedProteins = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -153,16 +155,12 @@ class BreakfastFragment : Fragment() {
                     mainViewModel.clickedPosListBreakfast.remove(position)
                 }
                 else {
-                    if(!isModification) {
-                        val clickedCalories = myActivity.BreakfastList[position].calories
-                        val clickedProteins = myActivity.BreakfastList[position].proteins
-                        Toast.makeText(
-                            context,
-                            "Kalória: +$clickedCalories\nFehérje: +$clickedProteins\n",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
                     mainViewModel.clickedPosListBreakfast.add(position)
+                }
+                
+                if(!isModification) {
+                    calculateAddedMacros()
+                    myActivity.setMacros(addedCalories, addedProteins)
                 }
             }
         for (pos in mainViewModel.clickedPosListBreakfast) {
@@ -170,6 +168,23 @@ class BreakfastFragment : Fragment() {
         }
 
         return root 
+    }
+
+    fun calculateAddedMacros(){
+        /* Set objects */
+        val myActivity = (activity as MainActivity?)!!
+
+        val mainViewModel = activity?.run {
+            ViewModelProvider(this)[MainViewModel::class.java]
+        } ?: throw Exception("Invalid Activity")
+
+        addedCalories = 0
+        addedProteins = 0
+
+        for (pos in mainViewModel.clickedPosListBreakfast){
+            addedCalories += myActivity.BreakfastList[pos].calories
+            addedProteins += myActivity.BreakfastList[pos].proteins
+        }
     }
 
     override fun onDestroyView() {

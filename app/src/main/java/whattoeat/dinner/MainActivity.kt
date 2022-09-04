@@ -1,10 +1,15 @@
 package whattoeat.dinner
 
 import android.content.Context
+import android.content.res.Configuration
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import android.graphics.LightingColorFilter
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -33,6 +38,7 @@ class MainActivity : AppCompatActivity() {
     var LunchList: MutableList<Food> = mutableListOf<Food>()
     var SnackList: MutableList<Food> = mutableListOf<Food>()
 
+    @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         getLists()
@@ -47,6 +53,13 @@ class MainActivity : AppCompatActivity() {
 
         // using toolbar as ActionBar
         setSupportActionBar(toolbar)
+        val imageView: ImageView = binding.avocadoIcon
+
+        if(resources.configuration.uiMode and
+                Configuration.UI_MODE_NIGHT_MASK == UI_MODE_NIGHT_YES){
+            val lcf = LightingColorFilter(0xFF808080.toInt(), 0x00000000)
+            imageView.colorFilter = lcf
+        }
 
         mainViewModel =
             ViewModelProvider(this).get(MainViewModel::class.java)
@@ -77,6 +90,13 @@ class MainActivity : AppCompatActivity() {
             // appear for some time
             controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
+    }
+
+    fun setMacros(calories: Int, proteins: Int){
+        val calTextView: TextView = binding.textViewCaloriesCounter
+        val proTextView: TextView = binding.textViewProteinsCounter
+        calTextView.text = "cal: $calories"
+        proTextView.text = "pro: $proteins"
     }
 
     fun getLists(){
