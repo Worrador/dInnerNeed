@@ -14,7 +14,7 @@
         <entry key="..\:/Suli/GitHub/KotlinProjects/WhatToEatAndroid/app/src/main/res/drawable/launcher_avoado_background.xml" value="0.317" />
         <entry key="..\:/Suli/GitHub/KotlinProjects/WhatToEatAndroid/app/src/main/res/drawable/list_view_background_selector.xml" value="0.183" />
         <entry key="..\:/Suli/GitHub/KotlinProjects/WhatToEatAndroid/app/src/main/res/drawable/list_view_background_selector_night.xml" value="0.3315" />
-        <entry key="..\:/Suli/GitHub/KotlinProjects/WhatToEatAndroid/app/src/main/res/layout/activity_main.xml" value="0.5" />
+        <entry key="..\:/Suli/GitHub/KotlinProjects/WhatToEatAndroid/app/src/main/res/layout/activity_main.xml" value="0.5013901760889713" />
         <entry key="..\:/Suli/GitHub/KotlinProjects/WhatToEatAndroid/app/src/main/res/layout/fragment_breakfast.xml" value="0.2578024796921761" />
         <entry key="..\:/Suli/GitHub/KotlinProjects/WhatToEatAndroid/app/src/main/res/layout/fragment_dashboard.xml" value="0.25" />
         <entry key="..\:/Suli/GitHub/KotlinProjects/WhatToEatAndroid/app/src/main/res/layout/fragment_home.xml" value="0.2" />
@@ -30,6 +30,7 @@
         <entry key="..\:/Suli/GitHub/KotlinProjects/WhatToEatAndroid/app/src/main/res/menu/list_view_selector.xml" value="0.4548952543822146" />
         <entry key="..\:/Suli/GitHub/KotlinProjects/WhatToEatAndroid/app/src/main/res/mipmap-anydpi-v26/cute_breakfast.xml" value="0.1795" />
         <entry key="..\:/Suli/GitHub/KotlinProjects/WhatToEatAndroid/app/src/main/res/mipmap-anydpi-v26/cute_breakfast_round.xml" value="0.1795" />
+        <entry key="..\:/Suli/GitHub/KotlinProjects/WhatToEatAndroid/app/src/main/res/xml/slide_down.xml" value="0.4510474561778538" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.35052083333333334" />
         <entry key="app/src/main/res/layout/fragment_breakfast.xml" value="0.35520833333333335" />
         <entry key="app/src/main/res/layout/fragment_lunch.xml" value="0.35052083333333334" />

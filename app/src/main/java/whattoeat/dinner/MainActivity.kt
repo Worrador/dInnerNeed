@@ -1,5 +1,6 @@
 package whattoeat.dinner
 
+import android.R
 import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
@@ -7,8 +8,11 @@ import android.graphics.LightingColorFilter
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +21,9 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
@@ -27,6 +33,7 @@ import com.google.gson.reflect.TypeToken
 import whattoeat.dinner.databinding.ActivityMainBinding
 import whattoeat.dinner.ui.MainViewModel
 import java.lang.reflect.Type
+import whattoeat.dinner.R as R2
 
 
 class MainActivity : AppCompatActivity() {
@@ -37,6 +44,7 @@ class MainActivity : AppCompatActivity() {
     var BreakfastList: MutableList<Food> = mutableListOf<Food>()
     var LunchList: MutableList<Food> = mutableListOf<Food>()
     var SnackList: MutableList<Food> = mutableListOf<Food>()
+    var isMenuVisible = false
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,11 +57,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // assigning ID of the toolbar to a variable
-        val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
+        val toolbar = findViewById<View>(R2.id.toolbar) as Toolbar
 
         // using toolbar as ActionBar
         setSupportActionBar(toolbar)
-        val imageView: ImageView = binding.avocadoIcon
+        val imageView: ImageButton = binding.avocadoIconMenu
 
         if(resources.configuration.uiMode and
                 Configuration.UI_MODE_NIGHT_MASK == UI_MODE_NIGHT_YES){
@@ -66,16 +74,42 @@ class MainActivity : AppCompatActivity() {
 
         val navView: BottomNavigationView = binding.navView
 
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R2.id.nav_host_fragment_activity_main) as NavHostFragment
+        val navController: NavController = navHostFragment.navController
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_breakfast, R.id.navigation_lunch, R.id.navigation_snacks, R.id.navigation_results
+                R2.id.navigation_breakfast, R2.id.navigation_lunch, R2.id.navigation_snacks, R2.id.navigation_results
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+    }
+
+    fun toggleMenu(view: View) {
+
+        val menu: LinearLayout = binding.linLayout
+
+        //Load animation
+        val slide_down = AnimationUtils.loadAnimation(
+            applicationContext,
+            R2.anim.slide_down
+        )
+
+        val slide_up = AnimationUtils.loadAnimation(
+            applicationContext,
+            R2.anim.slide_up
+        )
+
+        if(isMenuVisible){
+            menu.startAnimation(slide_up)
+        }else{
+            menu.startAnimation(slide_down)
+        }
+        isMenuVisible = isMenuVisible.not()
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
