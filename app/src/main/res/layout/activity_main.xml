@@ -36,7 +36,7 @@
     <LinearLayout
         android:id="@+id/linLayout"
         android:layout_width="match_parent"
-        android:layout_height="47dp"
+        android:layout_height="50dp"
         android:minHeight="?attr/actionBarSize"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
         android:weightSum="2"
@@ -46,7 +46,7 @@
             android:id="@+id/linLayoutInner1"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="47dp"
+            android:layout_height="50dp"
             android:gravity="center"
             android:background="@color/blue2"
             android:minHeight="?attr/actionBarSize"
@@ -58,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text=" Cél beállítása "
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:gravity="center"
                 android:textColor="?attr/colorOnPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -66,8 +66,8 @@
 
             <ImageButton
                 android:id="@+id/goalImage"
-                android:layout_width="47dp"
-                android:layout_height="47dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_alignParentEnd="true"
                 android:background="@null"
                 android:src="@mipmap/goal_night"
@@ -78,7 +78,7 @@
             android:id="@+id/linLayoutInner2"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="47dp"
+            android:layout_height="50dp"
             android:layout_gravity="left"
             android:background="@color/blue2"
             android:minHeight="?attr/actionBarSize"
@@ -90,20 +90,20 @@
                 android:id="@+id/calendarText"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text=" Történet "
+                android:text=" Visszatekintés "
                 android:textColor="?attr/colorOnPrimary"
                 android:gravity="center"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/calendarImage"
-                android:layout_width="47dp"
-                android:layout_height="47dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_alignParentEnd="true"
                 android:background="@null"
-                android:src="@mipmap/calendar_day"
+                android:src="@mipmap/calendar_night"
                 app:layout_constraintStart_toEndOf="@+id/calendarText" />
         </LinearLayout>
 
@@ -112,7 +112,7 @@
     <LinearLayout
         android:id="@+id/linLayoutDivider"
         android:layout_width="2dp"
-        android:layout_height="48dp"
+        android:layout_height="50dp"
         android:background="?attr/colorOnPrimary"
         android:minHeight="?attr/actionBarSize"
         android:visibility="invisible"
