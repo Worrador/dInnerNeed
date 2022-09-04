@@ -2,7 +2,7 @@
 <resources>
     <color name="red">#dd1324</color>
     <color name="brown">#9e5626</color>
-    <color name="dark_brown">#271509</color>
+    <color name="dark_brown">#231308</color>
     <color name="green_yellow">#d1e659</color>
     <color name="dark_green_yellow">#215221</color>
     <color name="light_green">#e8f2ac</color>
@@ -16,6 +16,6 @@
     <color name="dark_blue_grad2">#5d7ce3</color>
     <color name="grey">#99999999</color>
     <color name="darker_grey">#6b6b6b</color>
-    <color name="light_brown">#fcf6f2</color>
+    <color name="light_brown">#f3daca</color>
     <color name="green_blue_dark">#22a07e</color>
 </resources>
