@@ -32,6 +32,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import whattoeat.dinner.databinding.ActivityMainBinding
 import whattoeat.dinner.ui.MainViewModel
+import java.lang.Thread.sleep
 import java.lang.reflect.Type
 import whattoeat.dinner.R as R2
 
@@ -93,6 +94,8 @@ class MainActivity : AppCompatActivity() {
 
         val menu: LinearLayout = binding.linLayout
 
+        val divider: LinearLayout = binding.linLayoutDivider
+
         //Load animation
         val slide_down = AnimationUtils.loadAnimation(
             applicationContext,
@@ -111,6 +114,28 @@ class MainActivity : AppCompatActivity() {
             menu.startAnimation(slide_down)
             menu.visibility = View.VISIBLE
         }
+
+
+        //Load animation
+        val slide_down_divider = AnimationUtils.loadAnimation(
+            applicationContext,
+            R2.anim.slide_down_divider
+        )
+
+        val slide_up_divider = AnimationUtils.loadAnimation(
+            applicationContext,
+            R2.anim.slide_up_divider
+        )
+
+
+        if(isMenuVisible){
+            divider.startAnimation(slide_up_divider)
+            divider.visibility = View.INVISIBLE
+        }else{
+            divider.startAnimation(slide_down_divider)
+            divider.visibility = View.VISIBLE
+        }
+
         isMenuVisible = isMenuVisible.not()
     }
 
