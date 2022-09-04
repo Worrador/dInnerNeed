@@ -48,7 +48,7 @@
             android:layout_weight="1"
             android:layout_height="47dp"
             android:gravity="center"
-            android:background="@color/light_blue"
+            android:background="@color/blue2"
             android:minHeight="?attr/actionBarSize"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
@@ -60,7 +60,7 @@
                 android:text=" Cél beállítása "
                 android:textSize="20sp"
                 android:gravity="center"
-                android:textColor="?attr/colorOnSecondary"
+                android:textColor="?attr/colorOnPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -70,7 +70,7 @@
                 android:layout_height="47dp"
                 android:layout_alignParentEnd="true"
                 android:background="@null"
-                android:src="@mipmap/goal_day"
+                android:src="@mipmap/goal_night"
                 app:layout_constraintStart_toEndOf="@+id/goalText" />
         </LinearLayout>
 
@@ -80,7 +80,7 @@
             android:layout_weight="1"
             android:layout_height="47dp"
             android:layout_gravity="left"
-            android:background="@color/light_blue"
+            android:background="@color/blue2"
             android:minHeight="?attr/actionBarSize"
             android:gravity="center"
             android:orientation="horizontal"
@@ -91,7 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text=" Történet "
-                android:textColor="?attr/colorOnSecondary"
+                android:textColor="?attr/colorOnPrimary"
                 android:gravity="center"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -113,7 +113,7 @@
         android:id="@+id/linLayoutDivider"
         android:layout_width="2dp"
         android:layout_height="48dp"
-        android:background="?attr/colorSecondary"
+        android:background="?attr/colorOnPrimary"
         android:minHeight="?attr/actionBarSize"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/linLayout"
