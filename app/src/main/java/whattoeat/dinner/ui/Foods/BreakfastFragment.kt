@@ -63,6 +63,7 @@ class BreakfastFragment : Fragment() {
             addBtn.visibility = View.VISIBLE
             delBtn.visibility = View.VISIBLE
             root.hideKeyboard()
+            calculateAddedMacros()
             isModification= false
         }
 
@@ -72,7 +73,7 @@ class BreakfastFragment : Fragment() {
                 caloriesText.visibility = View.VISIBLE
                 proteinsText.visibility = View.VISIBLE
             }
-
+            calculateAddedMacros()
             addBtn.visibility = View.INVISIBLE
             delBtn.visibility = View.INVISIBLE
             checkBtn.visibility = View.VISIBLE
@@ -97,10 +98,10 @@ class BreakfastFragment : Fragment() {
         delBtn.setOnClickListener {
             isDataAddition = false
             isModification = true
-            setModifyingVisibility()
             for (pos in mainViewModel.clickedPosListBreakfast)
                 listView.setItemChecked(pos, false)
             mainViewModel.clickedPosListBreakfast.clear()
+            setModifyingVisibility()
         }
 
         checkBtn.setOnClickListener {
@@ -143,6 +144,11 @@ class BreakfastFragment : Fragment() {
         }
 
         cancelBtn.setOnClickListener {
+            if(isDataAddition.not()) {
+                for (pos in mainViewModel.clickedPosListBreakfast)
+                    listView.setItemChecked(pos, false)
+                mainViewModel.clickedPosListBreakfast.clear()
+            }
             setDefaultVisibility()
         }
 
@@ -157,10 +163,9 @@ class BreakfastFragment : Fragment() {
                 else {
                     mainViewModel.clickedPosListBreakfast.add(position)
                 }
-                
+
                 if(!isModification) {
                     calculateAddedMacros()
-                    myActivity.setMacros(addedCalories, addedProteins)
                 }
             }
         for (pos in mainViewModel.clickedPosListBreakfast) {
@@ -170,7 +175,7 @@ class BreakfastFragment : Fragment() {
         return root 
     }
 
-    fun calculateAddedMacros(){
+    private fun calculateAddedMacros(){
         /* Set objects */
         val myActivity = (activity as MainActivity?)!!
 
@@ -185,6 +190,7 @@ class BreakfastFragment : Fragment() {
             addedCalories += myActivity.BreakfastList[pos].calories
             addedProteins += myActivity.BreakfastList[pos].proteins
         }
+        myActivity.setMacros(addedCalories, addedProteins)
     }
 
     override fun onDestroyView() {

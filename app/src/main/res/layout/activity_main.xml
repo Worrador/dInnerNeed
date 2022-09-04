@@ -38,6 +38,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+        android:visibility="invisible"
         android:background="?attr/colorSecondary"
         android:orientation="horizontal" />
 

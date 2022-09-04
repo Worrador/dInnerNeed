@@ -106,8 +106,10 @@ class MainActivity : AppCompatActivity() {
 
         if(isMenuVisible){
             menu.startAnimation(slide_up)
+            menu.visibility = View.INVISIBLE
         }else{
             menu.startAnimation(slide_down)
+            menu.visibility = View.VISIBLE
         }
         isMenuVisible = isMenuVisible.not()
     }
