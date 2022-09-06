@@ -67,12 +67,12 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/goalImage"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@null"
-                android:src="@mipmap/goal_night"
+                android:src="@mipmap/goals_night"
                 app:layout_constraintStart_toEndOf="@+id/goalText" />
         </LinearLayout>
 
@@ -105,7 +105,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@null"
-                android:src="@mipmap/calendar_night"
+                android:src="@mipmap/calendar_night_smaller"
                 app:layout_constraintStart_toEndOf="@+id/calendarText" />
         </LinearLayout>
 

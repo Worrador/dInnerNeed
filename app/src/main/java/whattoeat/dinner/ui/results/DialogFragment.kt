@@ -1,13 +1,11 @@
 package whattoeat.dinner.ui.results
 
-import android.app.DatePickerDialog
-import android.app.DatePickerDialog.OnDateSetListener
-import android.app.Dialog
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.Nullable
+import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import java.util.*
 import whattoeat.dinner.R as R2
@@ -23,3 +21,4 @@ class DialogFragment : DialogFragment() {
         return inflater.inflate(R2.layout.dialog_fragment, container, false)
     }
 }
+
