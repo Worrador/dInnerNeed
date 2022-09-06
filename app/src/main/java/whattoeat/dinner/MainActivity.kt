@@ -1,7 +1,6 @@
 package whattoeat.dinner
 
 import android.R
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
@@ -11,12 +10,10 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
-import android.widget.ImageButton
-import android.widget.LinearLayout
-import android.widget.PopupWindow
-import android.widget.TextView
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -30,6 +27,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import whattoeat.dinner.databinding.ActivityMainBinding
@@ -37,6 +35,7 @@ import whattoeat.dinner.ui.MainViewModel
 import java.lang.reflect.Type
 import java.util.*
 import whattoeat.dinner.R as R2
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -47,35 +46,6 @@ class MainActivity : AppCompatActivity() {
     var LunchList: MutableList<Food> = mutableListOf<Food>()
     var SnackList: MutableList<Food> = mutableListOf<Food>()
     var isMenuVisible = false
-
-
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-        if (hasFocus) {
-            hideSystemUI()
-        } else {
-            // When PopupMenu appears, the current Activity looses the focus
-            setFlagsOnThePeekView() // Hijack to the current peek view, apply the Flags on it
-        }
-    }
-
-    @SuppressLint("PrivateApi", "DiscouragedPrivateApi")
-    fun setFlagsOnThePeekView() {
-        try {
-            val wmgClass = Class.forName("android.view.WindowManagerGlobal")
-            val wmgInstance = wmgClass.getMethod("getInstance").invoke(null)
-            val viewsField = wmgClass.getDeclaredField("mViews")
-            viewsField.isAccessible = true
-
-            val views = viewsField.get(wmgInstance) as ArrayList<View>
-            // When the popup appears, its decorView is the peek of the stack aka last item
-            views.last().apply {
-                hideSystemUI()
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,12 +59,20 @@ class MainActivity : AppCompatActivity() {
 
         // assigning ID of the toolbar to a variable
         val toolbar = findViewById<View>(R2.id.toolbar) as Toolbar
-
         val goalMenu: LinearLayout = binding.linLayoutInner1
-
         val historymenu: LinearLayout = binding.linLayoutInner2
 
-        goalMenu.setOnClickListener(){
+        fun PopupWindow.dimBehind() {
+            val container = contentView.rootView
+            val context = contentView.context
+            val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+            val p = container.layoutParams as WindowManager.LayoutParams
+            p.flags = p.flags or WindowManager.LayoutParams.FLAG_DIM_BEHIND
+            p.dimAmount = 0.3f
+            wm.updateViewLayout(container, p)
+        }
+
+        goalMenu.setOnClickListener{
             // inflate the layout of the popup window
             val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val popupView: View = inflater.inflate(R2.layout.dialog_fragment, null)
@@ -105,10 +83,27 @@ class MainActivity : AppCompatActivity() {
             val focusable = true // lets taps outside the popup also dismiss it
 
             val popupWindow = PopupWindow(popupView, width, height, focusable)
+            popupWindow.isOutsideTouchable = false;
+            popupWindow.setAnimationStyle(R.style.Animation);
 
             // show the popup window
             // which view you pass in doesn't matter, it is only used for the window tolken
-            popupWindow.showAtLocation(binding.root, Gravity.CENTER, 0, 0)
+            popupWindow.showAtLocation(binding.root, Gravity.CENTER, 0, -100)
+
+            popupWindow.dimBehind()
+
+            val cancelBtn = popupView.findViewById<View>(R2.id.cancelBtn) as FloatingActionButton
+            val checkBtn = popupView.findViewById<View>(R2.id.checkBtn) as FloatingActionButton
+
+            checkBtn.setOnClickListener{
+                    popupWindow.dismiss()
+            }
+
+
+            cancelBtn.setOnClickListener{
+                popupWindow.dismiss();
+            }
+
         }
 
         // using toolbar as ActionBar
