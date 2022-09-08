@@ -27,9 +27,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView.SELECTION_MODE_MULTIPLE
 import whattoeat.dinner.databinding.ActivityMainBinding
 import whattoeat.dinner.ui.MainViewModel
 import java.lang.reflect.Type
+import java.util.*
 import whattoeat.dinner.R as R2
 
 
@@ -123,6 +126,12 @@ class MainActivity : AppCompatActivity() {
 
             val cancelBtn = popupView.findViewById<View>(R2.id.cancelBtn) as FloatingActionButton
             val checkBtn = popupView.findViewById<View>(R2.id.checkBtn) as FloatingActionButton
+            val calView = popupView.findViewById<View>(R2.id.calendarView) as MaterialCalendarView
+
+            calView.selectionMode = SELECTION_MODE_MULTIPLE
+
+            val c = Calendar.getInstance().time
+            calView.setDateSelected(c, true)
 
             checkBtn.setOnClickListener{
                 popupWindow.dismiss()
