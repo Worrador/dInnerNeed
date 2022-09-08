@@ -39,12 +39,13 @@ import whattoeat.dinner.R as R2
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-
     lateinit var mainViewModel : MainViewModel
     var BreakfastList: MutableList<Food> = mutableListOf<Food>()
     var LunchList: MutableList<Food> = mutableListOf<Food>()
     var SnackList: MutableList<Food> = mutableListOf<Food>()
     var isMenuVisible = false
+    var calorieGoal = 1800
+    var proteinGoal = 50
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,7 +97,12 @@ class MainActivity : AppCompatActivity() {
             val caloriesEditText = popupView.findViewById<View>(R2.id.editTextNumber1) as EditText
             val proteinsEditText = popupView.findViewById<View>(R2.id.editTextNumber2) as EditText
 
+            caloriesEditText.hint = calorieGoal.toString()
+            proteinsEditText.hint = proteinGoal.toString()
+
             checkBtn.setOnClickListener{
+                calorieGoal = caloriesEditText.text.toString().toInt()
+                proteinGoal = proteinsEditText.text.toString().toInt()
                 popupWindow.dismiss()
             }
             cancelBtn.setOnClickListener{
@@ -245,6 +251,9 @@ class MainActivity : AppCompatActivity() {
         BreakfastList = gson.fromJson(sh.getString("breakfastList", gson.toJson(BreakfastList).toString()), typeOfObjectsList)
         LunchList = gson.fromJson(sh.getString("lunchList", gson.toJson(LunchList).toString()), typeOfObjectsList)
         SnackList = gson.fromJson(sh.getString("snackList", gson.toJson(SnackList)), typeOfObjectsList)
+
+        calorieGoal = sh.getInt("calorieGoal", calorieGoal)
+        proteinGoal = sh.getInt("proteinGoal", proteinGoal)
     }
 
     override fun onResume() {
@@ -272,6 +281,17 @@ class MainActivity : AppCompatActivity() {
         myEdit.commit()
         myEdit.putString("snackList", gson.toJson(SnackList))
         myEdit.commit()
+
+        myEdit.remove("calorieGoal")
+        myEdit.commit()
+        myEdit.putInt("calorieGoal", calorieGoal)
+        myEdit.commit()
+
+        myEdit.remove("proteinGoal")
+        myEdit.commit()
+        myEdit.putInt("proteinGoal", proteinGoal)
+        myEdit.commit()
+
     }
 }
 

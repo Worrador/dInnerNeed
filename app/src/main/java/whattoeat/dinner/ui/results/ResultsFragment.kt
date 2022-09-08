@@ -28,9 +28,6 @@ class ResultsFragment : Fragment() {
     private val binding get() = _binding!!
     var allCalories = 0
     var allProteins = 0
-
-    private val calorieGoal = 1800
-    private val proteinGoal = 50
     private val goalDiffMaxPercentage = 0.05
 
     override fun onCreateView(
@@ -72,8 +69,8 @@ class ResultsFragment : Fragment() {
         }
 
         fun calculateDiffPercentage(currentFoodCalories: Double, currentFoodProteins: Double) : Double{
-            var possibleCalorieDifference = ((calorieGoal - allCalories - currentFoodCalories).absoluteValue / calorieGoal)
-            var possibleProteinDifference = ((proteinGoal - allProteins - currentFoodProteins).absoluteValue / proteinGoal)
+            var possibleCalorieDifference = ((myActivity.calorieGoal - allCalories - currentFoodCalories).absoluteValue / myActivity.calorieGoal)
+            var possibleProteinDifference = ((myActivity.proteinGoal - allProteins - currentFoodProteins).absoluteValue / myActivity.proteinGoal)
 
             return (possibleCalorieDifference + possibleProteinDifference)
         }
