@@ -16,6 +16,7 @@
         <item name="android:statusBarColor">@color/dark_blue</item>
         <item name="android:windowLightStatusBar">true</item>
         <!-- Customize your theme here. -->
+        <item name="android:windowBackground">@color/dark_blue_grad</item>
         <item name="android:listChoiceBackgroundIndicator">@drawable/list_view_background_selector_night</item>
         <item name="android:colorBackground">@color/black</item>
     </style>

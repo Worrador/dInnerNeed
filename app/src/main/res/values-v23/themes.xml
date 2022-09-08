@@ -18,6 +18,7 @@
         <item name="android:listChoiceBackgroundIndicator">@drawable/list_view_background_selector
         </item>
         <item name="android:colorBackground">@color/white</item>
+        <item name="android:windowBackground">@color/blue</item>
         <item name="android:windowLightStatusBar">false</item>
         <!-- <item name="android:windowFullscreen">true</item>  Majd Áginak ezt bekapcsolni-->
     </style>
