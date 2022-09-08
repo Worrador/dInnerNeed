@@ -36,13 +36,13 @@
                 android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:textColor="?attr/colorSecondary"
-                android:text="@string/inputFoodCalories_title"
+                android:text="Kalória cél:"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:autofillHints="1800"
                 android:padding="10dp"
                 android:gravity="left"
-                android:textSize="30sp"
+                android:textSize="25sp"
                 android:inputType="number"/>
 
             <EditText
@@ -53,8 +53,9 @@
                 android:textColor="?attr/colorSecondary"
                 android:layout_weight="1"
                 android:hint="1800"
+                android:ems="4"
                 android:gravity="center"
-                android:textSize="30sp"
+                android:textSize="25sp"
                 android:layout_height="wrap_content"
                 android:autofillHints="1800"
                 android:inputType="number"/>
@@ -76,13 +77,13 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:textColor="?attr/colorSecondary"
-                android:text="@string/inputFoodProtein_title"
+                android:text="Fehérje cél:"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="10dp"
                 android:autofillHints="1800"
                 android:gravity="left"
-                android:textSize="30sp"
+                android:textSize="25sp"
                 android:inputType="number"/>
 
             <EditText
@@ -93,7 +94,8 @@
                 android:layout_weight="1"
                 android:focusable="true"
                 android:hint="50"
-                android:textSize="30sp"
+                android:ems="4"
+                android:textSize="25sp"
                 android:gravity="center"
                 android:layout_height="wrap_content"
                 android:autofillHints="1800"

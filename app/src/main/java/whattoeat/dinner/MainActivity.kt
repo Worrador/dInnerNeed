@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var mainViewModel : MainViewModel
     var BreakfastList: MutableList<Food> = mutableListOf<Food>()
     var LunchList: MutableList<Food> = mutableListOf<Food>()
-    var SnackList: MutableList<Food> = mutableListOf<Food>()
+    var SnacksList: MutableList<Food> = mutableListOf<Food>()
     var isMenuVisible = false
     var calorieGoal = 1800
     var proteinGoal = 50
@@ -97,8 +97,8 @@ class MainActivity : AppCompatActivity() {
             val caloriesEditText = popupView.findViewById<View>(R2.id.editTextNumber1) as EditText
             val proteinsEditText = popupView.findViewById<View>(R2.id.editTextNumber2) as EditText
 
-            caloriesEditText.hint = calorieGoal.toString()
-            proteinsEditText.hint = proteinGoal.toString()
+            caloriesEditText.hint = "$calorieGoal(kcal)"
+            proteinsEditText.hint = "$proteinGoal(g)"
 
             checkBtn.setOnClickListener{
                 calorieGoal = caloriesEditText.text.toString().toInt()
@@ -250,7 +250,7 @@ class MainActivity : AppCompatActivity() {
 
         BreakfastList = gson.fromJson(sh.getString("breakfastList", gson.toJson(BreakfastList).toString()), typeOfObjectsList)
         LunchList = gson.fromJson(sh.getString("lunchList", gson.toJson(LunchList).toString()), typeOfObjectsList)
-        SnackList = gson.fromJson(sh.getString("snackList", gson.toJson(SnackList)), typeOfObjectsList)
+        SnacksList = gson.fromJson(sh.getString("snackList", gson.toJson(SnacksList)), typeOfObjectsList)
 
         calorieGoal = sh.getInt("calorieGoal", calorieGoal)
         proteinGoal = sh.getInt("proteinGoal", proteinGoal)
@@ -279,7 +279,7 @@ class MainActivity : AppCompatActivity() {
 
         myEdit.remove("snackList")
         myEdit.commit()
-        myEdit.putString("snackList", gson.toJson(SnackList))
+        myEdit.putString("snackList", gson.toJson(SnacksList))
         myEdit.commit()
 
         myEdit.remove("calorieGoal")

@@ -6,7 +6,7 @@ import whattoeat.dinner.Food
 class MainViewModel : ViewModel() {
     var clickedPosListBreakfast: ArrayList<Int> = ArrayList()
     var clickedPosListLunch: ArrayList<Int> = ArrayList()
-    var clickedPosListSnack: ArrayList<Int> = ArrayList()
+    var clickedPosListSnacks: ArrayList<Int> = ArrayList()
 
 
     fun setMultipleListView(FoodList: MutableList<Food>): ArrayList<String>{

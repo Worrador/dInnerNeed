@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import whattoeat.dinner.Food
@@ -17,7 +16,6 @@ import whattoeat.dinner.ui.MainViewModel
 import kotlin.math.absoluteValue
 import whattoeat.dinner.R
 import com.bumptech.glide.Glide
-import whattoeat.dinner.hideKeyboard
 
 class ResultsFragment : Fragment() {
 
@@ -62,10 +60,10 @@ class ResultsFragment : Fragment() {
             for (selectedFoodPos in mainViewModel.clickedPosListLunch)
                 allProteins += myActivity.LunchList[selectedFoodPos].proteins
 
-            for (selectedFoodPos in mainViewModel.clickedPosListSnack)
-                allCalories += myActivity.SnackList[selectedFoodPos].calories
-            for (selectedFoodPos in mainViewModel.clickedPosListSnack)
-                allProteins += myActivity.SnackList[selectedFoodPos].proteins
+            for (selectedFoodPos in mainViewModel.clickedPosListSnacks)
+                allCalories += myActivity.SnacksList[selectedFoodPos].calories
+            for (selectedFoodPos in mainViewModel.clickedPosListSnacks)
+                allProteins += myActivity.SnacksList[selectedFoodPos].proteins
         }
 
         fun calculateDiffPercentage(currentFoodCalories: Double, currentFoodProteins: Double) : Double{
@@ -83,7 +81,7 @@ class ResultsFragment : Fragment() {
             var allFoodsList: MutableList<Food> = mutableListOf<Food>()
             allFoodsList.addAll(myActivity.BreakfastList)
             allFoodsList.addAll(myActivity.LunchList)
-            allFoodsList.addAll(myActivity.SnackList)
+            allFoodsList.addAll(myActivity.SnacksList)
             allFoodsList.add(Food("Semmi",0,0))
 
             var first = 2.0

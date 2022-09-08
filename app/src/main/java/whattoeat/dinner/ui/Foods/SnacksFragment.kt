@@ -1,7 +1,4 @@
 package whattoeat.dinner.ui.Foods
-
-import android.R
-import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -13,11 +10,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import whattoeat.dinner.Food
 import whattoeat.dinner.MainActivity
+import whattoeat.dinner.R
 import whattoeat.dinner.databinding.FragmentSnacksBinding
 import whattoeat.dinner.hideKeyboard
 import whattoeat.dinner.ui.MainViewModel
-import whattoeat.dinner.ui.results.ResultsFragment
-import whattoeat.dinner.R as R2
 
 
 class SnacksFragment : Fragment() {
@@ -25,6 +21,10 @@ class SnacksFragment : Fragment() {
     private var _binding: FragmentSnacksBinding? = null
     private val binding get() = _binding!!
     private var isDataAddition: Boolean = false
+    private var isModification: Boolean = false
+
+    private var addedCalories = 0
+    private var addedProteins = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,26 +52,28 @@ class SnacksFragment : Fragment() {
 
         /* Local functions */
         fun setDefaultVisibility(){
-            nameText.setVisibility(View.INVISIBLE)
-            nameText.setText("")
-            caloriesText.setVisibility(View.INVISIBLE)
-            caloriesText.setText("")
-            proteinsText.setVisibility(View.INVISIBLE)
-            proteinsText.setText("")
+            nameText.visibility = View.INVISIBLE
+            nameText.text = ""
+            caloriesText.visibility = View.INVISIBLE
+            caloriesText.text = ""
+            proteinsText.visibility = View.INVISIBLE
+            proteinsText.text = ""
             checkBtn.visibility = View.INVISIBLE
             cancelBtn.visibility = View.INVISIBLE
             addBtn.visibility = View.VISIBLE
             delBtn.visibility = View.VISIBLE
             root.hideKeyboard()
+            calculateAddedMacros()
+            isModification= false
         }
 
         fun setModifyingVisibility(){
             if(isDataAddition){
-                nameText.setVisibility(View.VISIBLE)
-                caloriesText.setVisibility(View.VISIBLE)
-                proteinsText.setVisibility(View.VISIBLE)
+                nameText.visibility = View.VISIBLE
+                caloriesText.visibility = View.VISIBLE
+                proteinsText.visibility = View.VISIBLE
             }
-
+            calculateAddedMacros()
             addBtn.visibility = View.INVISIBLE
             delBtn.visibility = View.INVISIBLE
             checkBtn.visibility = View.VISIBLE
@@ -79,51 +81,62 @@ class SnacksFragment : Fragment() {
         }
 
         fun generateListView(){
-            val listOfItem: ArrayList<String> = mainViewModel.setMultipleListView(myActivity.SnackList)
-            getContext()?.let {
-                val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(it, R2.layout.list_text_view, listOfItem)
+            val listOfItem: ArrayList<String> = mainViewModel.setMultipleListView(myActivity.SnacksList)
+            context?.let {
+                val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(it, R.layout.list_text_view, listOfItem)
                 listView.adapter = arrayAdapter
             }
-            for (pos in mainViewModel.clickedPosListSnack)
-                listView.setItemChecked(pos, true)
         }
 
         /* Set object callbacks */
         addBtn.setOnClickListener {
             isDataAddition = true
+            isModification = true
             setModifyingVisibility()
         }
 
         delBtn.setOnClickListener {
             isDataAddition = false
-            setModifyingVisibility()
-            for (pos in mainViewModel.clickedPosListSnack)
+            isModification = true
+            for (pos in mainViewModel.clickedPosListSnacks)
                 listView.setItemChecked(pos, false)
-            mainViewModel.clickedPosListSnack.clear()
+            mainViewModel.clickedPosListSnacks.clear()
+            setModifyingVisibility()
         }
 
         checkBtn.setOnClickListener {
             if(isDataAddition){
-                val isGoodInputs = TextUtils.isDigitsOnly(caloriesText.getText()) && TextUtils.isDigitsOnly(proteinsText.getText()) &&
-                        !TextUtils.isEmpty(nameText.getText()) && !TextUtils.isEmpty(caloriesText.getText()) && !TextUtils.isEmpty(proteinsText.getText())
+                val isGoodInputs = TextUtils.isDigitsOnly(caloriesText.text) && TextUtils.isDigitsOnly(proteinsText.text) &&
+                        !TextUtils.isEmpty(nameText.text) && !TextUtils.isEmpty(caloriesText.text) && !TextUtils.isEmpty(proteinsText.text)
                 if(isGoodInputs){
-                    Toast.makeText(getContext(),
+                    Toast.makeText(
+                        context,
                         "Hozzáadva!", Toast.LENGTH_SHORT).show()
-                    myActivity.SnackList.add(Food(nameText.text.toString(), caloriesText.text.toString().toInt(), proteinsText.text.toString().toInt()))
+                    myActivity.SnacksList.add(Food(nameText.text.toString(), caloriesText.text.toString().toInt(), proteinsText.text.toString().toInt()))
                     setDefaultVisibility()
                     generateListView()
                 }else{
-                    Toast.makeText(getContext(),
+                    Toast.makeText(
+                        context,
                         "Helytelen értékek!", Toast.LENGTH_SHORT).show()
                 }
             }else{
-                for (pos in mainViewModel.clickedPosListSnack)
-                    myActivity.SnackList.remove(listView.getItemAtPosition(pos))
+                var flag = false
+                for (pos in mainViewModel.clickedPosListSnacks){
+                    val foodToDeleteName = listView.getItemAtPosition(pos)
+                    for(food in myActivity.SnacksList){
+                        if(food.name == foodToDeleteName) {
+                            flag = flag or myActivity.SnacksList.remove(food)
+                            break
+                        }
+                    }
+                }
 
-                if(!mainViewModel.clickedPosListSnack.isEmpty()){
-                    Toast.makeText(getContext(),
+                if(flag){
+                    Toast.makeText(
+                        context,
                         "Törölve!", Toast.LENGTH_SHORT).show()
-                    mainViewModel.clickedPosListSnack.clear()
+                    mainViewModel.clickedPosListSnacks.clear()
                     generateListView()
                 }
                 setDefaultVisibility()
@@ -131,32 +144,53 @@ class SnacksFragment : Fragment() {
         }
 
         cancelBtn.setOnClickListener {
+            if(isDataAddition.not()) {
+                for (pos in mainViewModel.clickedPosListSnacks)
+                    listView.setItemChecked(pos, false)
+                mainViewModel.clickedPosListSnacks.clear()
+            }
             setDefaultVisibility()
         }
 
         /* Set listView */
-        listView.choiceMode = ListView.CHOICE_MODE_MULTIPLE
         generateListView()
-        //listView.choiceMode = ListView.CHOICE_MODE_MULTIPLE
+        listView.choiceMode = ListView.CHOICE_MODE_MULTIPLE
         listView.onItemClickListener =
-            AdapterView.OnItemClickListener { _, _, position, _ ->
-                if (mainViewModel.clickedPosListSnack.contains(position)) {
-                    mainViewModel.clickedPosListSnack.remove(position)
+            AdapterView.OnItemClickListener { _, view, position, _ ->
+                if (mainViewModel.clickedPosListSnacks.contains(position)) {
+                    mainViewModel.clickedPosListSnacks.remove(position)
                 }
                 else {
-                    val clickedCalories = myActivity.SnackList[position].calories
-                    val clickedProteins = myActivity.SnackList[position].proteins
-                    Toast.makeText(
-                        getContext(),
-                        "Kalória: +$clickedCalories\nFehérje: +$clickedProteins\n",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    mainViewModel.clickedPosListSnack.add(position)
+                    mainViewModel.clickedPosListSnacks.add(position)
+                }
+
+                if(!isModification) {
+                    calculateAddedMacros()
                 }
             }
-
+        for (pos in mainViewModel.clickedPosListSnacks) {
+            listView.setItemChecked(pos, true)
+        }
 
         return root
+    }
+
+    private fun calculateAddedMacros(){
+        /* Set objects */
+        val myActivity = (activity as MainActivity?)!!
+
+        val mainViewModel = activity?.run {
+            ViewModelProvider(this)[MainViewModel::class.java]
+        } ?: throw Exception("Invalid Activity")
+
+        addedCalories = 0
+        addedProteins = 0
+
+        for (pos in mainViewModel.clickedPosListSnacks){
+            addedCalories += myActivity.SnacksList[pos].calories
+            addedProteins += myActivity.SnacksList[pos].proteins
+        }
+        myActivity.setMacros(addedCalories, addedProteins)
     }
 
     override fun onDestroyView() {
