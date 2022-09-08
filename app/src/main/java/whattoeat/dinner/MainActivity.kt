@@ -43,12 +43,6 @@ class MainActivity : AppCompatActivity() {
     var SnackList: MutableList<Food> = mutableListOf<Food>()
     var isMenuVisible = false
 
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-        if (hasFocus)
-            hideSystemUI()
-    }
-
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,8 +76,7 @@ class MainActivity : AppCompatActivity() {
             // create the popup window
             val width = LinearLayout.LayoutParams.WRAP_CONTENT
             val height = LinearLayout.LayoutParams.WRAP_CONTENT
-            val focusable = false // lets taps outside the popup also dismiss it
-
+            val focusable = true // lets taps outside the popup also dismiss it
 
             val popupWindow = PopupWindow(popupView, width, height, focusable)
             popupWindow.isOutsideTouchable = false;
@@ -92,8 +85,8 @@ class MainActivity : AppCompatActivity() {
             // show the popup window
             // which view you pass in doesn't matter, it is only used for the window tolken
             popupWindow.showAtLocation(binding.root, Gravity.CENTER, 0, -100)
-
             popupWindow.dimBehind()
+
 
             val cancelBtn = popupView.findViewById<View>(R2.id.cancelBtn) as FloatingActionButton
             val checkBtn = popupView.findViewById<View>(R2.id.checkBtn) as FloatingActionButton
