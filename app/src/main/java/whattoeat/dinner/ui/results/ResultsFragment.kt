@@ -1,21 +1,22 @@
 package whattoeat.dinner.ui.results
 
 import android.os.Bundle
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import whattoeat.dinner.Food
 import whattoeat.dinner.MainActivity
+import whattoeat.dinner.R
 import whattoeat.dinner.databinding.FragmentResultsBinding
 import whattoeat.dinner.ui.MainViewModel
 import kotlin.math.absoluteValue
-import whattoeat.dinner.R
-import com.bumptech.glide.Glide
 
 class ResultsFragment : Fragment() {
 
@@ -27,6 +28,10 @@ class ResultsFragment : Fragment() {
     var allCalories = 0
     var allProteins = 0
     private val goalDiffMaxPercentage = 0.05
+
+    private fun getColoredSpanned(text: String, color: String): String? {
+        return "<b><font color=$color>$text</font></b>"
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -152,10 +157,11 @@ class ResultsFragment : Fragment() {
                 }
                 Glide.with(this).load(R.drawable.bravocado).into(gifView)
             }else{
-                textToBeDisplayed += "Sajnos ma már nem tudod elérni a célodat, mert $allCalories/${myActivity.calorieGoal} kalóriát " +
-                        "és $allProteins/${myActivity.proteinGoal} proteint vittél be." +
-                        "\n\nMindenesetre a legjobb választás a(z) :$firstName lenne. \n\nEzzel ${allCalories+firstCal}/${myActivity.calorieGoal} kalóriát " +
-                        "és ${allProteins+firstPro}/${myActivity.proteinGoal} proteint fogsz bevinni."
+                textToBeDisplayed += "Sajnos ma már nem tudod elérni a célodat, mert " + getColoredSpanned("$allCalories/${myActivity.calorieGoal}", "#dd1324") +
+                        " és " + getColoredSpanned("$allProteins/${myActivity.proteinGoal}", "#dd1324") +" proteint vittél be." +
+                        "<br/><br/>Mindenesetre a legjobb választás a(z): " + getColoredSpanned("$firstName", "#42a543") + " lenne. <br/><br/>Ezzel " +
+                        getColoredSpanned("${allCalories+firstCal}/${myActivity.calorieGoal}", "#d1e659") +
+                        " kalóriát és " + getColoredSpanned("${allProteins+firstPro}/${myActivity.proteinGoal}", "#d1e659") +" proteint fogsz bevinni."
                 Glide.with(this).load(R.drawable.nahvocado).into(gifView)
             }
             
@@ -163,7 +169,10 @@ class ResultsFragment : Fragment() {
         }
 
         resultBtn.setOnClickListener {
-            textView.text = getDinner()
+            val name = getColoredSpanned("Hiren", "#800000")
+            val surName = getColoredSpanned("Patel", "#000080")
+
+            textView.text = (Html.fromHtml(getDinner()))
             resultBtn.visibility = View.INVISIBLE
             saveResultBtn.visibility = View.VISIBLE
         }
