@@ -33,6 +33,10 @@ class ResultsFragment : Fragment() {
         return "<b><font color=$color>$text</font></b>"
     }
 
+    private fun getColoredSpannedLittle(text: String, color: String): String? {
+        return "<small><font color=$color>$text</small>"
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -147,18 +151,23 @@ class ResultsFragment : Fragment() {
                 }
             }
             if(first < 2 * goalDiffMaxPercentage){
-                textToBeDisplayed = "Sikerülhet elérni a célodat!\nEhhez a következő(k) közül válassz:\n\n"
-                textToBeDisplayed += "1. $firstName\n"
+                textToBeDisplayed = "Sikerülhet elérni a célodat, mert már " + getColoredSpanned("$allCalories/${myActivity.calorieGoal}", "#d1e659") +
+                        " kalóriát és " + getColoredSpanned("$allProteins/${myActivity.proteinGoal}", "#d1e659") +
+                        " proteint bevittél!<br/>Ehhez a következő(k) közül válassz:<br/><br/>"
+                textToBeDisplayed += getColoredSpanned("1. $firstName ", "#42a543") +
+                        getColoredSpannedLittle("(${allCalories+firstCal}/${myActivity.calorieGoal}, ${allProteins+firstPro}/${myActivity.proteinGoal})<br/>", "#d1e659")
                 if(second < 2 * goalDiffMaxPercentage){
-                    textToBeDisplayed += "2. $secondName\n"
+                    textToBeDisplayed += getColoredSpanned("2. $secondName ", "#42a543") +
+                            getColoredSpannedLittle("(${allCalories+secondCal}/${myActivity.calorieGoal}, ${allProteins+secondPro}/${myActivity.proteinGoal})<br/>", "#d1e659")
                     if(third < 2 * goalDiffMaxPercentage){
-                        textToBeDisplayed += "3. $thirdName"
+                        textToBeDisplayed += getColoredSpanned("3. $thirdName ", "#42a543") +
+                                getColoredSpannedLittle("(${allCalories+thirdCal}/${myActivity.calorieGoal}, ${allProteins+thirdPro}/${myActivity.proteinGoal})", "#d1e659")
                     }
                 }
                 Glide.with(this).load(R.drawable.bravocado).into(gifView)
             }else{
                 textToBeDisplayed += "Sajnos ma már nem tudod elérni a célodat, mert " + getColoredSpanned("$allCalories/${myActivity.calorieGoal}", "#dd1324") +
-                        " és " + getColoredSpanned("$allProteins/${myActivity.proteinGoal}", "#dd1324") +" proteint vittél be." +
+                        " kalóriát és " + getColoredSpanned("$allProteins/${myActivity.proteinGoal}", "#dd1324") +" proteint vittél be." +
                         "<br/><br/>Mindenesetre a legjobb választás a(z): " + getColoredSpanned("$firstName", "#42a543") + " lenne. <br/><br/>Ezzel " +
                         getColoredSpanned("${allCalories+firstCal}/${myActivity.calorieGoal}", "#d1e659") +
                         " kalóriát és " + getColoredSpanned("${allProteins+firstPro}/${myActivity.proteinGoal}", "#d1e659") +" proteint fogsz bevinni."
