@@ -171,6 +171,7 @@ class SnacksFragment : Fragment() {
         for (pos in mainViewModel.clickedPosListSnacks) {
             listView.setItemChecked(pos, true)
         }
+        calculateAddedMacros()
 
         return root
     }

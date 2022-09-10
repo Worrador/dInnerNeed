@@ -171,6 +171,7 @@ class LunchFragment : Fragment() {
         for (pos in mainViewModel.clickedPosListLunch) {
             listView.setItemChecked(pos, true)
         }
+        calculateAddedMacros()
 
         return root
     }

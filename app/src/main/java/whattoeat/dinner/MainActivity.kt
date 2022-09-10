@@ -239,8 +239,14 @@ class MainActivity : AppCompatActivity() {
     fun setMacros(calories: Int, proteins: Int){
         val calTextView: TextView = binding.textViewCaloriesCounter
         val proTextView: TextView = binding.textViewProteinsCounter
-        calTextView.text = "cal: $calories"
-        proTextView.text = "pro: $proteins"
+        if((calories >= 0) && (proteins >= 0)) {
+            calTextView.text = "cal: $calories"
+            proTextView.text = "pro: $proteins"
+        }else
+        {
+            calTextView.text = ""
+            proTextView.text = ""
+        }
     }
 
     fun getLists(){

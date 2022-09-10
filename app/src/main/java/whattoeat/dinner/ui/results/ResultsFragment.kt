@@ -43,8 +43,11 @@ class ResultsFragment : Fragment() {
 
         val root: View = binding.root
         val resultBtn: Button = binding.resultBtn
+        val saveResultBtn: Button = binding.saveResultBtn
         val textView: TextView = binding.TextView
         val gifView: ImageView = binding.gifView
+
+        myActivity.setMacros(-1, -1)
 
         fun calculateNutrition(){
             allCalories = 0
@@ -85,10 +88,16 @@ class ResultsFragment : Fragment() {
             allFoodsList.add(Food("Semmi",0,0))
 
             var first = 2.0
+            var firstCal = 0.0
+            var firstPro = 0.0
             var firstName = ""
             var second = 2.0
+            var secondCal = 0.0
+            var secondPro = 0.0
             var secondName = ""
             var third = 2.0
+            var thirdCal = 0.0
+            var thirdPro = 0.0
             var thirdName = ""
 
             for (food in allFoodsList){
@@ -98,20 +107,38 @@ class ResultsFragment : Fragment() {
                 if (first > current) {
                     third = second
                     thirdName = secondName
+                    thirdCal = secondCal
+                    thirdPro = secondCal
+
+
                     second = first
                     secondName = firstName
+                    secondCal = firstCal
+                    secondPro = firstPro
+
+
                     first = current
                     firstName = currentName
+                    firstCal = food.calories.toDouble()
+                    firstPro = food.proteins.toDouble()
 
                 } else if (second > current) {
                     third = second
                     thirdName = secondName
+                    thirdCal = secondCal
+                    thirdPro = secondPro
+
+
                     second = current
                     secondName = currentName
+                    secondCal = food.calories.toDouble()
+                    secondPro = food.proteins.toDouble()
 
                 } else if (third > current) {
                     third = current
                     thirdName = currentName
+                    thirdCal = food.calories.toDouble()
+                    thirdPro = food.proteins.toDouble()
                 }
             }
             if(first < 2 * goalDiffMaxPercentage){
@@ -125,7 +152,10 @@ class ResultsFragment : Fragment() {
                 }
                 Glide.with(this).load(R.drawable.bravocado).into(gifView)
             }else{
-                textToBeDisplayed += "Sajnos ma már nem tudod elérni a célodat.\nMindenesetre a legjobb választás:\n\n$firstName"
+                textToBeDisplayed += "Sajnos ma már nem tudod elérni a célodat, mert $allCalories/${myActivity.calorieGoal} kalóriát " +
+                        "és $allProteins/${myActivity.proteinGoal} proteint vittél be." +
+                        "\n\nMindenesetre a legjobb választás a(z) :$firstName lenne. \n\nEzzel ${allCalories+firstCal}/${myActivity.calorieGoal} kalóriát " +
+                        "és ${allProteins+firstPro}/${myActivity.proteinGoal} proteint fogsz bevinni."
                 Glide.with(this).load(R.drawable.nahvocado).into(gifView)
             }
             
@@ -135,6 +165,7 @@ class ResultsFragment : Fragment() {
         resultBtn.setOnClickListener {
             textView.text = getDinner()
             resultBtn.visibility = View.INVISIBLE
+            saveResultBtn.visibility = View.VISIBLE
         }
         return root
     }
