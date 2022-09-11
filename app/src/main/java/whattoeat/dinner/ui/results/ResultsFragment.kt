@@ -153,7 +153,7 @@ class ResultsFragment : Fragment() {
             if(first < 2 * goalDiffMaxPercentage){
                 textToBeDisplayed = "Sikerülhet elérni a célodat, mert már " + getColoredSpanned("$allCalories/${myActivity.calorieGoal}", "#d1e659") +
                         " kalóriát és " + getColoredSpanned("$allProteins/${myActivity.proteinGoal}", "#d1e659") +
-                        " proteint bevittél!<br/>Ehhez a következő(k) közül válassz:<br/><br/>"
+                        " proteint bevittél!<br/><br/>Ehhez a következő(k) közül válassz:<br/><br/>"
                 textToBeDisplayed += getColoredSpanned("1. $firstName ", "#42a543") +
                         getColoredSpannedLittle("(${allCalories+firstCal}/${myActivity.calorieGoal}, ${allProteins+firstPro}/${myActivity.proteinGoal})<br/>", "#d1e659")
                 if(second < 2 * goalDiffMaxPercentage){

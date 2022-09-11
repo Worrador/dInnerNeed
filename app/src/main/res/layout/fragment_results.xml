@@ -24,7 +24,7 @@
         android:layout_alignParentBottom="true"
         android:text="@string/result_title"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="104dp"
+        android:layout_marginBottom="105dp"
         app:layout_constraintEnd_toEndOf="parent"
         android:textColor="?attr/colorOnPrimary"
         app:layout_constraintStart_toStartOf="parent" />
@@ -38,7 +38,7 @@
         android:layout_alignParentBottom="true"
         android:text="Ezt mentsük el mára!"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="104dp"
+        android:layout_marginBottom="105dp"
         app:layout_constraintEnd_toEndOf="parent"
         android:textColor="?attr/colorOnPrimary"
         android:visibility="invisible"
