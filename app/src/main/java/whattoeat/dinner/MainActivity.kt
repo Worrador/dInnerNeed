@@ -30,15 +30,21 @@ import com.google.gson.reflect.TypeToken
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView.SELECTION_MODE_MULTIPLE
 import whattoeat.dinner.databinding.ActivityMainBinding
+import whattoeat.dinner.ui.Foods.BreakfastFragment
 import whattoeat.dinner.ui.MainViewModel
 import java.lang.reflect.Type
 import java.util.*
+import kotlin.math.abs
 import whattoeat.dinner.R as R2
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var gestureDetector: GestureDetector
+    lateinit var navView: BottomNavigationView
+    private val swipeThreshold = 100
+    private val swipeVelocityThreshold = 100
     lateinit var mainViewModel : MainViewModel
     var BreakfastList: MutableList<Food> = mutableListOf<Food>()
     var LunchList: MutableList<Food> = mutableListOf<Food>()
@@ -46,6 +52,7 @@ class MainActivity : AppCompatActivity() {
     var isMenuVisible = false
     var calorieGoal = 1800
     var proteinGoal = 50
+    var currentFragmentidx = 0
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,14 +61,18 @@ class MainActivity : AppCompatActivity() {
 
         hideSystemUI()
 
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Initializing the gesture detector
+        gestureDetector = GestureDetector(this)
 
         // assigning ID of the toolbar to a variable
         val toolbar = findViewById<View>(R2.id.toolbar) as Toolbar
         val goalMenu: LinearLayout = binding.linLayoutInner1
         val historyMenu: LinearLayout = binding.linLayoutInner2
-        val navView: BottomNavigationView = binding.navView
+        navView = binding.navView
         var navbarMock: LinearLayout = findViewById(R2.id.navbar_mock)
         navbarMock.visibility = View.VISIBLE
         val params: ViewGroup.LayoutParams = navbarMock.layoutParams
@@ -317,6 +328,72 @@ class MainActivity : AppCompatActivity() {
         myEdit.putInt("proteinGoal", proteinGoal)
         myEdit.commit()
 
+    }
+    // Override this method to recognize touch event
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        return if (gestureDetector.onTouchEvent(event)) {
+            true
+        }
+        else {
+            super.onTouchEvent(event)
+        }
+    }
+
+    // All the below methods are GestureDetector.OnGestureListener members
+    // Except onFling, all must "return false" if Boolean return type
+    // and "return" if no return type
+    override fun onDown(e: MotionEvent?): Boolean {
+        return false
+    }
+
+    override fun onShowPress(e: MotionEvent?) {
+        return
+    }
+
+    override fun onSingleTapUp(e: MotionEvent?): Boolean {
+        return false
+    }
+
+    override fun onScroll(e1: MotionEvent?, e2: MotionEvent?, distanceX: Float, distanceY: Float): Boolean {
+        return false
+    }
+
+    override fun onLongPress(e: MotionEvent?) {
+        return
+    }
+
+    override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+        try {
+            val diffY = e2.y - e1.y
+            val diffX = e2.x - e1.x
+            if (abs(diffX) > abs(diffY)) {
+                if (abs(diffX) > swipeThreshold && abs(velocityX) > swipeVelocityThreshold) {
+                    if (diffX > 0) {
+
+                        if(currentFragmentidx > 0){
+                            currentFragmentidx -= 1
+                        }
+                        Toast.makeText(applicationContext, "Left to Right swipe gesture", Toast.LENGTH_SHORT).show()
+                    }
+                    else {
+                        if(currentFragmentidx < 3){
+                            currentFragmentidx += 1
+                        }
+                        Toast.makeText(applicationContext, "Right to Left swipe gesture", Toast.LENGTH_SHORT).show()
+                    }
+                    when (currentFragmentidx) {
+                        0 -> navView.selectedItemId = R2.id.home_frag
+                        1 -> navView.selectedItemId = R2.id.lunch_frag
+                        2 -> navView.selectedItemId = R2.id.snacks_frag
+                        3 -> navView.selectedItemId = R2.id.results_frag
+                    }
+                }
+            }
+        }
+        catch (exception: Exception) {
+            exception.printStackTrace()
+        }
+        return true
     }
 }
 

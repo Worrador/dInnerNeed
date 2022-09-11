@@ -4,21 +4,25 @@
     <item
         android:id="@+id/navigation_breakfast"
         android:icon="@drawable/breakfast_icon"
+        android:enabled="true"
         android:title="@string/title_breakfast" />
 
     <item
         android:id="@+id/navigation_lunch"
         android:icon="@drawable/lunch_icon"
+        android:enabled="true"
         android:title="@string/title_lunch" />
 
     <item
         android:id="@+id/navigation_snacks"
         android:icon="@drawable/snack_icon"
+        android:enabled="true"
         android:title="@string/title_snack" />
 
     <item
         android:id="@+id/navigation_results"
         android:icon="@drawable/dinner_icon"
+        android:enabled="true"
         android:title="@string/title_results" />
 
 </menu>
