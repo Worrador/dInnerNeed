@@ -61,6 +61,13 @@ class MainActivity : AppCompatActivity() {
         val toolbar = findViewById<View>(R2.id.toolbar) as Toolbar
         val goalMenu: LinearLayout = binding.linLayoutInner1
         val historyMenu: LinearLayout = binding.linLayoutInner2
+        val navView: BottomNavigationView = binding.navView
+        var navbarMock: LinearLayout = findViewById(R2.id.navbar_mock)
+        navbarMock.visibility = View.VISIBLE
+        val params: ViewGroup.LayoutParams = navbarMock.layoutParams
+        val resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
+        params.height = resources.getDimensionPixelSize(resourceId)
+        navbarMock.layoutParams = params
 
         fun PopupWindow.dimBehind() {
             val container = contentView.rootView
@@ -73,6 +80,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         goalMenu.setOnClickListener{
+            navView.visibility = View.INVISIBLE
+
+
             // inflate the layout of the popup window
             val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val popupView: View = inflater.inflate(R2.layout.goal_dialog_fragment, null)
@@ -100,17 +110,23 @@ class MainActivity : AppCompatActivity() {
             caloriesEditText.hint = "$calorieGoal(kcal)"
             proteinsEditText.hint = "$proteinGoal(g)"
 
+            popupWindow.setOnDismissListener(PopupWindow.OnDismissListener {
+                popupWindow.dismiss()
+                navView.visibility = View.VISIBLE
+            })
+
             checkBtn.setOnClickListener{
                 calorieGoal = caloriesEditText.text.toString().toInt()
                 proteinGoal = proteinsEditText.text.toString().toInt()
                 popupWindow.dismiss()
             }
             cancelBtn.setOnClickListener{
-                popupWindow.dismiss();
+                popupWindow.dismiss()
             }
         }
 
         historyMenu.setOnClickListener{
+            navView.visibility = View.INVISIBLE
             // inflate the layout of the popup window
             val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val popupView: View = inflater.inflate(R2.layout.calendar_dialog_fragment, null)
@@ -139,6 +155,11 @@ class MainActivity : AppCompatActivity() {
             val c = Calendar.getInstance().time
             calView.setDateSelected(c, true)
 
+            popupWindow.setOnDismissListener(PopupWindow.OnDismissListener {
+                popupWindow.dismiss()
+                navView.visibility = View.VISIBLE
+            })
+
             checkBtn.setOnClickListener{
                 popupWindow.dismiss()
             }
@@ -159,8 +180,6 @@ class MainActivity : AppCompatActivity() {
 
         mainViewModel =
             ViewModelProvider(this).get(MainViewModel::class.java)
-
-        val navView: BottomNavigationView = binding.navView
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R2.id.nav_host_fragment_activity_main) as NavHostFragment
