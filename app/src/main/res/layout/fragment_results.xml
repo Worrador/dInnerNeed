@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:id="@+id/results_frag"
     tools:context=".ui.results.ResultsFragment">
 
@@ -58,4 +59,12 @@
         android:justificationMode="inter_word"
         android:textSize="25sp"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/darkener"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        android:alpha="0"
+        android:orientation="horizontal" />
 </androidx.constraintlayout.widget.ConstraintLayout>

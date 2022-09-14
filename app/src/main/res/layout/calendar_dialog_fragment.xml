@@ -7,7 +7,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_dialog_fragment_background"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -17,13 +17,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+
+        <com.applandeo.materialcalendarview.CalendarView
             android:id="@+id/calendarView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:mcv_showOtherDates="all"
-            app:mcv_selectionColor="@color/dark_green"
-            />
+            android:layout_width="match_parent"
+            app:eventsEnabled="true"
+            app:headerLabelColor="@color/dark_green"
+            app:todayLabelColor="?attr/colorSecondary"
+            app:abbreviationsBarColor="?attr/colorSecondaryVariant"
+            app:pagesColor="?attr/colorSecondaryVariant"
+            app:headerColor="?attr/colorSecondaryVariant"
+            android:layout_height="wrap_content" />
 
 
         <LinearLayout

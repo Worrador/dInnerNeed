@@ -66,7 +66,7 @@
             android:layout_weight="1"
             android:layout_height="50dp"
             android:gravity="center"
-            android:background="@color/blue2"
+            android:background="?attr/submenu_color"
             android:minHeight="?attr/actionBarSize"
             android:orientation="horizontal"
             android:clickable="true"
@@ -89,7 +89,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@null"
-                android:src="@mipmap/goals_night"
+                android:src="?attr/submenu_goalicon"
                 app:layout_constraintStart_toEndOf="@+id/goalText" />
         </LinearLayout>
 
@@ -100,7 +100,7 @@
             android:layout_height="50dp"
             android:clickable="true"
             android:focusable="true"
-            android:background="@color/blue2"
+            android:background="?attr/submenu_color"
             android:minHeight="?attr/actionBarSize"
             android:gravity="center"
             android:orientation="horizontal"
@@ -122,7 +122,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@null"
-                android:src="@mipmap/calendar_night_smaller"
+                android:src="?attr/submenu_calendaricon"
                 app:layout_constraintStart_toEndOf="@+id/calendarText" />
         </LinearLayout>
 
@@ -170,7 +170,7 @@
                 android:id="@+id/avocado_icon_menu"
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
-                android:src="@mipmap/avocado_icon_menu_round"
+                android:src="?attr/menu_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:background="@null"
                 android:onClick="toggleMenu"

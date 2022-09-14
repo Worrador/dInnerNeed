@@ -78,8 +78,8 @@
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="70dp"
             android:layout_marginBottom="85dp"
-            android:backgroundTint="@color/dark_green"
-            app:backgroundTint="@color/dark_green"
+            android:backgroundTint="?attr/actionbutton_primary_color"
+            app:backgroundTint="?attr/actionbutton_primary_color"
             app:srcCompat="@drawable/ic_delete"
             app:tint="?attr/colorOnPrimary" />
 
@@ -91,8 +91,8 @@
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="12dp"
             android:layout_marginBottom="85dp"
-            android:backgroundTint="@color/dark_green"
-            app:backgroundTint="@color/dark_green"
+            android:backgroundTint="?attr/actionbutton_primary_color"
+            app:backgroundTint="?attr/actionbutton_primary_color"
             app:tint="?attr/colorOnPrimary"
             app:srcCompat="@drawable/ic_add" />
 
@@ -104,9 +104,9 @@
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="70dp"
             android:layout_marginBottom="85dp"
-            android:backgroundTint="@color/blue2"
+            android:backgroundTint="?attr/actionbutton_secondary_color"
             android:visibility="invisible"
-            app:backgroundTint="@color/blue2"
+            app:backgroundTint="?attr/actionbutton_secondary_color"
             app:srcCompat="@drawable/ic_cancel"
             app:tint="?attr/colorOnPrimary" />
 
@@ -118,9 +118,9 @@
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="12dp"
             android:layout_marginBottom="85dp"
-            android:backgroundTint="@color/blue2"
+            android:backgroundTint="?attr/actionbutton_secondary_color"
             android:visibility="invisible"
-            app:backgroundTint="@color/blue2"
+            app:backgroundTint="?attr/actionbutton_secondary_color"
             app:srcCompat="@drawable/ic_check"
             app:tint="?attr/colorOnPrimary" />
 

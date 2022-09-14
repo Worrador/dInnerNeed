@@ -4,4 +4,11 @@
         <item name="android:windowEnterAnimation">@anim/pop_up_window_open</item>
         <item name="android:windowExitAnimation">@anim/pop_up_window_close</item>
     </style>
+    <attr name="menu_icon" format="reference"/>
+    <attr name="submenu_goalicon" format="reference"/>
+    <attr name="submenu_calendaricon" format="reference"/>
+    <attr name="submenu_color" format="reference"/>
+    <attr name="actionbutton_primary_color" format="reference"/>
+    <attr name="actionbutton_secondary_color" format="reference"/>
+
 </resources>

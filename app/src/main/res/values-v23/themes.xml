@@ -21,5 +21,12 @@
         <item name="android:windowBackground">@color/blue</item>
         <item name="android:windowLightStatusBar">false</item>
         <!-- <item name="android:windowFullscreen">true</item>  Majd Áginak ezt bekapcsolni-->
+        <item name="menu_icon">@mipmap/avocado_icon_menu_round</item>
+        <item name="submenu_goalicon">@mipmap/goals_night</item>
+        <item name="submenu_calendaricon">@mipmap/calendar_night_smaller</item>
+
+        <item name="submenu_color">@color/blue2</item>
+        <item name="actionbutton_primary_color">@color/dark_green</item>
+        <item name="actionbutton_secondary_color">@color/blue2</item>
     </style>
 </resources>

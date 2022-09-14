@@ -4,7 +4,9 @@ import android.R
 import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import android.graphics.Color
 import android.graphics.LightingColorFilter
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.view.*
@@ -23,18 +25,17 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.applandeo.materialcalendarview.EventDay
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView.SELECTION_MODE_MULTIPLE
 import whattoeat.dinner.databinding.ActivityMainBinding
-import whattoeat.dinner.ui.Foods.BreakfastFragment
 import whattoeat.dinner.ui.MainViewModel
 import java.lang.reflect.Type
 import java.util.*
 import kotlin.math.abs
+import com.applandeo.materialcalendarview.CalendarView
 import whattoeat.dinner.R as R2
 
 
@@ -159,12 +160,16 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
             val cancelBtn = popupView.findViewById<View>(R2.id.cancelBtn) as FloatingActionButton
             val checkBtn = popupView.findViewById<View>(R2.id.checkBtn) as FloatingActionButton
-            val calView = popupView.findViewById<View>(R2.id.calendarView) as MaterialCalendarView
+            val calendarView = findViewById<View>(R2.id.calendarView) as CalendarView
 
-            calView.selectionMode = SELECTION_MODE_MULTIPLE
+            val events: MutableList<EventDay> = ArrayList()
 
-            val c = Calendar.getInstance().time
-            calView.setDateSelected(c, true)
+            val calendar = Calendar.getInstance()
+            events.add(EventDay(calendar, R.drawable.ic_input_add))
+
+            calendarView.setEvents(events)
+
+
 
             popupWindow.setOnDismissListener(PopupWindow.OnDismissListener {
                 popupWindow.dismiss()
@@ -178,6 +183,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
                 popupWindow.dismiss();
             }
         }
+
 
         // using toolbar as ActionBar
         setSupportActionBar(toolbar)

@@ -1,5 +1,7 @@
 package whattoeat.dinner.ui.results
 
+import android.content.res.Configuration
+import android.graphics.Color.alpha
 import android.os.Bundle
 import android.text.Html
 import android.view.LayoutInflater
@@ -7,7 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -17,6 +21,8 @@ import whattoeat.dinner.R
 import whattoeat.dinner.databinding.FragmentResultsBinding
 import whattoeat.dinner.ui.MainViewModel
 import kotlin.math.absoluteValue
+import android.graphics.Color.alpha
+
 
 class ResultsFragment : Fragment() {
 
@@ -55,6 +61,17 @@ class ResultsFragment : Fragment() {
         val saveResultBtn: Button = binding.saveResultBtn
         val textView: TextView = binding.TextView
         val gifView: ImageView = binding.gifView
+        val darkener: LinearLayout = binding.darkener
+
+        when (myActivity.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                darkener.alpha = 0.65F
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+
+            }
+            Configuration.UI_MODE_NIGHT_UNDEFINED -> {}
+        }
 
         myActivity.setMacros(-1, -1)
 

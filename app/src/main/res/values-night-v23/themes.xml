@@ -7,7 +7,7 @@
         <item name="colorPrimaryVariant">@color/brown</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/brown</item> <!-- List view selected text color -->mm
+        <item name="colorSecondary">@color/dark_brown</item> <!-- List view selected text color -->mm
         <item name="colorSecondaryVariant">@color/dark_green_yellow
         </item> <!-- List view selected background and divider color -->
         <item name="colorOnSecondary">@color/black
@@ -19,5 +19,13 @@
         <item name="android:windowBackground">@color/dark_blue_grad</item>
         <item name="android:listChoiceBackgroundIndicator">@drawable/list_view_background_selector_night</item>
         <item name="android:colorBackground">@color/black</item>
+        <item name="menu_icon">@mipmap/avocadi_icon_night_round</item>
+        <item name="submenu_goalicon">@mipmap/goals_day</item>
+        <item name="submenu_calendaricon">@mipmap/calendar_day</item>
+
+        <item name="submenu_color">@color/dark_blue</item>
+        <item name="actionbutton_primary_color">@color/very_dark_green</item>
+        <item name="actionbutton_secondary_color">@color/dark_blue</item>
+
     </style>
 </resources>
