@@ -28,5 +28,8 @@
         <item name="submenu_color">@color/blue2</item>
         <item name="actionbutton_primary_color">@color/dark_green</item>
         <item name="actionbutton_secondary_color">@color/blue2</item>
+        <item name="resultsbutton_color">@color/brown</item>
+
+
     </style>
 </resources>

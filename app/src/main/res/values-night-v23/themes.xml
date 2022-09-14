@@ -26,6 +26,7 @@
         <item name="submenu_color">@color/dark_blue</item>
         <item name="actionbutton_primary_color">@color/very_dark_green</item>
         <item name="actionbutton_secondary_color">@color/dark_blue</item>
+        <item name="resultsbutton_color">@color/dark_brown</item>
 
     </style>
 </resources>

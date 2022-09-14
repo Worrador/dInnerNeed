@@ -10,5 +10,6 @@
     <attr name="submenu_color" format="reference"/>
     <attr name="actionbutton_primary_color" format="reference"/>
     <attr name="actionbutton_secondary_color" format="reference"/>
+    <attr name="resultsbutton_color" format="reference"/>
 
 </resources>
