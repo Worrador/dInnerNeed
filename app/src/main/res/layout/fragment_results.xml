@@ -17,6 +17,71 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:weightSum="2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/saveResultBtn"
+            android:background="@drawable/common_button_background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:text="Ezt mentsük el mára:"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_weight="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="?attr/colorOnPrimary"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/option1"
+            android:background="@drawable/common_button_background"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.33"
+            android:text="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="105dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="invisible"
+            android:textColor="?attr/colorOnPrimary"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/option2"
+            android:background="@drawable/common_button_background"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.33"
+            android:text="2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="105dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="invisible"
+            android:textColor="?attr/colorOnPrimary"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/option3"
+            android:background="@drawable/common_button_background"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.33"
+            android:text="3"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="105dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="?attr/colorOnPrimary"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </LinearLayout>
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/resultBtn"
         android:background="@drawable/common_button_background"
@@ -29,21 +94,6 @@
         android:layout_marginBottom="105dp"
         app:layout_constraintEnd_toEndOf="parent"
         android:textColor="?attr/colorOnPrimary"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/saveResultBtn"
-        android:background="@drawable/common_button_background"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:layout_alignParentBottom="true"
-        android:text="Ezt mentsük el mára!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="105dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textColor="?attr/colorOnPrimary"
-        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent" />
 
 

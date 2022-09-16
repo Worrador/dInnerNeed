@@ -7,10 +7,6 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -22,6 +18,7 @@ import whattoeat.dinner.databinding.FragmentResultsBinding
 import whattoeat.dinner.ui.MainViewModel
 import kotlin.math.absoluteValue
 import android.graphics.Color.alpha
+import android.widget.*
 
 
 class ResultsFragment : Fragment() {
@@ -170,7 +167,7 @@ class ResultsFragment : Fragment() {
             if(first < 2 * goalDiffMaxPercentage){
                 textToBeDisplayed = "Sikerülhet elérni a célodat, mert már " + getColoredSpanned("$allCalories/${myActivity.calorieGoal}", "#d1e659") +
                         " kalóriát és " + getColoredSpanned("$allProteins/${myActivity.proteinGoal}", "#d1e659") +
-                        " proteint bevittél!<br/><br/>Ehhez a következő(k) közül válassz:<br/><br/>"
+                        " fehérjét bevittél!<br/><br/>Ehhez a következő(k) közül válassz:<br/><br/>"
                 textToBeDisplayed += getColoredSpanned("1. $firstName ", "#42a543") +
                         getColoredSpannedLittle("(${allCalories+firstCal}/${myActivity.calorieGoal}, ${allProteins+firstPro}/${myActivity.proteinGoal})<br/>", "#d1e659")
                 if(second < 2 * goalDiffMaxPercentage){
@@ -184,23 +181,28 @@ class ResultsFragment : Fragment() {
                 Glide.with(this).load(R.drawable.bravocado).into(gifView)
             }else{
                 textToBeDisplayed += "Sajnos ma már nem tudod elérni a célodat, mert " + getColoredSpanned("$allCalories/${myActivity.calorieGoal}", "#dd1324") +
-                        " kalóriát és " + getColoredSpanned("$allProteins/${myActivity.proteinGoal}", "#dd1324") +" proteint vittél be." +
+                        " kalóriát és " + getColoredSpanned("$allProteins/${myActivity.proteinGoal}", "#dd1324") +" fehérjét vittél be." +
                         "<br/><br/>Mindenesetre a legjobb választás a(z): " + getColoredSpanned("$firstName", "#42a543") + " lenne. <br/><br/>Ezzel " +
                         getColoredSpanned("${allCalories+firstCal}/${myActivity.calorieGoal}", "#d1e659") +
-                        " kalóriát és " + getColoredSpanned("${allProteins+firstPro}/${myActivity.proteinGoal}", "#d1e659") +" proteint fogsz bevinni."
+                        " kalóriát és " + getColoredSpanned("${allProteins+firstPro}/${myActivity.proteinGoal}", "#d1e659") +" fehérjét fogsz bevinni."
                 Glide.with(this).load(R.drawable.nahvocado).into(gifView)
+                saveResultBtn.text = "Ezt mentsük el mára: $firstName"
+                saveResultBtn.visibility = View.VISIBLE
             }
             
             return textToBeDisplayed
         }
 
         resultBtn.setOnClickListener {
-            val name = getColoredSpanned("Hiren", "#800000")
-            val surName = getColoredSpanned("Patel", "#000080")
-
             textView.text = (Html.fromHtml(getDinner()))
             resultBtn.visibility = View.INVISIBLE
-            saveResultBtn.visibility = View.VISIBLE
+        }
+
+        saveResultBtn.setOnClickListener{
+            Toast.makeText(
+                context,
+                "Elmentve!", Toast.LENGTH_SHORT).show()
+
         }
         return root
     }

@@ -22,9 +22,11 @@
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
             app:eventsEnabled="true"
+            app:type="one_day_picker"
             app:headerLabelColor="@color/dark_green"
             app:todayLabelColor="?attr/colorSecondary"
             app:abbreviationsBarColor="?attr/colorSecondaryVariant"
+            app:selectionColor="?attr/colorSecondary"
             app:pagesColor="?attr/colorSecondaryVariant"
             app:headerColor="?attr/colorSecondaryVariant"
             android:layout_height="wrap_content" />

@@ -360,8 +360,18 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         myEdit.commit()
         myEdit.putInt("proteinGoal", proteinGoal)
         myEdit.commit()
-
     }
+
+    fun saveResults(){
+        /*
+        val sharedPreferences = getPreferences(Context.MODE_APPEND)
+        val myEdit = sharedPreferences.edit()
+        myEdit.remove("breakfastList")
+        myEdit.commit()
+        myEdit.putString("breakfastList", gson.toJson(BreakfastList))
+        myEdit.commit()*/
+    }
+
     // Override this method to recognize touch event
     override fun onTouchEvent(event: MotionEvent): Boolean {
         return if (gestureDetector.onTouchEvent(event)) {
