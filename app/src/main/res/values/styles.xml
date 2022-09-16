@@ -2,7 +2,6 @@
 <resources>
     <style name="Animation">
         <item name="android:windowEnterAnimation">@anim/pop_up_window_open</item>
-        <item name="android:windowExitAnimation">@anim/pop_up_window_close</item>
     </style>
     <attr name="menu_icon" format="reference"/>
     <attr name="submenu_goalicon" format="reference"/>

@@ -95,6 +95,18 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         goalMenu.setOnClickListener{
             navView.visibility = View.INVISIBLE
 
+            val slide_down = AnimationUtils.loadAnimation(
+                applicationContext,
+                R2.anim.slide_down_navbar
+            )
+
+            val slide_up = AnimationUtils.loadAnimation(
+                applicationContext,
+                R2.anim.slide_up_navbar
+            )
+            navbarMock.startAnimation(slide_up)
+            navView.startAnimation(slide_down)
+
 
             // inflate the layout of the popup window
             val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -106,8 +118,8 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             val focusable = true // lets taps outside the popup also dismiss it
 
             val popupWindow = PopupWindow(popupView, width, height, focusable)
-            popupWindow.isOutsideTouchable = false;
-            popupWindow.animationStyle = R2.style.Animation;
+            popupWindow.isOutsideTouchable = false
+            popupWindow.animationStyle = R2.style.Animation
 
             // show the popup window
             // which view you pass in doesn't matter, it is only used for the window tolken
@@ -140,6 +152,19 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
         historyMenu.setOnClickListener{
             navView.visibility = View.INVISIBLE
+
+            val slide_down = AnimationUtils.loadAnimation(
+                applicationContext,
+                R2.anim.slide_down_navbar
+            )
+
+            val slide_up = AnimationUtils.loadAnimation(
+                applicationContext,
+                R2.anim.slide_up_navbar
+            )
+            navbarMock.startAnimation(slide_up)
+            navView.startAnimation(slide_down)
+            
             // inflate the layout of the popup window
             val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val popupView: View = inflater.inflate(R2.layout.calendar_dialog_fragment, null)
