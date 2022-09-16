@@ -4,9 +4,7 @@ import android.R
 import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import android.graphics.Color
 import android.graphics.LightingColorFilter
-import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.view.*
@@ -21,10 +19,13 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.applandeo.materialcalendarview.CalendarView
 import com.applandeo.materialcalendarview.EventDay
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -35,7 +36,6 @@ import whattoeat.dinner.ui.MainViewModel
 import java.lang.reflect.Type
 import java.util.*
 import kotlin.math.abs
-import com.applandeo.materialcalendarview.CalendarView
 import whattoeat.dinner.R as R2
 
 
@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var gestureDetector: GestureDetector
     lateinit var navView: BottomNavigationView
+    lateinit var navController: NavController
     private val swipeThreshold = 100
     private val swipeVelocityThreshold = 100
     lateinit var mainViewModel : MainViewModel
@@ -200,7 +201,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R2.id.nav_host_fragment_activity_main) as NavHostFragment
-        val navController: NavController = navHostFragment.navController
+        navController = navHostFragment.navController
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -379,20 +380,14 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
                         if(currentFragmentidx > 0){
                             currentFragmentidx -= 1
                         }
-                        Toast.makeText(applicationContext, "Left to Right swipe gesture", Toast.LENGTH_SHORT).show()
                     }
                     else {
                         if(currentFragmentidx < 3){
                             currentFragmentidx += 1
                         }
-                        Toast.makeText(applicationContext, "Right to Left swipe gesture", Toast.LENGTH_SHORT).show()
                     }
-                    when (currentFragmentidx) {
-                        0 -> navView.selectedItemId = R2.id.home_frag
-                        1 -> navView.selectedItemId = R2.id.lunch_frag
-                        2 -> navView.selectedItemId = R2.id.snacks_frag
-                        3 -> navView.selectedItemId = R2.id.results_frag
-                    }
+                    val navItem: MenuItem  = navView.menu.getItem(currentFragmentidx)
+                    navItem.onNavDestinationSelected(navController)
                 }
             }
         }
