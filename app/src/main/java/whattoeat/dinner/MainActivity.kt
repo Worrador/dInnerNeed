@@ -1,9 +1,11 @@
 package whattoeat.dinner
 
 import android.R
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import android.graphics.Color
 import android.graphics.LightingColorFilter
 import android.os.Build
 import android.os.Bundle
@@ -164,7 +166,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             )
             navbarMock.startAnimation(slide_up)
             navView.startAnimation(slide_down)
-            
+
             // inflate the layout of the popup window
             val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val popupView: View = inflater.inflate(R2.layout.calendar_dialog_fragment, null)
@@ -186,16 +188,15 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
             val cancelBtn = popupView.findViewById<View>(R2.id.cancelBtn) as FloatingActionButton
             val checkBtn = popupView.findViewById<View>(R2.id.checkBtn) as FloatingActionButton
-            val calendarView = findViewById<View>(R2.id.calendarView) as CalendarView
+            val calendarView = popupView.findViewById<View>(R2.id.calendarView) as CalendarView
 
             val events: MutableList<EventDay> = ArrayList()
 
             val calendar = Calendar.getInstance()
-            events.add(EventDay(calendar, R.drawable.ic_input_add))
+
+            events.add(EventDay(calendar, R2.drawable.ic_check_green))
 
             calendarView.setEvents(events)
-
-
 
             popupWindow.setOnDismissListener(PopupWindow.OnDismissListener {
                 popupWindow.dismiss()
