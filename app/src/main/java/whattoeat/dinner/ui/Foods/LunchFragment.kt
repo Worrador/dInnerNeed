@@ -1,9 +1,7 @@
 package whattoeat.dinner.ui.Foods
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -16,12 +14,13 @@ import whattoeat.dinner.hideKeyboard
 import whattoeat.dinner.ui.MainViewModel
 
 
-class LunchFragment : Fragment() {
+class LunchFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGestureListener {
 
     private var _binding: FragmentLunchBinding? = null
     private val binding get() = _binding!!
     private var isDataAddition: Boolean = false
     private var isModification: Boolean = false
+    private lateinit var gestureDetector: GestureDetector
 
     private var addedCalories = 0
     private var addedProteins = 0
@@ -49,6 +48,9 @@ class LunchFragment : Fragment() {
         val addBtn: FloatingActionButton = binding.addBtn
         val delBtn: FloatingActionButton = binding.deleteBtn
         val listView: ListView = binding.lunchListView
+
+        // Initializing the gesture detector
+        gestureDetector = GestureDetector(this)
 
         /* Local functions */
         fun setDefaultVisibility(){
@@ -155,6 +157,7 @@ class LunchFragment : Fragment() {
         /* Set listView */
         generateListView()
         listView.choiceMode = ListView.CHOICE_MODE_MULTIPLE
+        listView.setOnTouchListener(this)
         listView.onItemClickListener =
             AdapterView.OnItemClickListener { _, view, position, _ ->
                 if (mainViewModel.clickedPosListLunch.contains(position)) {
@@ -197,5 +200,38 @@ class LunchFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+
+    override fun onTouch(v: View?, e: MotionEvent?): Boolean {
+        return gestureDetector.onTouchEvent(e)
+    }
+
+    // All the below methods are GestureDetector.OnGestureListener members
+    // Except onFling, all must "return false" if Boolean return type
+    // and "return" if no return type
+    override fun onDown(e: MotionEvent?): Boolean {
+        return false
+    }
+
+    override fun onShowPress(e: MotionEvent?) {
+        return
+    }
+
+    override fun onSingleTapUp(e: MotionEvent?): Boolean {
+        return false
+    }
+
+    override fun onScroll(e1: MotionEvent?, e2: MotionEvent?, distanceX: Float, distanceY: Float): Boolean {
+        return false
+    }
+
+    override fun onLongPress(e: MotionEvent?) {
+        return
+    }
+
+    override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+        val myActivity = (activity as MainActivity?)!!
+        return myActivity.onFling(e1, e2, velocityX, velocityY)
     }
 }

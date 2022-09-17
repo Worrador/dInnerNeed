@@ -1,13 +1,10 @@
 package whattoeat.dinner.ui.results
 
 import android.content.res.Configuration
-import android.graphics.Color.alpha
 import android.os.Bundle
 import android.text.Html
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatDelegate
+import android.view.*
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -17,11 +14,9 @@ import whattoeat.dinner.R
 import whattoeat.dinner.databinding.FragmentResultsBinding
 import whattoeat.dinner.ui.MainViewModel
 import kotlin.math.absoluteValue
-import android.graphics.Color.alpha
-import android.widget.*
 
 
-class ResultsFragment : Fragment() {
+class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGestureListener {
 
     private var _binding: FragmentResultsBinding? = null
 
@@ -31,6 +26,7 @@ class ResultsFragment : Fragment() {
     var allCalories = 0
     var allProteins = 0
     private val goalDiffMaxPercentage = 0.05
+    private lateinit var gestureDetector: GestureDetector
 
     private fun getColoredSpanned(text: String, color: String): String? {
         return "<b><font color=$color>$text</font></b>"
@@ -57,8 +53,30 @@ class ResultsFragment : Fragment() {
         val resultBtn: Button = binding.resultBtn
         val saveResultBtn: Button = binding.saveResultBtn
         val textView: TextView = binding.TextView
+        textView.setOnTouchListener(this)
         val gifView: ImageView = binding.gifView
+        gifView.setOnTouchListener(this)
         val darkener: LinearLayout = binding.darkener
+        darkener.setOnTouchListener(this)
+
+        // Initializing the gesture detector
+        gestureDetector = GestureDetector(this)
+
+        val users = arrayOf(
+            "Suresh Dasari",
+            "Trishika Dasari",
+            "Rohini Alavala",
+            "Praveen Kumar",
+            "Madhav Sai"
+        )
+
+
+        var autocompleteTV  : AutoCompleteTextView = binding.autoCompleteTextView
+        context?.let {
+            val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(it, android.R.layout.simple_spinner_dropdown_item, users)
+            autocompleteTV.setAdapter(arrayAdapter)
+        }
+
 
         when (myActivity.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_YES -> {
@@ -210,5 +228,38 @@ class ResultsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+
+    override fun onTouch(v: View?, e: MotionEvent?): Boolean {
+        return gestureDetector.onTouchEvent(e)
+    }
+
+    // All the below methods are GestureDetector.OnGestureListener members
+    // Except onFling, all must "return false" if Boolean return type
+    // and "return" if no return type
+    override fun onDown(e: MotionEvent?): Boolean {
+        return false
+    }
+
+    override fun onShowPress(e: MotionEvent?) {
+        return
+    }
+
+    override fun onSingleTapUp(e: MotionEvent?): Boolean {
+        return false
+    }
+
+    override fun onScroll(e1: MotionEvent?, e2: MotionEvent?, distanceX: Float, distanceY: Float): Boolean {
+        return false
+    }
+
+    override fun onLongPress(e: MotionEvent?) {
+        return
+    }
+
+    override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+        val myActivity = (activity as MainActivity?)!!
+        return myActivity.onFling(e1, e2, velocityX, velocityY)
     }
 }
