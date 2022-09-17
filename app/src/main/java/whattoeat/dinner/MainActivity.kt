@@ -409,6 +409,16 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             val diffX = e2.x - e1.x
             if (abs(diffX) > abs(diffY)) {
                 if (abs(diffX) > swipeThreshold && abs(velocityX) > swipeVelocityThreshold) {
+
+                    if(navView.menu.getItem(0).isChecked)
+                        currentFragmentidx = 0
+                    else if(navView.menu.getItem(1).isChecked)
+                        currentFragmentidx = 1
+                    else if(navView.menu.getItem(2).isChecked)
+                        currentFragmentidx = 2
+                    else if(navView.menu.getItem(3).isChecked)
+                        currentFragmentidx = 3
+
                     if (diffX > 0) {
 
                         if(currentFragmentidx > 0){

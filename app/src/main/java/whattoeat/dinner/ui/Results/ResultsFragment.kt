@@ -22,6 +22,7 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
     private var _binding: FragmentResultsBinding? = null
 
     lateinit var myActivity: MainActivity
+    lateinit var autocompleteTV: AutoCompleteTextView
 
     private val binding get() = _binding!!
     var allCalories = 0
@@ -64,24 +65,18 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
         // Initializing the gesture detector
         gestureDetector = GestureDetector(this)
 
-        val users = arrayOf(
-            "Suresh Dasari",
-            "Trishika Dasari",
-            "Rohini Alavala",
-            "Praveen Kumar",
-            "Madhav Sai"
-        )
+        var foodsResults = ArrayList<String>()
 
 
-        var autocompleteTV  : AutoCompleteTextView = binding.autoCompleteTextView
+        autocompleteTV  = binding.autoCompleteTextView
         context?.let {
-            val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(it, android.R.layout.simple_spinner_dropdown_item, users)
+            val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(it, android.R.layout.simple_spinner_dropdown_item, foodsResults)
             autocompleteTV.setAdapter(arrayAdapter)
         }
 
         autocompleteTV.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id->
-                saveResultBtn.text = "Mentés"
+                saveResultBtn.visibility = View.VISIBLE
             }
 
         when (myActivity.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
@@ -129,6 +124,7 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
             var textToBeDisplayed = ""//A következők közül válassz:\n\n"
 
             var allFoodsList: MutableList<Food> = mutableListOf<Food>()
+
             allFoodsList.addAll(myActivity.BreakfastList)
             allFoodsList.addAll(myActivity.LunchList)
             allFoodsList.addAll(myActivity.SnacksList)
@@ -146,6 +142,8 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
             var thirdCal = 0.0
             var thirdPro = 0.0
             var thirdName = ""
+
+            foodsResults.plusElement("$firstName")
 
             for (food in allFoodsList){
                 val current = calculateDiffPercentage(food.calories.toDouble(), food.proteins.toDouble())
@@ -188,6 +186,8 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
                     thirdPro = food.proteins.toDouble()
                 }
             }
+
+            foodsResults.add("$firstName")
             if(first < 2 * goalDiffMaxPercentage){
                 textToBeDisplayed = "Sikerülhet elérni a célodat, mert már " + getColoredSpanned("$allCalories/${myActivity.calorieGoal}", "#d1e659") +
                         " kalóriát és " + getColoredSpanned("$allProteins/${myActivity.proteinGoal}", "#d1e659") +
@@ -195,9 +195,11 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
                 textToBeDisplayed += getColoredSpanned("1. $firstName ", "#42a543") +
                         getColoredSpannedLittle("(${allCalories+firstCal}/${myActivity.calorieGoal}, ${allProteins+firstPro}/${myActivity.proteinGoal})<br/>", "#d1e659")
                 if(second < 2 * goalDiffMaxPercentage){
+                    foodsResults.add("$secondName")
                     textToBeDisplayed += getColoredSpanned("2. $secondName ", "#42a543") +
                             getColoredSpannedLittle("(${allCalories+secondCal}/${myActivity.calorieGoal}, ${allProteins+secondPro}/${myActivity.proteinGoal})<br/>", "#d1e659")
                     if(third < 2 * goalDiffMaxPercentage){
+                        foodsResults.add("$thirdName")
                         textToBeDisplayed += getColoredSpanned("3. $thirdName ", "#42a543") +
                                 getColoredSpannedLittle("(${allCalories+thirdCal}/${myActivity.calorieGoal}, ${allProteins+thirdPro}/${myActivity.proteinGoal})", "#d1e659")
                     }
@@ -211,6 +213,7 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
                         " kalóriát és " + getColoredSpanned("${allProteins+firstPro}/${myActivity.proteinGoal}", "#d1e659") +" fehérjét fogsz bevinni."
                 Glide.with(this).load(R.drawable.nahvocado).into(gifView)
             }
+            foodsResults.add("Valami mást")
             
             return textToBeDisplayed
         }
