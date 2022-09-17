@@ -7,25 +7,25 @@
 
     <fragment
         android:id="@+id/navigation_breakfast"
-        android:name="whattoeat.dinner.ui.Foods.BreakfastFragment"
+        android:name="whattoeat.dinner.ui.Meals.BreakfastFragment"
         android:label="@string/title_breakfast"
         tools:layout="@layout/fragment_breakfast" />
 
     <fragment
         android:id="@+id/navigation_lunch"
-        android:name="whattoeat.dinner.ui.Foods.LunchFragment"
+        android:name="whattoeat.dinner.ui.Meals.LunchFragment"
         android:label="@string/title_lunch"
         tools:layout="@layout/fragment_lunch" />
 
     <fragment
         android:id="@+id/navigation_snacks"
-        android:name="whattoeat.dinner.ui.Foods.SnacksFragment"
+        android:name="whattoeat.dinner.ui.Meals.SnacksFragment"
         android:label="@string/title_snack"
         tools:layout="@layout/fragment_snacks" />
 
     <fragment
         android:id="@+id/navigation_results"
-        android:name="whattoeat.dinner.ui.results.ResultsFragment"
+        android:name="whattoeat.dinner.ui.Results.ResultsFragment"
         android:label="@string/title_results"
         tools:layout="@layout/fragment_results" />
 </navigation>

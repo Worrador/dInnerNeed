@@ -1,11 +1,9 @@
 package whattoeat.dinner
 
 import android.R
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import android.graphics.Color
 import android.graphics.LightingColorFilter
 import android.os.Build
 import android.os.Bundle
@@ -21,7 +19,6 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.onNavDestinationSelected
@@ -35,6 +32,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import whattoeat.dinner.databinding.ActivityMainBinding
 import whattoeat.dinner.ui.MainViewModel
+import whattoeat.dinner.ui.Meals.Food
 import java.lang.reflect.Type
 import java.util.*
 import kotlin.math.abs

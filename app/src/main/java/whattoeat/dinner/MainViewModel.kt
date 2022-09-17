@@ -1,6 +1,6 @@
 package whattoeat.dinner.ui
 import androidx.lifecycle.ViewModel
-import whattoeat.dinner.Food
+import whattoeat.dinner.ui.Meals.Food
 
 
 class MainViewModel : ViewModel() {

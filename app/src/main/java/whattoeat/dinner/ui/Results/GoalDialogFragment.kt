@@ -1,4 +1,4 @@
-package whattoeat.dinner.ui.results
+package whattoeat.dinner.ui.Results
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,14 +8,14 @@ import androidx.fragment.app.DialogFragment
 import whattoeat.dinner.R as R2
 
 
-class CalendarDialogFragment : DialogFragment() {
+class GoalDialogFragment : DialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R2.layout.calendar_dialog_fragment, container, false)
+        return inflater.inflate(R2.layout.goal_dialog_fragment, container, false)
     }
 }
 

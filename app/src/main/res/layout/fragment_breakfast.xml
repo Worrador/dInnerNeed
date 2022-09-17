@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/home_frag"
-    tools:context=".ui.Foods.BreakfastFragment">
+    tools:context=".ui.Meals.BreakfastFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:id="@+id/results_frag"
-    tools:context=".ui.results.ResultsFragment">
+    tools:context=".ui.Results.ResultsFragment">
 
     <ImageView
         android:id="@+id/gifView"
@@ -21,6 +21,7 @@
         android:layout_width="match_parent"
         android:layout_alignParentBottom="true"
         android:weightSum="2"
+        android:background="?attr/colorSecondary"
         android:layout_marginBottom="105dp"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_height="wrap_content">
@@ -30,27 +31,46 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="?attr/colorSecondary"
-            android:text="Ezt mentsük el mára:"
+            android:text="Ezt fogom ma enni:"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_weight="1"
+            android:textAllCaps="false"
+            android:textSize="18dp"
+            android:fontFamily="casual"
             app:layout_constraintEnd_toEndOf="parent"
             android:textColor="?attr/colorOnPrimary"
             app:layout_constraintStart_toStartOf="parent" />
 
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:background="?attr/colorSecondary"
+            app:hintTextColor="@color/light_brown"
+            android:layout_gravity="center"
+            app:boxBackgroundColor="?attr/colorSecondary"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:endIconDrawable="@drawable/ic_arrow_down"
+            app:endIconTint="?attr/colorOnPrimary"
             android:layout_height="match_parent">
 
             <AutoCompleteTextView
+                android:background="@color/light_brown"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingTop="10dp"
+                android:fontFamily="casual"
+                android:paddingBottom="10dp"
+                android:textSize="18dp"
+                android:singleLine="true"
+                android:textAlignment="center"
+                tools:ignore="LabelFor"
                 android:id="@+id/autoCompleteTextView"
                 android:layout_width="match_parent"
-                android:background="?attr/colorSecondary"
                 android:layout_height="match_parent"
                 android:inputType="none"
+                android:textColor="?attr/colorOnPrimary"
                 android:text="Válassz ételt!"
                 />
 
@@ -93,7 +113,6 @@
         android:layout_height="match_parent"
         android:alpha="0"
         android:background="@color/black"
-        android:orientation="horizontal"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="0dp" />
+        android:orientation="horizontal" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

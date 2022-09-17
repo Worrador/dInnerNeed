@@ -1,4 +1,4 @@
-package whattoeat.dinner.ui.results
+package whattoeat.dinner.ui.Results
 
 import android.content.res.Configuration
 import android.os.Bundle
@@ -8,7 +8,7 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import whattoeat.dinner.Food
+import whattoeat.dinner.ui.Meals.Food
 import whattoeat.dinner.MainActivity
 import whattoeat.dinner.R
 import whattoeat.dinner.databinding.FragmentResultsBinding

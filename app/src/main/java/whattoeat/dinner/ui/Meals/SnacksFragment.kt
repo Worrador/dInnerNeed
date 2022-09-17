@@ -1,6 +1,4 @@
-package whattoeat.dinner.ui.Foods
-
-import android.R.bool
+package whattoeat.dinner.ui.Meals
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.*
@@ -8,17 +6,16 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import whattoeat.dinner.Food
 import whattoeat.dinner.MainActivity
 import whattoeat.dinner.R
-import whattoeat.dinner.databinding.FragmentBreakfastBinding
+import whattoeat.dinner.databinding.FragmentSnacksBinding
 import whattoeat.dinner.hideKeyboard
 import whattoeat.dinner.ui.MainViewModel
 
 
-class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGestureListener {
+class SnacksFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGestureListener {
 
-    private var _binding: FragmentBreakfastBinding? = null
+    private var _binding: FragmentSnacksBinding? = null
     private val binding get() = _binding!!
     private var isDataAddition: Boolean = false
     private var isModification: Boolean = false
@@ -33,7 +30,6 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
         savedInstanceState: Bundle?
     ): View {
 
-
         /* Set objects */
         val myActivity = (activity as MainActivity?)!!
 
@@ -41,7 +37,7 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
             ViewModelProvider(this)[MainViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
 
-        _binding = FragmentBreakfastBinding.inflate(inflater, container, false)
+        _binding = FragmentSnacksBinding.inflate(inflater, container, false)
         val root: View = binding.root
         val nameText: TextView = binding.textView
         val caloriesText: TextView = binding.textViewCalories
@@ -50,7 +46,7 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
         val checkBtn: FloatingActionButton = binding.checkBtn
         val addBtn: FloatingActionButton = binding.addBtn
         val delBtn: FloatingActionButton = binding.deleteBtn
-        val listView: ListView = binding.breakfastListView
+        val listView: ListView = binding.snacksListView
 
         // Initializing the gesture detector
         gestureDetector = GestureDetector(this)
@@ -86,7 +82,7 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
         }
 
         fun generateListView(){
-            val listOfItem: ArrayList<String> = mainViewModel.setMultipleListView(myActivity.BreakfastList)
+            val listOfItem: ArrayList<String> = mainViewModel.setMultipleListView(myActivity.SnacksList)
             context?.let {
                 val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(it, R.layout.list_text_view, listOfItem)
                 listView.adapter = arrayAdapter
@@ -103,9 +99,9 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
         delBtn.setOnClickListener {
             isDataAddition = false
             isModification = true
-            for (pos in mainViewModel.clickedPosListBreakfast)
+            for (pos in mainViewModel.clickedPosListSnacks)
                 listView.setItemChecked(pos, false)
-            mainViewModel.clickedPosListBreakfast.clear()
+            mainViewModel.clickedPosListSnacks.clear()
             setModifyingVisibility()
         }
 
@@ -117,7 +113,7 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
                     Toast.makeText(
                         context,
                         "Hozzáadva!", Toast.LENGTH_SHORT).show()
-                    myActivity.BreakfastList.add(Food(nameText.text.toString(), caloriesText.text.toString().toInt(), proteinsText.text.toString().toInt()))
+                    myActivity.SnacksList.add(Food(nameText.text.toString(), caloriesText.text.toString().toInt(), proteinsText.text.toString().toInt()))
                     setDefaultVisibility()
                     generateListView()
                 }else{
@@ -127,11 +123,11 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
                 }
             }else{
                 var flag = false
-                for (pos in mainViewModel.clickedPosListBreakfast){
+                for (pos in mainViewModel.clickedPosListSnacks){
                     val foodToDeleteName = listView.getItemAtPosition(pos)
-                    for(food in myActivity.BreakfastList){
+                    for(food in myActivity.SnacksList){
                         if(food.name == foodToDeleteName) {
-                            flag = flag or myActivity.BreakfastList.remove(food)
+                            flag = flag or myActivity.SnacksList.remove(food)
                             break
                         }
                     }
@@ -141,7 +137,7 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
                     Toast.makeText(
                         context,
                         "Törölve!", Toast.LENGTH_SHORT).show()
-                    mainViewModel.clickedPosListBreakfast.clear()
+                    mainViewModel.clickedPosListSnacks.clear()
                     generateListView()
                 }
                 setDefaultVisibility()
@@ -150,9 +146,9 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
 
         cancelBtn.setOnClickListener {
             if(isDataAddition.not()) {
-                for (pos in mainViewModel.clickedPosListBreakfast)
+                for (pos in mainViewModel.clickedPosListSnacks)
                     listView.setItemChecked(pos, false)
-                mainViewModel.clickedPosListBreakfast.clear()
+                mainViewModel.clickedPosListSnacks.clear()
             }
             setDefaultVisibility()
         }
@@ -163,23 +159,23 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
         listView.setOnTouchListener(this)
         listView.onItemClickListener =
             AdapterView.OnItemClickListener { _, view, position, _ ->
-                if (mainViewModel.clickedPosListBreakfast.contains(position)) {
-                    mainViewModel.clickedPosListBreakfast.remove(position)
+                if (mainViewModel.clickedPosListSnacks.contains(position)) {
+                    mainViewModel.clickedPosListSnacks.remove(position)
                 }
                 else {
-                    mainViewModel.clickedPosListBreakfast.add(position)
+                    mainViewModel.clickedPosListSnacks.add(position)
                 }
 
                 if(!isModification) {
                     calculateAddedMacros()
                 }
             }
-        for (pos in mainViewModel.clickedPosListBreakfast) {
+        for (pos in mainViewModel.clickedPosListSnacks) {
             listView.setItemChecked(pos, true)
         }
         calculateAddedMacros()
 
-        return root 
+        return root
     }
 
     private fun calculateAddedMacros(){
@@ -193,9 +189,9 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
         addedCalories = 0
         addedProteins = 0
 
-        for (pos in mainViewModel.clickedPosListBreakfast){
-            addedCalories += myActivity.BreakfastList[pos].calories
-            addedProteins += myActivity.BreakfastList[pos].proteins
+        for (pos in mainViewModel.clickedPosListSnacks){
+            addedCalories += myActivity.SnacksList[pos].calories
+            addedProteins += myActivity.SnacksList[pos].proteins
         }
         myActivity.setMacros(addedCalories, addedProteins)
     }
@@ -204,6 +200,7 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
         super.onDestroyView()
         _binding = null
     }
+
 
     override fun onTouch(v: View?, e: MotionEvent?): Boolean {
         return gestureDetector.onTouchEvent(e)

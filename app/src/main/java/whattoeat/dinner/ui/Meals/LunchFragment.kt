@@ -1,4 +1,4 @@
-package whattoeat.dinner.ui.Foods
+package whattoeat.dinner.ui.Meals
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.*
@@ -6,7 +6,6 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import whattoeat.dinner.Food
 import whattoeat.dinner.MainActivity
 import whattoeat.dinner.R
 import whattoeat.dinner.databinding.FragmentLunchBinding

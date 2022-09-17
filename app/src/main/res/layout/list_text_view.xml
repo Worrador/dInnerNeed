@@ -7,6 +7,7 @@
     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
     android:checkMarkTint="@menu/list_view_selector"
     android:gravity="center_vertical"
+    android:fontFamily="casual"
     android:paddingStart="?android:attr/listPreferredItemPaddingStart"
     android:paddingTop="2dip"
     android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
