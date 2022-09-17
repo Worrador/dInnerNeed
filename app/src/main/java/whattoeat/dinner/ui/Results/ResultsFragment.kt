@@ -1,6 +1,7 @@
 package whattoeat.dinner.ui.Results
 
 import android.content.res.Configuration
+import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Html
 import android.view.*
@@ -8,11 +9,11 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import whattoeat.dinner.ui.Meals.Food
 import whattoeat.dinner.MainActivity
 import whattoeat.dinner.R
 import whattoeat.dinner.databinding.FragmentResultsBinding
 import whattoeat.dinner.ui.MainViewModel
+import whattoeat.dinner.ui.Meals.Food
 import kotlin.math.absoluteValue
 
 
@@ -58,6 +59,7 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
         gifView.setOnTouchListener(this)
         val darkener: LinearLayout = binding.darkener
         darkener.setOnTouchListener(this)
+        val resultsLayout: LinearLayout = binding.resultsLayout
 
         // Initializing the gesture detector
         gestureDetector = GestureDetector(this)
@@ -77,6 +79,10 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
             autocompleteTV.setAdapter(arrayAdapter)
         }
 
+        autocompleteTV.onItemClickListener =
+            AdapterView.OnItemClickListener { parent, view, position, id->
+                saveResultBtn.text = "Mentés"
+            }
 
         when (myActivity.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_YES -> {
@@ -204,8 +210,6 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
                         getColoredSpanned("${allCalories+firstCal}/${myActivity.calorieGoal}", "#d1e659") +
                         " kalóriát és " + getColoredSpanned("${allProteins+firstPro}/${myActivity.proteinGoal}", "#d1e659") +" fehérjét fogsz bevinni."
                 Glide.with(this).load(R.drawable.nahvocado).into(gifView)
-                saveResultBtn.text = "Ezt mentsük el mára: $firstName"
-                saveResultBtn.visibility = View.VISIBLE
             }
             
             return textToBeDisplayed
@@ -214,6 +218,7 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
         resultBtn.setOnClickListener {
             textView.text = (Html.fromHtml(getDinner()))
             resultBtn.visibility = View.INVISIBLE
+            resultsLayout.visibility = View.VISIBLE
         }
 
         saveResultBtn.setOnClickListener{
