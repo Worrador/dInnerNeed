@@ -3,12 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@drawable/rounded_dialog_fragment_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,37 +38,97 @@
             android:background="?attr/colorSecondaryVariant"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:weightSum="2"
             android:layout_marginTop="10dp"
             android:gravity="center"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/cancelBtn"
+            <TextView
                 android:layout_width="wrap_content"
+                android:textColor="?attr/colorOnSecondary"
+                android:text="Aznap elért eredmények:"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/dark_green"
-                android:padding="10dp"
-                app:backgroundTint="@color/dark_green"
-                android:layout_marginEnd="12dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                app:srcCompat="@drawable/ic_cancel"
-                app:tint="?attr/colorOnPrimary" />
+                android:layout_weight="1"
+                android:padding="15dp"
+                android:autofillHints="1800"
+                android:gravity="left"
+                android:textSize="20sp"/>
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/checkBtn"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/dark_green"
-                app:backgroundTint="@color/dark_green"
-                app:srcCompat="@drawable/ic_check"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                app:tint="?attr/colorOnPrimary" />
+                android:background="?attr/colorSecondaryVariant"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/calTextView"
+                    android:layout_width="wrap_content"
+                    android:textColor="?attr/colorSecondary"
+                    android:text="Kalória:"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingVertical="10dp"
+                    android:paddingStart="15dp"
+                    android:autofillHints="1800"
+                    android:gravity="left"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/calTextViewData"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/dark_green"
+                    android:layout_weight="1"
+                    android:text="1650 / 1700"
+                    android:ems="4"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorSecondaryVariant"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/proTextView"
+                    android:layout_width="wrap_content"
+                    android:textColor="?attr/colorSecondary"
+                    android:text="Fehérje:"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingVertical="10dp"
+                    android:paddingStart="15dp"
+                    android:autofillHints="1800"
+                    android:gravity="left"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/proTextViewData"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/dark_green"
+                    android:layout_weight="1"
+                    android:text="42 / 50"
+                    android:ems="4"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>

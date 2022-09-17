@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
             val p = container.layoutParams as WindowManager.LayoutParams
             p.flags = p.flags or WindowManager.LayoutParams.FLAG_DIM_BEHIND
-            p.dimAmount = 0.3f
+            p.dimAmount = 0.5f
             wm.updateViewLayout(container, p)
         }
 
@@ -104,6 +104,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
                 applicationContext,
                 R2.anim.slide_up_navbar
             )
+
             navbarMock.startAnimation(slide_up)
             navView.startAnimation(slide_down)
 
@@ -123,12 +124,10 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
             // show the popup window
             // which view you pass in doesn't matter, it is only used for the window tolken
-            popupWindow.showAtLocation(binding.root, Gravity.CENTER, 0, -100)
+            popupWindow.showAtLocation(binding.root, Gravity.CENTER, 0, -150)
             popupWindow.dimBehind()
 
-
-            val cancelBtn = popupView.findViewById<View>(R2.id.cancelBtn) as FloatingActionButton
-            val checkBtn = popupView.findViewById<View>(R2.id.checkBtn) as FloatingActionButton
+            val checkBtn = popupView.findViewById<View>(R2.id.checkBtn) as Button
             val caloriesEditText = popupView.findViewById<View>(R2.id.editTextNumber1) as EditText
             val proteinsEditText = popupView.findViewById<View>(R2.id.editTextNumber2) as EditText
 
@@ -136,18 +135,25 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             proteinsEditText.hint = "$proteinGoal(g)"
 
             popupWindow.setOnDismissListener(PopupWindow.OnDismissListener {
-                popupWindow.dismiss()
+
                 navView.visibility = View.VISIBLE
+                navbarMock.startAnimation(slide_down)
+                navView.startAnimation(slide_up)
+                popupWindow.dismiss()
             })
 
             checkBtn.setOnClickListener{
-                calorieGoal = caloriesEditText.text.toString().toInt()
-                proteinGoal = proteinsEditText.text.toString().toInt()
+                if((caloriesEditText.text != null) && (proteinsEditText.text != null)){
+                    try {
+                        calorieGoal = caloriesEditText.text.toString().toInt()
+                        proteinGoal = proteinsEditText.text.toString().toInt()
+                    }catch (e: Exception)
+                    {}
+                }
+
                 popupWindow.dismiss()
             }
-            cancelBtn.setOnClickListener{
-                popupWindow.dismiss()
-            }
+
         }
 
         historyMenu.setOnClickListener{
@@ -170,22 +176,14 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             val popupView: View = inflater.inflate(R2.layout.calendar_dialog_fragment, null)
 
             // create the popup window
-            val width = LinearLayout.LayoutParams.WRAP_CONTENT
-            val height = LinearLayout.LayoutParams.WRAP_CONTENT
+            val width = 850
+            val height = 1700
             val focusable = true // lets taps outside the popup also dismiss it
 
             val popupWindow = PopupWindow(popupView, width, height, focusable)
             popupWindow.isOutsideTouchable = false;
             popupWindow.animationStyle = R2.style.Animation;
 
-            // show the popup window
-            // which view you pass in doesn't matter, it is only used for the window tolken
-            popupWindow.showAtLocation(binding.root, Gravity.CENTER, 0, -100)
-
-            popupWindow.dimBehind()
-
-            val cancelBtn = popupView.findViewById<View>(R2.id.cancelBtn) as FloatingActionButton
-            val checkBtn = popupView.findViewById<View>(R2.id.checkBtn) as FloatingActionButton
             val calendarView = popupView.findViewById<View>(R2.id.calendarView) as CalendarView
 
             val events: MutableList<EventDay> = ArrayList()
@@ -199,14 +197,15 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             popupWindow.setOnDismissListener(PopupWindow.OnDismissListener {
                 popupWindow.dismiss()
                 navView.visibility = View.VISIBLE
+                navView.startAnimation(slide_up)
+                popupWindow.dismiss()
             })
 
-            checkBtn.setOnClickListener{
-                popupWindow.dismiss()
-            }
-            cancelBtn.setOnClickListener{
-                popupWindow.dismiss();
-            }
+            // show the popup window
+            // which view you pass in doesn't matter, it is only used for the window tolken
+            popupWindow.showAtLocation(binding.root, Gravity.CENTER, 0, -100)
+
+            popupWindow.dimBehind()
         }
 
 
