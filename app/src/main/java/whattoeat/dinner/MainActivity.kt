@@ -196,6 +196,8 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             popupWindow.animationStyle = R2.style.Animation;
 
             val calendarView = popupView.findViewById<View>(R2.id.calendarView) as CalendarView
+            val caloriesScoreTextView = popupView.findViewById<View>(R2.id.calTextViewData) as TextView
+            val proteinsScoreTextView = popupView.findViewById<View>(R2.id.proTextViewData) as TextView
 
 
 
@@ -215,6 +217,26 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
             calendarView.setMinimumDate(min)
             calendarView.setMaximumDate(max)
+
+            calendarView.setOnDayClickListener { eventDay ->
+                val clickedDayCalendarYear = eventDay.calendar.get(Calendar.YEAR)
+                val clickedDayCalendarMonth = eventDay.calendar.get(Calendar.MONTH)
+                val clickedDayCalendarDay = eventDay.calendar.get(Calendar.DATE)
+
+                var calString = "Nincs adat"
+                var proString = "Nincs adat"
+
+                for (result in dayResults){
+                    if((result.year == clickedDayCalendarYear) && (result.month == clickedDayCalendarMonth) && (result.day == clickedDayCalendarDay)){
+                        calString = result.scoredCalories
+                        proString = result.scoredProteins
+                        break
+                    }
+                }
+                caloriesScoreTextView.text = calString
+                proteinsScoreTextView.text = proString
+
+            }
 
             // show the popup window
             // which view you pass in doesn't matter, it is only used for the window tolken
@@ -356,9 +378,9 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
         val calendars: List<Calendar> = ArrayList()
 
-        var yearIndex = 2022
-        var monthIndex = 7
-        var dayIndex = 23
+        var yearIndex = startingYear
+        var monthIndex = startingMonth
+        var dayIndex = startingDay
         while ((yearIndex != currentYear) || (monthIndex != currentMonth) || (dayIndex != currentDay)){
             var calendarTemp = calendar.clone() as Calendar
             calendarTemp.set(yearIndex, monthIndex, dayIndex)
@@ -410,7 +432,6 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun saveResults(newResult: DayResult){
-
         // Delete date from array if already present:
         for(result in dayResults){
             if (result.day == newResult.day){
@@ -423,7 +444,9 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         calendarTemp.set(newResult.year, newResult.month, newResult.day)
 
         for(event in events){
-            if (event.calendar == calendarTemp){
+            if ((event.calendar.get(Calendar.YEAR) == newResult.year) &&
+                (event.calendar.get(Calendar.MONTH) == newResult.month) &&
+                (event.calendar.get(Calendar.DATE) == newResult.day)){
                 events.remove(event)
                 break
             }
@@ -441,7 +464,6 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         val sh = getPreferences(Context.MODE_APPEND)
         val gson = Gson();
         val myEdit = sh.edit()
-        dayResults.add(newResult)
 
         myEdit.remove("resultList")
         myEdit.commit()
