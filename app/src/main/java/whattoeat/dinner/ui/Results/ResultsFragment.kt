@@ -2,10 +2,12 @@ package whattoeat.dinner.ui.Results
 
 import android.content.res.Configuration
 import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.view.*
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -14,6 +16,8 @@ import whattoeat.dinner.R
 import whattoeat.dinner.databinding.FragmentResultsBinding
 import whattoeat.dinner.ui.MainViewModel
 import whattoeat.dinner.ui.Meals.Food
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.absoluteValue
 
 
@@ -38,6 +42,7 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
         return "<small><font color=$color>$text</small>"
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -228,6 +233,9 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
             Toast.makeText(
                 context,
                 "Elmentve!", Toast.LENGTH_SHORT).show()
+
+            myActivity.saveResults(DayResult(myActivity.calendar.get(Calendar.YEAR), myActivity.calendar.get(Calendar.MONTH).toByte(),
+                myActivity.calendar.get(Calendar.DATE).toByte(), "1550/1600", "42/45", true))
 
         }
         return root

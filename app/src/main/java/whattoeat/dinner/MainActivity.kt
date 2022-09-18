@@ -1,12 +1,14 @@
 package whattoeat.dinner
 
 import android.R
+import android.R.attr.data
 import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.graphics.LightingColorFilter
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
@@ -27,13 +29,14 @@ import androidx.navigation.ui.setupWithNavController
 import com.applandeo.materialcalendarview.CalendarView
 import com.applandeo.materialcalendarview.EventDay
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import whattoeat.dinner.databinding.ActivityMainBinding
 import whattoeat.dinner.ui.MainViewModel
 import whattoeat.dinner.ui.Meals.Food
+import whattoeat.dinner.ui.Results.DayResult
 import java.lang.reflect.Type
+import java.nio.charset.Charset
 import java.util.*
 import kotlin.math.abs
 import whattoeat.dinner.R as R2
@@ -45,6 +48,9 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
     private lateinit var gestureDetector: GestureDetector
     lateinit var navView: BottomNavigationView
     lateinit var navController: NavController
+    val calendar: Calendar = Calendar.getInstance()
+    var events: MutableList<EventDay> = ArrayList()
+    var dayResults: MutableList<DayResult> = ArrayList()
     private val swipeThreshold = 100
     private val swipeVelocityThreshold = 100
     lateinit var mainViewModel : MainViewModel
@@ -186,13 +192,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
             val calendarView = popupView.findViewById<View>(R2.id.calendarView) as CalendarView
 
-            val events: MutableList<EventDay> = ArrayList()
 
-            val calendar = Calendar.getInstance()
-
-            events.add(EventDay(calendar, R2.drawable.ic_check_green))
-
-            calendarView.setEvents(events)
 
             popupWindow.setOnDismissListener(PopupWindow.OnDismissListener {
                 popupWindow.dismiss()
@@ -200,6 +200,13 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
                 navView.startAnimation(slide_up)
                 popupWindow.dismiss()
             })
+
+            var calendar1: Calendar = Calendar.getInstance()
+            calendar1.set(2022, 8, 15)
+            events.add(EventDay(calendar1, R2.drawable.ic_cancel_red))
+            calendarView.setEvents(events)
+
+
 
             // show the popup window
             // which view you pass in doesn't matter, it is only used for the window tolken
@@ -236,6 +243,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
+
 
     fun toggleMenu(view: View) {
 
@@ -320,6 +328,23 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
         calorieGoal = sh.getInt("calorieGoal", calorieGoal)
         proteinGoal = sh.getInt("proteinGoal", proteinGoal)
+
+
+        val typeOfResultList: Type = object : TypeToken<List<DayResult?>?>() {}.type
+        dayResults = gson.fromJson(sh.getString("resultList", gson.toJson(dayResults).toString()), typeOfResultList)
+        events.clear()
+        var calendarTemp: Calendar = Calendar.getInstance()
+        for (result in dayResults){
+            calendarTemp.set(result.year, result.month.toInt(), result.day.toInt())
+            if(result.isSuccess) {
+                events.add(EventDay(calendarTemp, R2.drawable.ic_check_green))
+            }else
+            {
+                events.add(EventDay(calendarTemp, R2.drawable.ic_cancel_red))
+            }
+        }
+
+
     }
 
     override fun onResume() {
@@ -359,14 +384,42 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         myEdit.commit()
     }
 
-    fun saveResults(){
-        /*
-        val sharedPreferences = getPreferences(Context.MODE_APPEND)
-        val myEdit = sharedPreferences.edit()
-        myEdit.remove("breakfastList")
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun saveResults(newResult: DayResult){
+
+        // Delete date from array if already present:
+        for(result in dayResults){
+            if (result.day == newResult.day){
+                dayResults.remove(result)
+                break
+            }
+        }
+
+        // Save preferences:
+        val sh = getPreferences(Context.MODE_APPEND)
+        val gson = Gson();
+        val myEdit = sh.edit()
+        dayResults.add(newResult)
+
+        myEdit.remove("resultList")
         myEdit.commit()
-        myEdit.putString("breakfastList", gson.toJson(BreakfastList))
-        myEdit.commit()*/
+        myEdit.putString("resultList", gson.toJson(dayResults))
+        myEdit.commit()
+
+        events.clear()
+        var calendarTemp: Calendar = Calendar.getInstance()
+
+        for (result in dayResults){
+            calendarTemp.set(result.year, result.month.toInt(), result.day.toInt())
+            if(result.isSuccess) {
+                events.add(EventDay(calendarTemp, R2.drawable.ic_check_green))
+            } else {
+                events.add(EventDay(calendarTemp, R2.drawable.ic_cancel_red))
+            }
+        }
+
+        //settings.edit().putLong("firstDate", System.currentTimeMillis()).commit();
+        //val firstDate = sh.getLong("firstDate", calendar.timeInMillis)
     }
 
     // Override this method to recognize touch event
