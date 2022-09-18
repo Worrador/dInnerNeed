@@ -28,6 +28,8 @@
             app:abbreviationsBarColor="?attr/colorSecondaryVariant"
             app:selectionColor="?attr/colorSecondary"
             app:pagesColor="?attr/colorSecondaryVariant"
+            app:previousButtonSrc="@drawable/ic_arrow_backward_black"
+            app:forwardButtonSrc="@drawable/ic_arrow_forward_black"
             app:headerColor="?attr/colorSecondaryVariant"
             android:layout_height="wrap_content" />
 

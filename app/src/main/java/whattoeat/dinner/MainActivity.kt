@@ -45,6 +45,9 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var gestureDetector: GestureDetector
+    private var startingYear = 2022
+    private var startingMonth = 0
+    private var startingDay = 0
     lateinit var navView: BottomNavigationView
     lateinit var navController: NavController
     val calendar: Calendar = Calendar.getInstance()
@@ -204,6 +207,15 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             })
             calendarView.setEvents(events)
 
+            val min = Calendar.getInstance()
+            min.set(startingYear, startingMonth, startingDay)
+
+            val max = Calendar.getInstance()
+            max.set(currentYear, currentMonth, currentDay)
+
+            calendarView.setMinimumDate(min)
+            calendarView.setMaximumDate(max)
+
             // show the popup window
             // which view you pass in doesn't matter, it is only used for the window tolken
             popupWindow.showAtLocation(binding.root, Gravity.CENTER, 0, -100)
@@ -325,9 +337,9 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         calorieGoal = sh.getInt("calorieGoal", calorieGoal)
         proteinGoal = sh.getInt("proteinGoal", proteinGoal)
 
-        val startingYear = sh.getInt("startingYear", currentYear)
-        val startingMonth = sh.getInt("startingMonth", currentMonth)
-        val startingDay = sh.getInt("startingDay", currentDay)
+        startingYear = sh.getInt("startingYear", currentYear)
+        startingMonth = sh.getInt("startingMonth", currentMonth)
+        startingDay = sh.getInt("startingDay", currentDay)
 
         val typeOfResultList: Type = object : TypeToken<List<DayResult?>?>() {}.type
         dayResults = gson.fromJson(sh.getString("resultList", gson.toJson(dayResults).toString()), typeOfResultList)
@@ -344,9 +356,9 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
         val calendars: List<Calendar> = ArrayList()
 
-        var yearIndex = startingYear
-        var monthIndex = startingMonth
-        var dayIndex = startingDay
+        var yearIndex = 2022
+        var monthIndex = 7
+        var dayIndex = 23
         while ((yearIndex != currentYear) || (monthIndex != currentMonth) || (dayIndex != currentDay)){
             var calendarTemp = calendar.clone() as Calendar
             calendarTemp.set(yearIndex, monthIndex, dayIndex)
