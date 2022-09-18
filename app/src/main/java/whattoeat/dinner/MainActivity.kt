@@ -1,7 +1,6 @@
 package whattoeat.dinner
 
 import android.R
-import android.R.attr.data
 import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
@@ -203,13 +202,6 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
                 navView.startAnimation(slide_up)
                 popupWindow.dismiss()
             })
-
-            var calendarTemp: Calendar = Calendar.getInstance()
-            calendarTemp.set(2022, 8, 15)
-            events.add(EventDay(calendarTemp, R2.drawable.ic_cancel_red))
-            var calendarTemp2 = calendarTemp.clone() as Calendar
-            calendarTemp2.set(2022, 8, 16)
-            events.add(EventDay(calendarTemp2, R2.drawable.ic_cancel_red))
             calendarView.setEvents(events)
 
             // show the popup window
@@ -341,27 +333,29 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         dayResults = gson.fromJson(sh.getString("resultList", gson.toJson(dayResults).toString()), typeOfResultList)
 
         events.clear()
-        var calendarTemp: Calendar = Calendar.getInstance()
-
 
         for (result in dayResults){
+            var calendarTemp = calendar.clone() as Calendar
             calendarTemp.set(result.year, result.month, result.day)
             if(result.isSuccess) {
                 events.add(EventDay(calendarTemp, R2.drawable.ic_check_green))
             }
         }
 
+        val calendars: List<Calendar> = ArrayList()
 
-
-        for (year in startingYear..currentYear){
-            for (month in startingMonth..12){
-                for (day in startingDay..currentDay){
-                    calendarTemp.set(year, month, day)
-                    if(!events.contains(EventDay(calendarTemp))){
-                        events.add(EventDay(calendarTemp, R2.drawable.ic_cancel_red))
-                    }
-                }
-            }
+        var yearIndex = startingYear
+        var monthIndex = startingMonth
+        var dayIndex = startingDay
+        while ((yearIndex != currentYear) || (monthIndex != currentMonth) || (dayIndex != currentDay)){
+            var calendarTemp = calendar.clone() as Calendar
+            calendarTemp.set(yearIndex, monthIndex, dayIndex)
+            events.add(EventDay(calendarTemp, R2.drawable.ic_cancel_red))
+            var calendarTempAfter = calendarTemp.clone() as Calendar
+            calendarTempAfter.add(Calendar.DATE, 1)
+            yearIndex = calendarTempAfter.get(Calendar.YEAR)
+            monthIndex = calendarTempAfter.get(Calendar.MONTH)
+            dayIndex = calendarTempAfter.get(Calendar.DATE)
         }
     }
 
