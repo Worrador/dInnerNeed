@@ -49,6 +49,9 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
     lateinit var navView: BottomNavigationView
     lateinit var navController: NavController
     val calendar: Calendar = Calendar.getInstance()
+    val currentYear = calendar.get(Calendar.YEAR)
+    val currentMonth = calendar.get(Calendar.MONTH)
+    val currentDay = calendar.get(Calendar.DATE)
     var events: MutableList<EventDay> = ArrayList()
     var dayResults: MutableList<DayResult> = ArrayList()
     private val swipeThreshold = 100
@@ -201,12 +204,13 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
                 popupWindow.dismiss()
             })
 
-            var calendar1: Calendar = Calendar.getInstance()
-            calendar1.set(2022, 8, 15)
-            events.add(EventDay(calendar1, R2.drawable.ic_cancel_red))
+            var calendarTemp: Calendar = Calendar.getInstance()
+            calendarTemp.set(2022, 8, 15)
+            events.add(EventDay(calendarTemp, R2.drawable.ic_cancel_red))
+            var calendarTemp2 = calendarTemp.clone() as Calendar
+            calendarTemp2.set(2022, 8, 16)
+            events.add(EventDay(calendarTemp2, R2.drawable.ic_cancel_red))
             calendarView.setEvents(events)
-
-
 
             // show the popup window
             // which view you pass in doesn't matter, it is only used for the window tolken
@@ -329,22 +333,36 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         calorieGoal = sh.getInt("calorieGoal", calorieGoal)
         proteinGoal = sh.getInt("proteinGoal", proteinGoal)
 
+        val startingYear = sh.getInt("startingYear", currentYear)
+        val startingMonth = sh.getInt("startingMonth", currentMonth)
+        val startingDay = sh.getInt("startingDay", currentDay)
 
         val typeOfResultList: Type = object : TypeToken<List<DayResult?>?>() {}.type
         dayResults = gson.fromJson(sh.getString("resultList", gson.toJson(dayResults).toString()), typeOfResultList)
+
         events.clear()
         var calendarTemp: Calendar = Calendar.getInstance()
+
+
         for (result in dayResults){
-            calendarTemp.set(result.year, result.month.toInt(), result.day.toInt())
+            calendarTemp.set(result.year, result.month, result.day)
             if(result.isSuccess) {
                 events.add(EventDay(calendarTemp, R2.drawable.ic_check_green))
-            }else
-            {
-                events.add(EventDay(calendarTemp, R2.drawable.ic_cancel_red))
             }
         }
 
 
+
+        for (year in startingYear..currentYear){
+            for (month in startingMonth..12){
+                for (day in startingDay..currentDay){
+                    calendarTemp.set(year, month, day)
+                    if(!events.contains(EventDay(calendarTemp))){
+                        events.add(EventDay(calendarTemp, R2.drawable.ic_cancel_red))
+                    }
+                }
+            }
+        }
     }
 
     override fun onResume() {
@@ -395,7 +413,25 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             }
         }
 
-        // Save preferences:
+        var calendarTemp: Calendar = Calendar.getInstance()
+        calendarTemp.set(newResult.year, newResult.month, newResult.day)
+
+        for(event in events){
+            if (event.calendar == calendarTemp){
+                events.remove(event)
+                break
+            }
+        }
+
+        // Add to lists:
+        dayResults.add(newResult)
+        if(newResult.isSuccess) {
+            events.add(EventDay(calendarTemp, R2.drawable.ic_check_green))
+        } else {
+            events.add(EventDay(calendarTemp, R2.drawable.ic_cancel_red))
+        }
+
+        // Save dayResults as preferences since its footprint is smaller:
         val sh = getPreferences(Context.MODE_APPEND)
         val gson = Gson();
         val myEdit = sh.edit()
@@ -406,17 +442,21 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         myEdit.putString("resultList", gson.toJson(dayResults))
         myEdit.commit()
 
-        events.clear()
-        var calendarTemp: Calendar = Calendar.getInstance()
-
-        for (result in dayResults){
-            calendarTemp.set(result.year, result.month.toInt(), result.day.toInt())
-            if(result.isSuccess) {
-                events.add(EventDay(calendarTemp, R2.drawable.ic_check_green))
-            } else {
-                events.add(EventDay(calendarTemp, R2.drawable.ic_cancel_red))
-            }
+        // Save first date:
+        if((sh.getInt("startingYear", currentYear) == currentYear) &&
+                (sh.getInt("startingMonth", currentMonth) == currentMonth) &&
+                (sh.getInt("startingDay", currentDay) == currentDay)){
+            myEdit.putInt("startingYear", currentYear)
+            myEdit.putInt("startingMonth", currentMonth)
+            myEdit.putInt("startingDay", currentDay)
+            myEdit.commit()
         }
+
+        val byteArray: ByteArray =
+            gson.toJson(dayResults).toString().toByteArray(Charset.defaultCharset())
+        val size = byteArray.size.toLong()
+
+        Log.e("SIZE", "Object size was: ${size}")
 
         //settings.edit().putLong("firstDate", System.currentTimeMillis()).commit();
         //val firstDate = sh.getLong("firstDate", calendar.timeInMillis)

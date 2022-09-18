@@ -234,8 +234,8 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
                 context,
                 "Elmentve!", Toast.LENGTH_SHORT).show()
 
-            myActivity.saveResults(DayResult(myActivity.calendar.get(Calendar.YEAR), myActivity.calendar.get(Calendar.MONTH).toByte(),
-                myActivity.calendar.get(Calendar.DATE).toByte(), "1550/1600", "42/45", true))
+            myActivity.saveResults(DayResult(myActivity.calendar.get(Calendar.YEAR), myActivity.calendar.get(Calendar.MONTH),
+                myActivity.calendar.get(Calendar.DATE), "1550 / 1600", "42 / 45", true))
 
         }
         return root

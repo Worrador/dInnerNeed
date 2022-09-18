@@ -2,10 +2,10 @@ package whattoeat.dinner.ui.Results
 
 import java.util.*
 
-class DayResult (year : Int, month : Byte, day : Byte, scoredCalories : String, scoredProteins : String, isSuccess : Boolean) {
+class DayResult (year : Int, month : Int, day : Int, scoredCalories : String, scoredProteins : String, isSuccess : Boolean) {
     var year : Int
-    var month : Byte
-    var day : Byte
+    var month : Int
+    var day : Int
     var scoredCalories : String
     var scoredProteins : String
     var isSuccess : Boolean
