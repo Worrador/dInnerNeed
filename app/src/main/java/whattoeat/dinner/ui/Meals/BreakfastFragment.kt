@@ -89,6 +89,10 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
                 val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(it, R.layout.list_text_view, listOfItem)
                 listView.adapter = arrayAdapter
             }
+
+            for (pos in mainViewModel.clickedPosListBreakfast) {
+                listView.setItemChecked(pos, true)
+            }
         }
 
         /* Set object callbacks */
