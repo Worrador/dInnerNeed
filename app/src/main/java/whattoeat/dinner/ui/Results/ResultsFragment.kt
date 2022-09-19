@@ -1,7 +1,6 @@
 package whattoeat.dinner.ui.Results
 
 import android.content.res.Configuration
-import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
@@ -10,6 +9,7 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.applandeo.materialcalendarview.EventDay
 import com.bumptech.glide.Glide
 import whattoeat.dinner.MainActivity
 import whattoeat.dinner.R
@@ -28,7 +28,8 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
     lateinit var myActivity: MainActivity
     lateinit var autocompleteTV: AutoCompleteTextView
     var isSuccess = false
-    var somethingelseSelected = false
+    private var resultOptions: Array<Pair<Double,Double>> = arrayOf()
+    var selectedId = 0
 
     private val binding get() = _binding!!
     var allCalories = 0
@@ -84,11 +85,7 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
         autocompleteTV.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id->
                 saveResultBtn.visibility = View.VISIBLE
-                if(id.toInt() == 0){
-                    somethingelseSelected == true
-                }else{
-                    somethingelseSelected == false
-                }
+                selectedId = id.toInt()
             }
 
         when (myActivity.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
@@ -141,6 +138,7 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
             allFoodsList.addAll(myActivity.LunchList)
             allFoodsList.addAll(myActivity.SnacksList)
             allFoodsList.add(Food("Semmi",0,0))
+            resultOptions = arrayOf(Pair(0.0,0.0), Pair(0.0,0.0), Pair(0.0,0.0), Pair(0.0,0.0))
 
             var first = 2.0
             var firstCal = 0.0
@@ -200,6 +198,12 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
             }
             foodsResults.add("Valami mást")
             foodsResults.add("$firstName")
+
+            resultOptions[0] = Pair(allCalories.toDouble(), allProteins.toDouble())
+            resultOptions[1] = Pair(allCalories+firstCal, allProteins+firstPro)
+            resultOptions[2] = Pair(allCalories+secondCal, allProteins+secondPro)
+            resultOptions[3] = Pair(allCalories+thirdCal, allProteins+thirdPro)
+
             if(first < 2 * goalDiffMaxPercentage){
                 textToBeDisplayed = "Sikerülhet elérni a célodat, mert már " + getColoredSpanned("$allCalories/${myActivity.calorieGoal}", "#d1e659") +
                         " kalóriát és " + getColoredSpanned("$allProteins/${myActivity.proteinGoal}", "#d1e659") +
@@ -217,8 +221,7 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
                     }
                 }
                 Glide.with(this).load(R.drawable.bravocado).into(gifView)
-                if(!somethingelseSelected)
-                    isSuccess = true
+                isSuccess = true
             }else{
                 textToBeDisplayed += "Sajnos ma már nem tudod elérni a célodat, mert " + getColoredSpanned("$allCalories/${myActivity.calorieGoal}", "#dd1324") +
                         " kalóriát és " + getColoredSpanned("$allProteins/${myActivity.proteinGoal}", "#dd1324") +" fehérjét vittél be." +
@@ -242,8 +245,15 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
             Toast.makeText(
                 context,
                 "Elmentve!", Toast.LENGTH_SHORT).show()
+
+            if(selectedId == 0) {
+                isSuccess = false
+            }
+            val scoredCalories = "${resultOptions[selectedId].first} / ${myActivity.calorieGoal}"
+            val scoredProteins = "${resultOptions[selectedId].second} / ${myActivity.proteinGoal}"
+
             myActivity.saveResults(DayResult(myActivity.calendar.get(Calendar.YEAR), myActivity.calendar.get(Calendar.MONTH),
-                myActivity.calendar.get(Calendar.DATE), "1550 / 1600", "42 / 45", isSuccess))
+                myActivity.calendar.get(Calendar.DATE), scoredCalories, scoredProteins, isSuccess))
 
         }
         return root

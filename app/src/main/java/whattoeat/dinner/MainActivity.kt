@@ -86,12 +86,6 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         val goalMenu: LinearLayout = binding.linLayoutInner1
         val historyMenu: LinearLayout = binding.linLayoutInner2
         navView = binding.navView
-        var navbarMock: LinearLayout = findViewById(R2.id.navbar_mock)
-        navbarMock.visibility = View.VISIBLE
-        val params: ViewGroup.LayoutParams = navbarMock.layoutParams
-        val resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
-        params.height = resources.getDimensionPixelSize(resourceId)
-        navbarMock.layoutParams = params
 
         fun PopupWindow.dimBehind() {
             val container = contentView.rootView
@@ -99,7 +93,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
             val p = container.layoutParams as WindowManager.LayoutParams
             p.flags = p.flags or WindowManager.LayoutParams.FLAG_DIM_BEHIND
-            p.dimAmount = 0.5f
+            p.dimAmount = 0.6f
             wm.updateViewLayout(container, p)
         }
 
@@ -115,8 +109,6 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
                 applicationContext,
                 R2.anim.slide_up_navbar
             )
-
-            navbarMock.startAnimation(slide_up)
             navView.startAnimation(slide_down)
 
 
@@ -148,7 +140,6 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             popupWindow.setOnDismissListener(PopupWindow.OnDismissListener {
 
                 navView.visibility = View.VISIBLE
-                navbarMock.startAnimation(slide_down)
                 navView.startAnimation(slide_up)
                 popupWindow.dismiss()
             })
@@ -179,7 +170,6 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
                 applicationContext,
                 R2.anim.slide_up_navbar
             )
-            navbarMock.startAnimation(slide_up)
             navView.startAnimation(slide_down)
 
             // inflate the layout of the popup window
@@ -243,6 +233,23 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             popupWindow.showAtLocation(binding.root, Gravity.CENTER, 0, -100)
 
             popupWindow.dimBehind()
+
+            val clickedDayCalendarYear = calendar.get(Calendar.YEAR)
+            val clickedDayCalendarMonth = calendar.get(Calendar.MONTH)
+            val clickedDayCalendarDay = calendar.get(Calendar.DATE)
+
+            var calString = "Nincs adat"
+            var proString = "Nincs adat"
+
+            for (result in dayResults){
+                if((result.year == clickedDayCalendarYear) && (result.month == clickedDayCalendarMonth) && (result.day == clickedDayCalendarDay)){
+                    calString = result.scoredCalories
+                    proString = result.scoredProteins
+                    break
+                }
+            }
+            caloriesScoreTextView.text = calString
+            proteinsScoreTextView.text = proString
         }
 
 
@@ -373,6 +380,8 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             calendarTemp.set(result.year, result.month, result.day)
             if(result.isSuccess) {
                 events.add(EventDay(calendarTemp, R2.drawable.ic_check_green))
+            }else{
+                events.add(EventDay(calendarTemp, R2.drawable.ic_cancel_red))
             }
         }
 
@@ -479,12 +488,6 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             myEdit.putInt("startingDay", currentDay)
             myEdit.commit()
         }
-
-        val byteArray: ByteArray =
-            gson.toJson(dayResults).toString().toByteArray(Charset.defaultCharset())
-        val size = byteArray.size.toLong()
-
-        Log.e("SIZE", "Object size was: ${size}")
 
         //settings.edit().putLong("firstDate", System.currentTimeMillis()).commit();
         //val firstDate = sh.getLong("firstDate", calendar.timeInMillis)
