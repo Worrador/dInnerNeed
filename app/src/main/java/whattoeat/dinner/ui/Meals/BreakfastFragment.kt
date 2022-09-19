@@ -12,6 +12,8 @@ import whattoeat.dinner.R
 import whattoeat.dinner.databinding.FragmentBreakfastBinding
 import whattoeat.dinner.hideKeyboard
 import whattoeat.dinner.ui.MainViewModel
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGestureListener {
@@ -120,6 +122,7 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
                         context,
                         "Hozzáadva!", Toast.LENGTH_SHORT).show()
                     myActivity.BreakfastList.add(Food(nameText.text.toString(), caloriesText.text.toString().toInt(), proteinsText.text.toString().toInt()))
+                    myActivity.BreakfastList.sortBy{it.name}
                     setDefaultVisibility()
                     generateListView()
                 }else{

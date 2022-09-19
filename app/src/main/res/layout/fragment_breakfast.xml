@@ -21,10 +21,16 @@
             android:divider="?attr/colorSecondary"
             android:dividerHeight="2dp"
             android:focusableInTouchMode="false"
-            android:isScrollContainer="false"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_alignBottom="@+id/breakfast_list_view"
+            android:background="@color/grey"
+            />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textView"

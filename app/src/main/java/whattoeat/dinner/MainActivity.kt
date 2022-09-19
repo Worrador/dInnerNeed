@@ -16,6 +16,7 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -51,6 +52,9 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
     private var startingDay = 0
     lateinit var navView: BottomNavigationView
     lateinit var navController: NavController
+
+    lateinit var leftSide: ConstraintLayout
+    lateinit var rightSide: ConstraintLayout
     val calendar: Calendar = Calendar.getInstance()
     val currentYear = calendar.get(Calendar.YEAR)
     val currentMonth = calendar.get(Calendar.MONTH)
@@ -83,6 +87,8 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
         calTextView = binding.editViewCaloriesCounter
         proTextView = binding.editViewProteinsCounter
+        leftSide = binding.leftSide
+        rightSide = binding.rightSide
 
         // Initializing the gesture detector
         gestureDetector = GestureDetector(this)
@@ -285,18 +291,6 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-        calTextView.setOnLongClickListener(View.OnLongClickListener(){
-            it.isFocusable = true
-            (it as EditText).inputType = InputType.TYPE_CLASS_NUMBER;
-            return@OnLongClickListener true
-        })
-
-        proTextView.setOnLongClickListener(View.OnLongClickListener(){
-            (it as EditText).inputType = InputType.TYPE_CLASS_NUMBER;
-            it.setFocusable(true)
-            return@OnLongClickListener true
-        })
     }
 
 
@@ -363,10 +357,15 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         if((calories >= 0) && (proteins >= 0)) {
             calTextView.text = "$calories"
             proTextView.text = "$proteins"
+            leftSide.visibility = View.VISIBLE
+            rightSide.visibility = View.VISIBLE
         }else
         {
             calTextView.text = ""
             proTextView.text = ""
+            leftSide.visibility = View.INVISIBLE
+            rightSide.visibility = View.INVISIBLE
+
         }
     }
 
@@ -379,6 +378,10 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         BreakfastList = gson.fromJson(sh.getString("breakfastList", gson.toJson(BreakfastList).toString()), typeOfObjectsList)
         LunchList = gson.fromJson(sh.getString("lunchList", gson.toJson(LunchList).toString()), typeOfObjectsList)
         SnacksList = gson.fromJson(sh.getString("snackList", gson.toJson(SnacksList)), typeOfObjectsList)
+
+        BreakfastList.sortBy { it.name }
+        LunchList.sortBy { it.name }
+        SnacksList.sortBy { it.name }
 
         calorieGoal = sh.getInt("calorieGoal", calorieGoal)
         proteinGoal = sh.getInt("proteinGoal", proteinGoal)

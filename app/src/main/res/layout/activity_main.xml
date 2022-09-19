@@ -15,10 +15,10 @@
         android:layout_width="0dp"
         android:layout_height="75dp"
         android:background="?attr/colorSecondaryVariant"
-        app:itemIconSize="60dp"
         android:fitsSystemWindows="true"
         app:itemIconTint="@menu/bottom_navigation_selector"
-        app:labelVisibilityMode="unlabeled"
+        app:labelVisibilityMode="selected"
+        app:itemTextColor="@menu/bottom_navigation_selector"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -180,6 +180,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
+                android:id="@+id/leftSide"
                 app:layout_constraintEnd_toStartOf="@+id/avocado_icon_menu"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -205,12 +206,14 @@
                     app:layout_constraintBottom_toBottomOf="@+id/textView_calories_counter"
                     app:layout_constraintStart_toEndOf="@+id/textView_calories_counter"
                     app:layout_constraintTop_toTopOf="@+id/textView_calories_counter"
-                    android:focusable="false"
                     android:textStyle="bold"
+                    android:focusableInTouchMode="true"
+                    android:focusable="true"
+                    android:longClickable="true"
+                    android:inputType="number"
                     android:layout_marginStart="6dp"
                     android:textColor="?attr/colorOnPrimary"
-                    android:background="@null"
-                    android:inputType="none" />
+                    android:background="@null" />
 
                 <TextView
                     android:id="@+id/kcal"
@@ -232,6 +235,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/rightSide"
                 android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/textView_proteins_counter"
@@ -254,11 +258,13 @@
                     app:layout_constraintBottom_toBottomOf="@+id/textView_proteins_counter"
                     app:layout_constraintEnd_toStartOf="@+id/gram"
                     app:layout_constraintTop_toTopOf="@+id/textView_proteins_counter"
-                    android:focusable="false"
                     android:textStyle="bold"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:longClickable="true"
+                    android:inputType="number"
                     android:layout_marginEnd="2dp"
-                    android:background="@null"
-                    android:inputType="none" />
+                    android:background="@null" />
 
                 <TextView
                     android:id="@+id/gram"

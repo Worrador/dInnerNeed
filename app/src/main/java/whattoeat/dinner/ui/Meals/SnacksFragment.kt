@@ -118,6 +118,7 @@ class SnacksFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGestu
                         context,
                         "Hozzáadva!", Toast.LENGTH_SHORT).show()
                     myActivity.SnacksList.add(Food(nameText.text.toString(), caloriesText.text.toString().toInt(), proteinsText.text.toString().toInt()))
+                    myActivity.SnacksList.sortBy{it.name}
                     setDefaultVisibility()
                     generateListView()
                 }else{
