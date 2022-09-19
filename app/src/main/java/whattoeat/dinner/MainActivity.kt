@@ -7,6 +7,7 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.graphics.LightingColorFilter
 import android.os.Build
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.view.*
 import android.view.animation.AnimationUtils
@@ -66,6 +67,8 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
     var calorieGoal = 1800
     var proteinGoal = 50
     var currentFragmentidx = 0
+    lateinit var calTextView: TextView
+    lateinit var proTextView: TextView
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,6 +80,9 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        calTextView = binding.editViewCaloriesCounter
+        proTextView = binding.editViewProteinsCounter
 
         // Initializing the gesture detector
         gestureDetector = GestureDetector(this)
@@ -279,6 +285,18 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        calTextView.setOnLongClickListener(View.OnLongClickListener(){
+            it.isFocusable = true
+            (it as EditText).inputType = InputType.TYPE_CLASS_NUMBER;
+            return@OnLongClickListener true
+        })
+
+        proTextView.setOnLongClickListener(View.OnLongClickListener(){
+            (it as EditText).inputType = InputType.TYPE_CLASS_NUMBER;
+            it.setFocusable(true)
+            return@OnLongClickListener true
+        })
     }
 
 
@@ -342,17 +360,16 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
     }
 
     fun setMacros(calories: Int, proteins: Int){
-        val calTextView: TextView = binding.textViewCaloriesCounter
-        val proTextView: TextView = binding.textViewProteinsCounter
         if((calories >= 0) && (proteins >= 0)) {
-            calTextView.text = "cal: $calories"
-            proTextView.text = "pro: $proteins"
+            calTextView.text = "$calories"
+            proTextView.text = "$proteins"
         }else
         {
             calTextView.text = ""
             proTextView.text = ""
         }
     }
+
 
     fun getLists(){
         val sh = getPreferences(Context.MODE_APPEND)

@@ -179,30 +179,86 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView_proteins_counter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:text="@string/proteins_counter_title"
-                android:textColor="?attr/colorOnPrimary"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/toolbar"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
                 android:id="@+id/textView_calories_counter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
+                android:layout_marginStart="12dp"
                 android:text="@string/calories_counter_title"
                 android:textColor="?attr/colorOnPrimary"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/textView_proteins_counter"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/editView_calories_counter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/textView_calories_counter"
+                app:layout_constraintStart_toEndOf="@+id/textView_calories_counter"
+                app:layout_constraintTop_toTopOf="@+id/textView_calories_counter"
+                android:focusable="false"
+                android:textStyle="bold"
+                android:layout_marginStart="6dp"
+                android:textColor="?attr/colorOnPrimary"
+                android:background="@null"
+                android:inputType="none" />
+
+            <TextView
+                android:id="@+id/kcal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="kcal"
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="18sp"
+                android:layout_marginStart="2dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/textView_calories_counter"
+                app:layout_constraintStart_toEndOf="@+id/editView_calories_counter"
+                app:layout_constraintTop_toTopOf="@+id/textView_calories_counter" />
+
+            <TextView
+                android:id="@+id/textView_proteins_counter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/proteins_counter_title"
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginEnd="6dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/editView_proteins_counter"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/editView_proteins_counter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="?attr/colorOnPrimary"
+                app:layout_constraintBottom_toBottomOf="@+id/textView_proteins_counter"
+                app:layout_constraintEnd_toStartOf="@+id/gram"
+                app:layout_constraintTop_toTopOf="@+id/textView_proteins_counter"
+                android:focusable="false"
+                android:textStyle="bold"
+                android:layout_marginEnd="2dp"
+                android:background="@null"
+                android:inputType="none" />
+
+            <TextView
+                android:id="@+id/gram"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="g"
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginEnd="12dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView_proteins_counter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView_proteins_counter" />
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
