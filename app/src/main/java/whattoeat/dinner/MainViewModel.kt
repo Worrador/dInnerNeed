@@ -8,7 +8,6 @@ class MainViewModel : ViewModel() {
     var clickedPosListLunch: ArrayList<Int> = ArrayList()
     var clickedPosListSnacks: ArrayList<Int> = ArrayList()
 
-
     fun setMultipleListView(FoodList: MutableList<Food>): ArrayList<String>{
         val arrayList: ArrayList<String> = ArrayList()
         for (element in FoodList)

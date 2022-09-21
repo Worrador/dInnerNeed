@@ -1,4 +1,4 @@
-package whattoeat.dinner.ui.Results
+package whattoeat.dinner.ui.Dialogs
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import androidx.fragment.app.DialogFragment
 import whattoeat.dinner.R as R2
 
 
-class GoalDialogFragment : DialogFragment() {
+class ItemCountDialogFragment : DialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

@@ -7,8 +7,6 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.graphics.LightingColorFilter
 import android.os.Build
 import android.os.Bundle
-import android.text.InputType
-import android.util.Log
 import android.view.*
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
@@ -34,10 +32,10 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import whattoeat.dinner.databinding.ActivityMainBinding
 import whattoeat.dinner.ui.MainViewModel
+import whattoeat.dinner.ui.Meals.BreakfastFragment
 import whattoeat.dinner.ui.Meals.Food
 import whattoeat.dinner.ui.Results.DayResult
 import java.lang.reflect.Type
-import java.nio.charset.Charset
 import java.util.*
 import kotlin.math.abs
 import whattoeat.dinner.R as R2
@@ -150,10 +148,9 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             proteinsEditText.hint = "$proteinGoal(g)"
 
             popupWindow.setOnDismissListener(PopupWindow.OnDismissListener {
-
                 navView.visibility = View.VISIBLE
                 navView.startAnimation(slide_up)
-                popupWindow.dismiss()
+                toggleMenu(popupView)
             })
 
             checkBtn.setOnClickListener{
@@ -204,10 +201,9 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
 
             popupWindow.setOnDismissListener(PopupWindow.OnDismissListener {
-                popupWindow.dismiss()
                 navView.visibility = View.VISIBLE
                 navView.startAnimation(slide_up)
-                popupWindow.dismiss()
+                toggleMenu(popupView)
             })
             calendarView.setEvents(events)
 
@@ -343,6 +339,77 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         isMenuVisible = isMenuVisible.not()
     }
 
+    fun createItemCountDialog(listToChange: MutableList<Food>, position: Int){
+
+        fun PopupWindow.dimBehind() {
+            val container = contentView.rootView
+            val context = contentView.context
+            val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+            val p = container.layoutParams as WindowManager.LayoutParams
+            p.flags = p.flags or WindowManager.LayoutParams.FLAG_DIM_BEHIND
+            p.dimAmount = 0.6f
+            wm.updateViewLayout(container, p)
+        }
+
+        navView.visibility = View.INVISIBLE
+
+        val slide_down = AnimationUtils.loadAnimation(
+            applicationContext,
+            R2.anim.slide_down_navbar
+        )
+
+        val slide_up = AnimationUtils.loadAnimation(
+            applicationContext,
+            R2.anim.slide_up_navbar
+        )
+        navView.startAnimation(slide_down)
+
+        // inflate the layout of the popup window
+        val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val popupView: View = inflater.inflate(R2.layout.goal_dialog_fragment, null)
+
+        // create the popup window
+        val width = LinearLayout.LayoutParams.WRAP_CONTENT
+        val height = LinearLayout.LayoutParams.WRAP_CONTENT
+        val focusable = true // lets taps outside the popup also dismiss it
+
+        val popupWindow = PopupWindow(popupView, width, height, focusable)
+        popupWindow.isOutsideTouchable = false
+        popupWindow.animationStyle = R2.style.Animation
+
+        // show the popup window
+        // which view you pass in doesn't matter, it is only used for the window tolken
+        popupWindow.showAtLocation(binding.root, Gravity.CENTER, 0, -150)
+        popupWindow.dimBehind()
+
+        val checkBtn = popupView.findViewById<View>(R2.id.checkBtn) as Button
+        val caloriesEditText = popupView.findViewById<View>(R2.id.editTextNumber1) as EditText
+
+        caloriesEditText.hint = "1"
+
+        var itemCount = 1
+
+        checkBtn.setOnClickListener{
+            if(caloriesEditText.text != null){
+                itemCount =  caloriesEditText.text.toString().toInt()
+            }
+
+            popupWindow.dismiss()
+            navView.visibility = View.VISIBLE
+            navView.startAnimation(slide_up)
+        }
+
+        popupWindow.setOnDismissListener(PopupWindow.OnDismissListener {
+            listToChange[position].count = itemCount
+            listToChange[position].name = listToChange[position].name.plus(" (${itemCount}db)")
+            val fragment = navController.currentDestination as? BreakfastFragment
+            fragment?.generateListView()
+            fragment?.calculateAddedMacros()
+        })
+    }
+
+
+
     @RequiresApi(Build.VERSION_CODES.R)
     private fun hideSystemUI() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -370,7 +437,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
     }
 
 
-    fun getLists(){
+    private fun getLists(){
         val sh = getPreferences(Context.MODE_APPEND)
         val gson = Gson();
         val typeOfObjectsList: Type = object : TypeToken<List<Food?>?>() {}.type
@@ -433,9 +500,18 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         val gson = Gson();
         val myEdit = sharedPreferences.edit()
 
+        var TrimmedBreakfastList = BreakfastList
+
+        for(breakfast in TrimmedBreakfastList) {
+            if (breakfast.count != 1){
+                breakfast.name = breakfast.name.substringBefore(delimiter = " (${breakfast.count}db)", missingDelimiterValue = breakfast.name)
+                breakfast.count = 1
+            }
+        }
+
         myEdit.remove("breakfastList")
         myEdit.commit()
-        myEdit.putString("breakfastList", gson.toJson(BreakfastList))
+        myEdit.putString("breakfastList", gson.toJson(TrimmedBreakfastList))
         myEdit.commit()
 
         myEdit.remove("lunchList")

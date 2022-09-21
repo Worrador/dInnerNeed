@@ -23,25 +23,38 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
     private var isDataAddition: Boolean = false
     private var isModification: Boolean = false
     private lateinit var gestureDetector: GestureDetector
+    lateinit var listView: ListView
+    /* Set objects */
+    lateinit var myActivity: MainActivity
+
+    lateinit var mainViewModel : MainViewModel
 
     private var addedCalories = 0
     private var addedProteins = 0
+
+    fun generateListView(){
+        val listOfItem: ArrayList<String> = mainViewModel.setMultipleListView(myActivity.BreakfastList)
+        context?.let {
+            val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(it, R.layout.list_text_view, listOfItem)
+            listView.adapter = arrayAdapter
+        }
+
+        for (pos in mainViewModel.clickedPosListBreakfast) {
+            listView.setItemChecked(pos, true)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-
-        /* Set objects */
-        val myActivity = (activity as MainActivity?)!!
-
-        val mainViewModel = activity?.run {
+        myActivity = (activity as MainActivity?)!!
+        mainViewModel = activity?.run {
             ViewModelProvider(this)[MainViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
-
         _binding = FragmentBreakfastBinding.inflate(inflater, container, false)
+        listView = binding.breakfastListView
         val root: View = binding.root
         val nameText: TextView = binding.textView
         val caloriesText: TextView = binding.textViewCalories
@@ -50,7 +63,7 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
         val checkBtn: FloatingActionButton = binding.checkBtn
         val addBtn: FloatingActionButton = binding.addBtn
         val delBtn: FloatingActionButton = binding.deleteBtn
-        val listView: ListView = binding.breakfastListView
+
 
         // Initializing the gesture detector
         gestureDetector = GestureDetector(this)
@@ -85,18 +98,6 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
             cancelBtn.visibility = View.VISIBLE
         }
 
-        fun generateListView(){
-            val listOfItem: ArrayList<String> = mainViewModel.setMultipleListView(myActivity.BreakfastList)
-            context?.let {
-                val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(it, R.layout.list_text_view, listOfItem)
-                listView.adapter = arrayAdapter
-            }
-
-            for (pos in mainViewModel.clickedPosListBreakfast) {
-                listView.setItemChecked(pos, true)
-            }
-        }
-
         /* Set object callbacks */
         addBtn.setOnClickListener {
             isDataAddition = true
@@ -124,7 +125,7 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
                     myActivity.BreakfastList.add(Food(nameText.text.toString(), caloriesText.text.toString().toInt(), proteinsText.text.toString().toInt()))
                     myActivity.BreakfastList.sortBy{it.name}
                     setDefaultVisibility()
-                    generateListView()
+                    this.generateListView()
                 }else{
                     Toast.makeText(
                         context,
@@ -147,7 +148,7 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
                         context,
                         "Törölve!", Toast.LENGTH_SHORT).show()
                     mainViewModel.clickedPosListBreakfast.clear()
-                    generateListView()
+                    this.generateListView()
                 }
                 setDefaultVisibility()
             }
@@ -163,7 +164,7 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
         }
 
         /* Set listView */
-        generateListView()
+        this.generateListView()
         listView.choiceMode = ListView.CHOICE_MODE_MULTIPLE
         listView.setOnTouchListener(this)
         listView.onItemClickListener =
@@ -179,6 +180,12 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
                     calculateAddedMacros()
                 }
             }
+
+        listView.onItemLongClickListener =
+            AdapterView.OnItemLongClickListener  { _, _, position, _ ->
+                myActivity.createItemCountDialog(myActivity.BreakfastList, position)
+                true
+            }
         for (pos in mainViewModel.clickedPosListBreakfast) {
             listView.setItemChecked(pos, true)
         }
@@ -187,7 +194,7 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
         return root 
     }
 
-    private fun calculateAddedMacros(){
+    fun calculateAddedMacros(){
         /* Set objects */
         val myActivity = (activity as MainActivity?)!!
 

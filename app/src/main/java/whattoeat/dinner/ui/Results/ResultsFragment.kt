@@ -249,8 +249,8 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
             if(selectedId == 0) {
                 isSuccess = false
             }
-            val scoredCalories = "${resultOptions[selectedId].first} / ${myActivity.calorieGoal}"
-            val scoredProteins = "${resultOptions[selectedId].second} / ${myActivity.proteinGoal}"
+            val scoredCalories = "${resultOptions[selectedId].first.toInt()} / ${myActivity.calorieGoal}"
+            val scoredProteins = "${resultOptions[selectedId].second.toInt()} / ${myActivity.proteinGoal}"
 
             myActivity.saveResults(DayResult(myActivity.calendar.get(Calendar.YEAR), myActivity.calendar.get(Calendar.MONTH),
                 myActivity.calendar.get(Calendar.DATE), scoredCalories, scoredProteins, isSuccess))
