@@ -402,9 +402,14 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         popupWindow.setOnDismissListener(PopupWindow.OnDismissListener {
             listToChange[position].count = itemCount
             listToChange[position].name = listToChange[position].name.plus(" (${itemCount}db)")
-            val fragment = navController.currentDestination as? BreakfastFragment
-            fragment?.generateListView()
-            fragment?.calculateAddedMacros()
+
+            currentFragmentidx += 1
+            val navItem: MenuItem  = navView.menu.getItem(currentFragmentidx)
+            navItem.onNavDestinationSelected(navController)
+
+            currentFragmentidx -= 1
+            val navItem2: MenuItem  = navView.menu.getItem(currentFragmentidx)
+            navItem2.onNavDestinationSelected(navController)
         })
     }
 
