@@ -179,11 +179,12 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
                 if(!isModification) {
                     calculateAddedMacros()
                 }
+                true
             }
-
         listView.onItemLongClickListener =
             AdapterView.OnItemLongClickListener  { _, _, position, _ ->
-                myActivity.createItemCountDialog(myActivity.BreakfastList, position)
+                if(android.view.ViewConfiguration.getPressedStateDuration() >= 2)
+                    myActivity.createItemCountDialog(myActivity.BreakfastList, position)
                 true
             }
         for (pos in mainViewModel.clickedPosListBreakfast) {

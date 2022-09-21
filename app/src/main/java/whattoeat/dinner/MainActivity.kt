@@ -392,24 +392,24 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         checkBtn.setOnClickListener{
             if(caloriesEditText.text != null){
                 itemCount =  caloriesEditText.text.toString().toInt()
+                listToChange[position].name = listToChange[position].name.substringBefore(delimiter = " (${listToChange[position].count}db)", missingDelimiterValue = listToChange[position].name).plus(" (${itemCount}db)")
+                listToChange[position].count = itemCount
+
+                currentFragmentidx += 1
+                val navItem: MenuItem  = navView.menu.getItem(currentFragmentidx)
+                navItem.onNavDestinationSelected(navController)
+
+                currentFragmentidx -= 1
+                val navItem2: MenuItem  = navView.menu.getItem(currentFragmentidx)
+                navItem2.onNavDestinationSelected(navController)
             }
 
             popupWindow.dismiss()
-            navView.visibility = View.VISIBLE
-            navView.startAnimation(slide_up)
         }
 
         popupWindow.setOnDismissListener(PopupWindow.OnDismissListener {
-            listToChange[position].count = itemCount
-            listToChange[position].name = listToChange[position].name.plus(" (${itemCount}db)")
-
-            currentFragmentidx += 1
-            val navItem: MenuItem  = navView.menu.getItem(currentFragmentidx)
-            navItem.onNavDestinationSelected(navController)
-
-            currentFragmentidx -= 1
-            val navItem2: MenuItem  = navView.menu.getItem(currentFragmentidx)
-            navItem2.onNavDestinationSelected(navController)
+            navView.visibility = View.VISIBLE
+            navView.startAnimation(slide_up)
         })
     }
 
