@@ -207,6 +207,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
             val min = Calendar.getInstance()
             min.set(startingYear, startingMonth, startingDay)
+            min.add(Calendar.DATE, -1)
 
             val max = Calendar.getInstance()
             max.set(currentYear, currentMonth, currentDay)
