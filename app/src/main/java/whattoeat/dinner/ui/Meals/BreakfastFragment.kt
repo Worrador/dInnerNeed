@@ -207,8 +207,8 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
         addedProteins = 0
 
         for (pos in mainViewModel.clickedPosListBreakfast){
-            addedCalories += myActivity.BreakfastList[pos].calories
-            addedProteins += myActivity.BreakfastList[pos].proteins
+            addedCalories += myActivity.BreakfastList[pos].calories * myActivity.BreakfastList[pos].count
+            addedProteins += myActivity.BreakfastList[pos].proteins * myActivity.BreakfastList[pos].count
         }
         myActivity.setMacros(addedCalories, addedProteins)
     }

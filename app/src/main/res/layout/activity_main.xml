@@ -208,9 +208,8 @@
                     app:layout_constraintTop_toTopOf="@+id/textView_calories_counter"
                     android:textStyle="bold"
                     android:focusableInTouchMode="true"
-                    android:focusable="true"
-                    android:longClickable="true"
-                    android:inputType="number"
+                    android:focusable="false"
+                    android:inputType="none"
                     android:layout_marginStart="6dp"
                     android:textColor="?attr/colorOnPrimary"
                     android:background="@null" />
@@ -261,8 +260,7 @@
                     android:textStyle="bold"
                     android:focusableInTouchMode="false"
                     android:focusable="false"
-                    android:longClickable="true"
-                    android:inputType="number"
+                    android:inputType="none"
                     android:layout_marginEnd="2dp"
                     android:background="@null" />
 

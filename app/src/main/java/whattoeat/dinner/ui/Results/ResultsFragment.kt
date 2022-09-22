@@ -105,19 +105,19 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
             allProteins = 0
 
             for (selectedFoodPos in mainViewModel.clickedPosListBreakfast)
-                allCalories += myActivity.BreakfastList[selectedFoodPos].calories
+                allCalories += myActivity.BreakfastList[selectedFoodPos].calories * myActivity.BreakfastList[selectedFoodPos].count
             for (selectedFoodPos in mainViewModel.clickedPosListBreakfast)
-                allProteins += myActivity.BreakfastList[selectedFoodPos].proteins
+                allProteins += myActivity.BreakfastList[selectedFoodPos].proteins * myActivity.BreakfastList[selectedFoodPos].count
 
             for (selectedFoodPos in mainViewModel.clickedPosListLunch)
-                allCalories += myActivity.LunchList[selectedFoodPos].calories
+                allCalories += myActivity.LunchList[selectedFoodPos].calories * myActivity.LunchList[selectedFoodPos].count
             for (selectedFoodPos in mainViewModel.clickedPosListLunch)
-                allProteins += myActivity.LunchList[selectedFoodPos].proteins
+                allProteins += myActivity.LunchList[selectedFoodPos].proteins * myActivity.LunchList[selectedFoodPos].count
 
             for (selectedFoodPos in mainViewModel.clickedPosListSnacks)
-                allCalories += myActivity.SnacksList[selectedFoodPos].calories
+                allCalories += myActivity.SnacksList[selectedFoodPos].calories * myActivity.SnacksList[selectedFoodPos].count
             for (selectedFoodPos in mainViewModel.clickedPosListSnacks)
-                allProteins += myActivity.SnacksList[selectedFoodPos].proteins
+                allProteins += myActivity.SnacksList[selectedFoodPos].proteins * myActivity.SnacksList[selectedFoodPos].count
         }
 
         fun calculateDiffPercentage(currentFoodCalories: Double, currentFoodProteins: Double) : Double{

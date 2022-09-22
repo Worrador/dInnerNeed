@@ -15,7 +15,7 @@ class ItemCountDialogFragment : DialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R2.layout.goal_dialog_fragment, container, false)
+        return inflater.inflate(R2.layout.itemcount_dialog_fragment, container, false)
     }
 }
 

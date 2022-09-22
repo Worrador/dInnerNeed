@@ -25,20 +25,20 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.applandeo.materialcalendarview.CalendarView
 import com.applandeo.materialcalendarview.EventDay
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import whattoeat.dinner.databinding.ActivityMainBinding
 import whattoeat.dinner.ui.MainViewModel
-import whattoeat.dinner.ui.Meals.BreakfastFragment
 import whattoeat.dinner.ui.Meals.Food
 import whattoeat.dinner.ui.Results.DayResult
 import java.lang.reflect.Type
 import java.util.*
 import kotlin.math.abs
 import whattoeat.dinner.R as R2
+import com.applandeo.materialcalendarview.CalendarView
+import whattoeat.dinner.ui.Meals.BreakfastFragment
 
 
 class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
@@ -197,8 +197,6 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             val calendarView = popupView.findViewById<View>(R2.id.calendarView) as CalendarView
             val caloriesScoreTextView = popupView.findViewById<View>(R2.id.calTextViewData) as TextView
             val proteinsScoreTextView = popupView.findViewById<View>(R2.id.proTextViewData) as TextView
-
-
 
             popupWindow.setOnDismissListener(PopupWindow.OnDismissListener {
                 navView.visibility = View.VISIBLE
@@ -366,7 +364,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
         // inflate the layout of the popup window
         val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val popupView: View = inflater.inflate(R2.layout.goal_dialog_fragment, null)
+        val popupView: View = inflater.inflate(R2.layout.itemcount_dialog_fragment, null)
 
         // create the popup window
         val width = LinearLayout.LayoutParams.WRAP_CONTENT
@@ -383,16 +381,23 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         popupWindow.dimBehind()
 
         val checkBtn = popupView.findViewById<View>(R2.id.checkBtn) as Button
-        val caloriesEditText = popupView.findViewById<View>(R2.id.editTextNumber1) as EditText
+        val itemcCountEditText = popupView.findViewById<View>(R2.id.editTextNumber1) as EditText
 
-        caloriesEditText.hint = "1"
+        itemcCountEditText.hint = "${listToChange[position].count}db"
 
         var itemCount = 1
 
         checkBtn.setOnClickListener{
-            if(caloriesEditText.text != null){
-                itemCount =  caloriesEditText.text.toString().toInt()
-                listToChange[position].name = listToChange[position].name.substringBefore(delimiter = " (${listToChange[position].count}db)", missingDelimiterValue = listToChange[position].name).plus(" (${itemCount}db)")
+            if(itemcCountEditText.text != null){
+                itemCount =  itemcCountEditText.text.toString().toInt()
+                if(itemCount == 1){
+                    listToChange[position].name = listToChange[position].name.substringBefore(delimiter = " (${listToChange[position].count}db)", missingDelimiterValue = listToChange[position].name)
+                }else {
+                    listToChange[position].name = listToChange[position].name.substringBefore(
+                        delimiter = " (${listToChange[position].count}db)",
+                        missingDelimiterValue = listToChange[position].name
+                    ).plus(" (${itemCount}db)")
+                }
                 listToChange[position].count = itemCount
 
                 currentFragmentidx += 1
