@@ -64,6 +64,7 @@ class SnacksFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGestu
             addBtn.visibility = View.VISIBLE
             delBtn.visibility = View.VISIBLE
             root.hideKeyboard()
+            myActivity.hideSystemUI()
             calculateAddedMacros()
             isModification= false
         }
@@ -175,6 +176,12 @@ class SnacksFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGestu
                     calculateAddedMacros()
                 }
             }
+        listView.onItemLongClickListener =
+            AdapterView.OnItemLongClickListener  { _, _, position, _ ->
+                if(android.view.ViewConfiguration.getPressedStateDuration() >= 2)
+                    myActivity.createItemCountDialog(myActivity.SnacksList, position)
+                true
+            }
         for (pos in mainViewModel.clickedPosListSnacks) {
             listView.setItemChecked(pos, true)
         }
@@ -195,8 +202,8 @@ class SnacksFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGestu
         addedProteins = 0
 
         for (pos in mainViewModel.clickedPosListSnacks){
-            addedCalories += myActivity.SnacksList[pos].calories
-            addedProteins += myActivity.SnacksList[pos].proteins
+            addedCalories += myActivity.SnacksList[pos].calories * myActivity.SnacksList[pos].count
+            addedProteins += myActivity.SnacksList[pos].proteins * myActivity.SnacksList[pos].count
         }
         myActivity.setMacros(addedCalories, addedProteins)
     }

@@ -10,9 +10,9 @@
 
     <ImageView
         android:id="@+id/gifView"
-        android:layout_width="match_parent"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="105dp"
+        android:layout_marginBottom="90dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -25,7 +25,7 @@
         android:visibility="invisible"
         android:padding="5dp"
         android:background="@color/dark_green"
-        android:layout_marginBottom="105dp"
+        android:layout_marginBottom="75dp"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_height="wrap_content">
 
@@ -122,7 +122,7 @@
         android:layout_alignParentBottom="true"
         android:text="@string/result_title"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="105dp"
+        android:layout_marginBottom="75dp"
         app:layout_constraintEnd_toEndOf="parent"
         android:textColor="?attr/colorOnPrimary"
         app:layout_constraintStart_toStartOf="parent" />
@@ -131,14 +131,14 @@
     <TextView
         android:id="@+id/TextView"
         android:layout_width="match_parent"
-        android:layout_marginEnd="12dp"
+        android:layout_marginEnd="6dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="42dp"
-        android:layout_marginStart="12dp"
+        android:layout_marginTop="38dp"
+        android:layout_marginStart="6dp"
         android:textColor="?attr/colorOnSecondary"
         android:text=""
         android:justificationMode="inter_word"
-        android:textSize="25sp"
+        android:textSize="20sp"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout

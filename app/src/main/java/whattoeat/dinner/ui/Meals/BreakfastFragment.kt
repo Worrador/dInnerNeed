@@ -81,6 +81,7 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
             addBtn.visibility = View.VISIBLE
             delBtn.visibility = View.VISIBLE
             root.hideKeyboard()
+            myActivity.hideSystemUI()
             calculateAddedMacros()
             isModification= false
         }

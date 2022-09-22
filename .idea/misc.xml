@@ -52,10 +52,12 @@
         <entry key="..\:/Suli/GitHub/KotlinProjects/WhatToEatAndroid/app/src/main/res/xml/rounded_dialog_fragment_background.xml" value="0.4548952543822146" />
         <entry key="..\:/Suli/GitHub/KotlinProjects/WhatToEatAndroid/app/src/main/res/xml/slide_down.xml" value="0.4510474561778538" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.35052083333333334" />
+        <entry key="app/src/main/res/layout/calendar_dialog_fragment.xml" value="0.35052083333333334" />
         <entry key="app/src/main/res/layout/fragment_breakfast.xml" value="0.35520833333333335" />
         <entry key="app/src/main/res/layout/fragment_lunch.xml" value="0.35052083333333334" />
         <entry key="app/src/main/res/layout/fragment_results.xml" value="0.35052083333333334" />
         <entry key="app/src/main/res/layout/fragment_snacks.xml" value="0.35052083333333334" />
+        <entry key="app/src/main/res/layout/goal_dialog_fragment.xml" value="0.246875" />
         <entry key="app/src/main/res/layout/itemcount_dialog_fragment.xml" value="0.35052083333333334" />
         <entry key="app/src/main/res/layout/list_text_view.xml" value="0.35052083333333334" />
         <entry key="app/src/main/res/layout/list_view_selector.xml" value="0.35052083333333334" />

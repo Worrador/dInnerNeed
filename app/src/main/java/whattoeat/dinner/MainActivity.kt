@@ -144,13 +144,14 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             val caloriesEditText = popupView.findViewById<View>(R2.id.editTextNumber1) as EditText
             val proteinsEditText = popupView.findViewById<View>(R2.id.editTextNumber2) as EditText
 
-            caloriesEditText.hint = "$calorieGoal(kcal)"
-            proteinsEditText.hint = "$proteinGoal(g)"
+            caloriesEditText.hint = "${calorieGoal}kcal"
+            proteinsEditText.hint = "${proteinGoal}g"
 
             popupWindow.setOnDismissListener(PopupWindow.OnDismissListener {
                 navView.visibility = View.VISIBLE
                 navView.startAnimation(slide_up)
                 toggleMenu(popupView)
+                hideSystemUI()
             })
 
             checkBtn.setOnClickListener{
@@ -186,8 +187,9 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             val popupView: View = inflater.inflate(R2.layout.calendar_dialog_fragment, null)
 
             // create the popup window
-            val width = 850
-            val height = 1700
+            val width = LinearLayout.LayoutParams.WRAP_CONTENT
+            val height = LinearLayout.LayoutParams.WRAP_CONTENT
+
             val focusable = true // lets taps outside the popup also dismiss it
 
             val popupWindow = PopupWindow(popupView, width, height, focusable)
@@ -202,6 +204,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
                 navView.visibility = View.VISIBLE
                 navView.startAnimation(slide_up)
                 toggleMenu(popupView)
+                hideSystemUI()
             })
             calendarView.setEvents(events)
 
@@ -401,12 +404,26 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
                 }
                 listToChange[position].count = itemCount
 
-                currentFragmentidx += 1
-                val navItem: MenuItem  = navView.menu.getItem(currentFragmentidx)
-                navItem.onNavDestinationSelected(navController)
+                var navItem1: MenuItem = navView.menu.getItem(0)
+                var navItem2: MenuItem = navView.menu.getItem(0)
 
-                currentFragmentidx -= 1
-                val navItem2: MenuItem  = navView.menu.getItem(currentFragmentidx)
+                if(navView.menu.getItem(0).isChecked) {
+                    navItem1 = navView.menu.getItem(1)
+                    navItem2 = navView.menu.getItem(0)
+                }
+                else if(navView.menu.getItem(1).isChecked) {
+                    navItem1 = navView.menu.getItem(2)
+                    navItem2 = navView.menu.getItem(1)
+                }
+                else if(navView.menu.getItem(2).isChecked) {
+                    navItem1 = navView.menu.getItem(3)
+                    navItem2 = navView.menu.getItem(2)
+                }
+                else if(navView.menu.getItem(3).isChecked) {
+                    navItem1 = navView.menu.getItem(2)
+                    navItem2 = navView.menu.getItem(3)
+                }
+                navItem1.onNavDestinationSelected(navController)
                 navItem2.onNavDestinationSelected(navController)
             }
 
@@ -416,14 +433,15 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         popupWindow.setOnDismissListener(PopupWindow.OnDismissListener {
             navView.visibility = View.VISIBLE
             navView.startAnimation(slide_up)
+            hideSystemUI()
         })
     }
 
 
 
     @RequiresApi(Build.VERSION_CODES.R)
-    private fun hideSystemUI() {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+    fun hideSystemUI() {
+        WindowCompat.setDecorFitsSystemWindows(window, true)
         WindowInsetsControllerCompat(window,
             window.decorView.findViewById(R.id.content)).let { controller ->
             controller.hide(WindowInsetsCompat.Type.navigationBars())
@@ -595,9 +613,6 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             myEdit.putInt("startingDay", currentDay)
             myEdit.commit()
         }
-
-        //settings.edit().putLong("firstDate", System.currentTimeMillis()).commit();
-        //val firstDate = sh.getLong("firstDate", calendar.timeInMillis)
     }
 
     // Override this method to recognize touch event
