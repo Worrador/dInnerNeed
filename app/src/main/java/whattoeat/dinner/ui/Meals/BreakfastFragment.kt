@@ -30,7 +30,7 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
     lateinit var mainViewModel : MainViewModel
 
     private var addedCalories = 0
-    private var addedProteins = 0
+    private var addedProteins = 0.0
 
     fun generateListView(){
         val listOfItem: ArrayList<String> = mainViewModel.setMultipleListView(myActivity.BreakfastList)
@@ -116,14 +116,12 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
 
         checkBtn.setOnClickListener {
             if(isDataAddition){
-                val isGoodInputs = TextUtils.isDigitsOnly(caloriesText.text) && TextUtils.isDigitsOnly(proteinsText.text) &&
-                        !TextUtils.isEmpty(nameText.text) && !TextUtils.isEmpty(caloriesText.text) && !TextUtils.isEmpty(proteinsText.text)
+                val isGoodInputs = !TextUtils.isEmpty(nameText.text) && !TextUtils.isEmpty(caloriesText.text) && !TextUtils.isEmpty(proteinsText.text)
                 if(isGoodInputs){
                     Toast.makeText(
                         context,
                         "Hozzáadva!", Toast.LENGTH_SHORT).show()
-                    myActivity.BreakfastList.add(Food(nameText.text.toString(), caloriesText.text.toString().toInt(), proteinsText.text.toString().toInt()))
-                    myActivity.BreakfastList.sortBy{it.name}
+                    myActivity.BreakfastList.add(Food(nameText.text.toString(), caloriesText.text.toString().toInt(), proteinsText.text.toString().toDouble()))
                     setDefaultVisibility()
                     this.generateListView()
                 }else{
@@ -204,7 +202,7 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
         } ?: throw Exception("Invalid Activity")
 
         addedCalories = 0
-        addedProteins = 0
+        addedProteins = 0.0
 
         for (pos in mainViewModel.clickedPosListBreakfast){
             addedCalories += myActivity.BreakfastList[pos].calories

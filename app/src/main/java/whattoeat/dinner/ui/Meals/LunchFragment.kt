@@ -22,7 +22,7 @@ class LunchFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGestur
     private lateinit var gestureDetector: GestureDetector
 
     private var addedCalories = 0
-    private var addedProteins = 0
+    private var addedProteins = 0.0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -117,7 +117,7 @@ class LunchFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGestur
                     Toast.makeText(
                         context,
                         "Hozzáadva!", Toast.LENGTH_SHORT).show()
-                    myActivity.LunchList.add(Food(nameText.text.toString(), caloriesText.text.toString().toInt(), proteinsText.text.toString().toInt()))
+                    myActivity.LunchList.add(Food(nameText.text.toString(), caloriesText.text.toString().toInt(), proteinsText.text.toString().toDouble()))
                     myActivity.LunchList.sortBy{it.name}
                     setDefaultVisibility()
                     generateListView()
@@ -192,7 +192,7 @@ class LunchFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGestur
         } ?: throw Exception("Invalid Activity")
 
         addedCalories = 0
-        addedProteins = 0
+        addedProteins = 0.0
 
         for (pos in mainViewModel.clickedPosListLunch){
             addedCalories += myActivity.LunchList[pos].calories
