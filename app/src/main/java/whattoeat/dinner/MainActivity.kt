@@ -67,6 +67,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
     var SnacksList: MutableList<Food> = mutableListOf<Food>()
     var isMenuVisible = false
     var calorieGoal = 1800
+    var isCountingCalories = true
     var proteinGoal = 50
     var currentFragmentidx = 0
     lateinit var calTextView: TextView
@@ -158,6 +159,11 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
                 if((caloriesEditText.text != null) && (proteinsEditText.text != null)){
                     try {
                         calorieGoal = caloriesEditText.text.toString().toInt()
+                        if(calorieGoal == 0){
+                            isCountingCalories = false
+                        }else{
+                            isCountingCalories = true
+                        }
                         proteinGoal = proteinsEditText.text.toString().toInt()
                     }catch (e: Exception)
                     {}
@@ -449,8 +455,8 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         }
     }
 
-    fun setMacros(calories: Int, proteins: Int){
-        if((calories >= 0) && (proteins >= 0)) {
+    fun setMacros(calories: Int, proteins: Double){
+        if((calories >= 0) && (proteins >= 0.0)) {
             calTextView.text = "$calories"
             proTextView.text = "$proteins"
             leftSide.visibility = View.VISIBLE
@@ -485,6 +491,8 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         startingYear = sh.getInt("startingYear", currentYear)
         startingMonth = sh.getInt("startingMonth", currentMonth)
         startingDay = sh.getInt("startingDay", currentDay)
+
+        isCountingCalories = sh.getBoolean("isCountingCalories", isCountingCalories)
 
         val typeOfResultList: Type = object : TypeToken<List<DayResult?>?>() {}.type
         dayResults = gson.fromJson(sh.getString("resultList", gson.toJson(dayResults).toString()), typeOfResultList)
@@ -561,6 +569,11 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         myEdit.remove("proteinGoal")
         myEdit.commit()
         myEdit.putInt("proteinGoal", proteinGoal)
+        myEdit.commit()
+
+        myEdit.remove("isCountingCalories")
+        myEdit.commit()
+        myEdit.putBoolean("isCountingCalories", isCountingCalories)
         myEdit.commit()
     }
 

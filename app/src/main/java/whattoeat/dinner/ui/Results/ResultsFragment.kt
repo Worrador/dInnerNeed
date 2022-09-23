@@ -33,7 +33,7 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
 
     private val binding get() = _binding!!
     var allCalories = 0
-    var allProteins = 0
+    var allProteins = 0.0
     private val goalDiffMaxPercentage = 0.05
     private lateinit var gestureDetector: GestureDetector
 
@@ -98,11 +98,11 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
             Configuration.UI_MODE_NIGHT_UNDEFINED -> {}
         }
 
-        myActivity.setMacros(-1, -1)
+        myActivity.setMacros(-1, -1.0)
 
         fun calculateNutrition(){
             allCalories = 0
-            allProteins = 0
+            allProteins = 0.0
 
             for (selectedFoodPos in mainViewModel.clickedPosListBreakfast)
                 allCalories += myActivity.BreakfastList[selectedFoodPos].calories * myActivity.BreakfastList[selectedFoodPos].count
@@ -124,7 +124,11 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
             var possibleCalorieDifference = ((myActivity.calorieGoal - allCalories - currentFoodCalories).absoluteValue / myActivity.calorieGoal)
             var possibleProteinDifference = ((myActivity.proteinGoal - allProteins - currentFoodProteins).absoluteValue / myActivity.proteinGoal)
 
-            return (possibleCalorieDifference + possibleProteinDifference)
+            return if(myActivity.isCountingCalories){
+                (possibleCalorieDifference + possibleProteinDifference)
+            }else{
+                (possibleProteinDifference)
+            }
         }
 
         fun getDinner() :String{
@@ -137,7 +141,7 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
             allFoodsList.addAll(myActivity.BreakfastList)
             allFoodsList.addAll(myActivity.LunchList)
             allFoodsList.addAll(myActivity.SnacksList)
-            allFoodsList.add(Food("Semmi",0,0))
+            allFoodsList.add(Food("Semmi",0,0.0))
             resultOptions = arrayOf(Pair(0.0,0.0), Pair(0.0,0.0), Pair(0.0,0.0), Pair(0.0,0.0))
 
             var first = 2.0
@@ -156,7 +160,7 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
             foodsResults.plusElement("$firstName")
 
             for (food in allFoodsList){
-                val current = calculateDiffPercentage(food.calories.toDouble(), food.proteins.toDouble())
+                val current = calculateDiffPercentage(food.calories.toDouble(), food.proteins)
                 val currentName = food.name
 
                 if (first > current) {
