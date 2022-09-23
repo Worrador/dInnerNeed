@@ -112,14 +112,12 @@ class LunchFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGestur
 
         checkBtn.setOnClickListener {
             if(isDataAddition){
-                val isGoodInputs = TextUtils.isDigitsOnly(caloriesText.text) && TextUtils.isDigitsOnly(proteinsText.text) &&
-                        !TextUtils.isEmpty(nameText.text) && !TextUtils.isEmpty(caloriesText.text) && !TextUtils.isEmpty(proteinsText.text)
+                val isGoodInputs = !TextUtils.isEmpty(nameText.text) && !TextUtils.isEmpty(caloriesText.text) && !TextUtils.isEmpty(proteinsText.text)
                 if(isGoodInputs){
                     Toast.makeText(
                         context,
                         "Hozzáadva!", Toast.LENGTH_SHORT).show()
                     myActivity.LunchList.add(Food(nameText.text.toString(), caloriesText.text.toString().toInt(), proteinsText.text.toString().toDouble()))
-                    myActivity.LunchList.sortBy{it.name}
                     setDefaultVisibility()
                     generateListView()
                 }else{
