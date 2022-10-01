@@ -9,7 +9,6 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.applandeo.materialcalendarview.EventDay
 import com.bumptech.glide.Glide
 import whattoeat.dinner.MainActivity
 import whattoeat.dinner.R
@@ -17,7 +16,6 @@ import whattoeat.dinner.databinding.FragmentResultsBinding
 import whattoeat.dinner.ui.MainViewModel
 import whattoeat.dinner.ui.Meals.Food
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.math.absoluteValue
 
 
@@ -25,23 +23,23 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
 
     private var _binding: FragmentResultsBinding? = null
 
-    lateinit var myActivity: MainActivity
-    lateinit var autocompleteTV: AutoCompleteTextView
-    var isSuccess = false
+    private lateinit var myActivity: MainActivity
+    private lateinit var autocompleteTV: AutoCompleteTextView
+    private var isSuccess = false
     private var resultOptions: Array<Pair<Double,Double>> = arrayOf()
-    var selectedId = 0
+    private var selectedId = 0
 
     private val binding get() = _binding!!
-    var allCalories = 0
-    var allProteins = 0.0
+    private var allCalories = 0
+    private var allProteins = 0.0
     private val goalDiffMaxPercentage = 0.05
     private lateinit var gestureDetector: GestureDetector
 
-    private fun getColoredSpanned(text: String, color: String): String? {
+    private fun getColoredSpanned(text: String, color: String): String {
         return "<b><font color=$color>$text</font></b>"
     }
 
-    private fun getColoredSpannedLittle(text: String, color: String): String? {
+    private fun getColoredSpannedLittle(text: String, color: String): String {
         return "<small><font color=$color>$text</small>"
     }
 
@@ -73,7 +71,7 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
         // Initializing the gesture detector
         gestureDetector = GestureDetector(this)
 
-        var foodsResults = ArrayList<String>()
+        val foodsResults = ArrayList<String>()
 
 
         autocompleteTV  = binding.autoCompleteTextView
@@ -121,8 +119,8 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
         }
 
         fun calculateDiffPercentage(currentFoodCalories: Double, currentFoodProteins: Double) : Double{
-            var possibleCalorieDifference = ((myActivity.calorieGoal - allCalories - currentFoodCalories).absoluteValue / myActivity.calorieGoal)
-            var possibleProteinDifference = ((myActivity.proteinGoal - allProteins - currentFoodProteins).absoluteValue / myActivity.proteinGoal)
+            val possibleCalorieDifference = ((myActivity.calorieGoal - allCalories - currentFoodCalories).absoluteValue / myActivity.calorieGoal)
+            val possibleProteinDifference = ((myActivity.proteinGoal - allProteins - currentFoodProteins).absoluteValue / myActivity.proteinGoal)
 
             return if(myActivity.isCountingCalories){
                 (possibleCalorieDifference + possibleProteinDifference)
@@ -136,10 +134,10 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
 
             var textToBeDisplayed = ""//A következők közül válassz:\n\n"
 
-            var allFoodsList: MutableList<Food> = mutableListOf<Food>()
+            val allFoodsList: MutableList<Food> = mutableListOf()
 
 
-            var TrimmedBreakfastList = myActivity.BreakfastList
+            val TrimmedBreakfastList = myActivity.BreakfastList
 
             for(breakfast in TrimmedBreakfastList) {
                 if (breakfast.count != 1){
@@ -148,7 +146,7 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
                 }
             }
 
-            var TrimmedLunchList = myActivity.LunchList
+            val TrimmedLunchList = myActivity.LunchList
 
             for(lunch in TrimmedLunchList) {
                 if (lunch.count != 1){
@@ -157,7 +155,7 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
                 }
             }
 
-            var TrimmedSnacksList = myActivity.LunchList
+            val TrimmedSnacksList = myActivity.LunchList
 
             for(snack in TrimmedSnacksList) {
                 if (snack.count != 1){
@@ -185,7 +183,7 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
             var thirdPro = 0.0
             var thirdName = ""
 
-            foodsResults.plusElement("$firstName")
+            foodsResults.plusElement(firstName)
 
             for (food in allFoodsList){
                 val current = calculateDiffPercentage(food.calories.toDouble(), food.proteins)
@@ -207,7 +205,7 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
                     first = current
                     firstName = currentName
                     firstCal = food.calories.toDouble()
-                    firstPro = food.proteins.toDouble()
+                    firstPro = food.proteins
 
                 } else if (second > current) {
                     third = second
@@ -219,19 +217,19 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
                     second = current
                     secondName = currentName
                     secondCal = food.calories.toDouble()
-                    secondPro = food.proteins.toDouble()
+                    secondPro = food.proteins
 
                 } else if (third > current) {
                     third = current
                     thirdName = currentName
                     thirdCal = food.calories.toDouble()
-                    thirdPro = food.proteins.toDouble()
+                    thirdPro = food.proteins
                 }
             }
             foodsResults.add("Valami mást")
-            foodsResults.add("$firstName")
+            foodsResults.add(firstName)
 
-            resultOptions[0] = Pair(allCalories.toDouble(), allProteins.toDouble())
+            resultOptions[0] = Pair(allCalories.toDouble(), allProteins)
             resultOptions[1] = Pair(allCalories+firstCal, allProteins+firstPro)
             resultOptions[2] = Pair(allCalories+secondCal, allProteins+secondPro)
             resultOptions[3] = Pair(allCalories+thirdCal, allProteins+thirdPro)
@@ -243,11 +241,11 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
                 textToBeDisplayed += getColoredSpanned("1. $firstName ", "#42a543") +
                         getColoredSpannedLittle("(${allCalories+firstCal}/${myActivity.calorieGoal}, ${allProteins+firstPro}/${myActivity.proteinGoal})<br/>", "#d1e659")
                 if(second < 2 * goalDiffMaxPercentage){
-                    foodsResults.add("$secondName")
+                    foodsResults.add(secondName)
                     textToBeDisplayed += getColoredSpanned("2. $secondName ", "#42a543") +
                             getColoredSpannedLittle("(${allCalories+secondCal}/${myActivity.calorieGoal}, ${allProteins+secondPro}/${myActivity.proteinGoal})<br/>", "#d1e659")
                     if(third < 2 * goalDiffMaxPercentage){
-                        foodsResults.add("$thirdName")
+                        foodsResults.add(thirdName)
                         textToBeDisplayed += getColoredSpanned("3. $thirdName ", "#42a543") +
                                 getColoredSpannedLittle("(${allCalories+thirdCal}/${myActivity.calorieGoal}, ${allProteins+thirdPro}/${myActivity.proteinGoal})", "#d1e659")
                     }
@@ -257,7 +255,8 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
             }else{
                 textToBeDisplayed += "Sajnos ma már nem tudod elérni a célodat, mert " + getColoredSpanned("$allCalories/${myActivity.calorieGoal}", "#dd1324") +
                         " kalóriát és " + getColoredSpanned("$allProteins/${myActivity.proteinGoal}", "#dd1324") +" fehérjét vittél be." +
-                        "<br/><br/>Mindenesetre a legjobb választás a(z): " + getColoredSpanned("$firstName", "#42a543") + " lenne. <br/><br/>Ezzel " +
+                        "<br/><br/>Mindenesetre a legjobb választás a(z): " + getColoredSpanned(
+                    firstName, "#42a543") + " lenne. <br/><br/>Ezzel " +
                         getColoredSpanned("${allCalories+firstCal}/${myActivity.calorieGoal}", "#d1e659") +
                         " kalóriát és " + getColoredSpanned("${allProteins+firstPro}/${myActivity.proteinGoal}", "#d1e659") +" fehérjét fogsz bevinni."
                 Glide.with(this).load(R.drawable.nahvocado).into(gifView)

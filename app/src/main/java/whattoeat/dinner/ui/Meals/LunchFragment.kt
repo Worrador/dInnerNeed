@@ -176,7 +176,7 @@ class LunchFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGestur
             }
         listView.onItemLongClickListener =
             AdapterView.OnItemLongClickListener  { _, _, position, _ ->
-                if(android.view.ViewConfiguration.getPressedStateDuration() >= 2)
+                if(ViewConfiguration.getPressedStateDuration() >= 2)
                     myActivity.createItemCountDialog(myActivity.LunchList, position)
                 true
             }

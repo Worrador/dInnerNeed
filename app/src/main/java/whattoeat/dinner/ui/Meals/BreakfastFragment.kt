@@ -12,8 +12,6 @@ import whattoeat.dinner.R
 import whattoeat.dinner.databinding.FragmentBreakfastBinding
 import whattoeat.dinner.hideKeyboard
 import whattoeat.dinner.ui.MainViewModel
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGestureListener {
@@ -23,16 +21,16 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
     private var isDataAddition: Boolean = false
     private var isModification: Boolean = false
     private lateinit var gestureDetector: GestureDetector
-    lateinit var listView: ListView
+    private lateinit var listView: ListView
     /* Set objects */
-    lateinit var myActivity: MainActivity
+    private lateinit var myActivity: MainActivity
 
-    lateinit var mainViewModel : MainViewModel
+    private lateinit var mainViewModel : MainViewModel
 
     private var addedCalories = 0
     private var addedProteins = 0.0
 
-    fun generateListView(){
+    private fun generateListView(){
         val listOfItem: ArrayList<String> = mainViewModel.setMultipleListView(myActivity.BreakfastList)
         context?.let {
             val arrayAdapter: ArrayAdapter<String> = ArrayAdapter(it, R.layout.list_text_view, listOfItem)
@@ -182,7 +180,7 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
             }
         listView.onItemLongClickListener =
             AdapterView.OnItemLongClickListener  { _, _, position, _ ->
-                if(android.view.ViewConfiguration.getPressedStateDuration() >= 2)
+                if(ViewConfiguration.getPressedStateDuration() >= 2)
                     myActivity.createItemCountDialog(myActivity.BreakfastList, position)
                 true
             }
@@ -194,7 +192,7 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
         return root 
     }
 
-    fun calculateAddedMacros(){
+    private fun calculateAddedMacros(){
         /* Set objects */
         val myActivity = (activity as MainActivity?)!!
 

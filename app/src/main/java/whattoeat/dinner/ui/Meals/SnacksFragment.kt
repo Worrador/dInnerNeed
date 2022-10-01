@@ -176,7 +176,7 @@ class SnacksFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGestu
             }
         listView.onItemLongClickListener =
             AdapterView.OnItemLongClickListener  { _, _, position, _ ->
-                if(android.view.ViewConfiguration.getPressedStateDuration() >= 2)
+                if(ViewConfiguration.getPressedStateDuration() >= 2)
                     myActivity.createItemCountDialog(myActivity.SnacksList, position)
                 true
             }

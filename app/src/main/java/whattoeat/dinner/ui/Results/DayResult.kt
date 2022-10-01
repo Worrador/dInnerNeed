@@ -1,7 +1,5 @@
 package whattoeat.dinner.ui.Results
 
-import java.util.*
-
 class DayResult (year : Int, month : Int, day : Int, scoredCalories : String, scoredProteins : String, isSuccess : Boolean) {
     var year : Int
     var month : Int

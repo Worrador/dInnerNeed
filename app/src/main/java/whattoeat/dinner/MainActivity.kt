@@ -38,7 +38,6 @@ import java.util.*
 import kotlin.math.abs
 import whattoeat.dinner.R as R2
 import com.applandeo.materialcalendarview.CalendarView
-import whattoeat.dinner.ui.Meals.BreakfastFragment
 
 
 class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
@@ -48,30 +47,30 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
     private var startingYear = 2022
     private var startingMonth = 0
     private var startingDay = 0
-    lateinit var navView: BottomNavigationView
-    lateinit var navController: NavController
+    private lateinit var navView: BottomNavigationView
+    private lateinit var navController: NavController
 
-    lateinit var leftSide: ConstraintLayout
-    lateinit var rightSide: ConstraintLayout
+    private lateinit var leftSide: ConstraintLayout
+    private lateinit var rightSide: ConstraintLayout
     val calendar: Calendar = Calendar.getInstance()
-    val currentYear = calendar.get(Calendar.YEAR)
-    val currentMonth = calendar.get(Calendar.MONTH)
-    val currentDay = calendar.get(Calendar.DATE)
-    var events: MutableList<EventDay> = ArrayList()
-    var dayResults: MutableList<DayResult> = ArrayList()
+    private val currentYear = calendar.get(Calendar.YEAR)
+    private val currentMonth = calendar.get(Calendar.MONTH)
+    private val currentDay = calendar.get(Calendar.DATE)
+    private var events: MutableList<EventDay> = ArrayList()
+    private var dayResults: MutableList<DayResult> = ArrayList()
     private val swipeThreshold = 100
     private val swipeVelocityThreshold = 100
-    lateinit var mainViewModel : MainViewModel
-    var BreakfastList: MutableList<Food> = mutableListOf<Food>()
-    var LunchList: MutableList<Food> = mutableListOf<Food>()
-    var SnacksList: MutableList<Food> = mutableListOf<Food>()
-    var isMenuVisible = false
+    private lateinit var mainViewModel : MainViewModel
+    var BreakfastList: MutableList<Food> = mutableListOf()
+    var LunchList: MutableList<Food> = mutableListOf()
+    var SnacksList: MutableList<Food> = mutableListOf()
+    private var isMenuVisible = false
     var calorieGoal = 1800
     var isCountingCalories = true
     var proteinGoal = 50
-    var currentFragmentidx = 0
-    lateinit var calTextView: TextView
-    lateinit var proTextView: TextView
+    private var currentFragmentidx = 0
+    private lateinit var calTextView: TextView
+    private lateinit var proTextView: TextView
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -148,12 +147,12 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             caloriesEditText.hint = "${calorieGoal}kcal"
             proteinsEditText.hint = "${proteinGoal}g"
 
-            popupWindow.setOnDismissListener(PopupWindow.OnDismissListener {
+            popupWindow.setOnDismissListener{
                 navView.visibility = View.VISIBLE
                 navView.startAnimation(slide_up)
                 toggleMenu(popupView)
                 hideSystemUI()
-            })
+            }
 
             checkBtn.setOnClickListener{
                 if((caloriesEditText.text != null) && (proteinsEditText.text != null)){
@@ -199,19 +198,19 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             val focusable = true // lets taps outside the popup also dismiss it
 
             val popupWindow = PopupWindow(popupView, width, height, focusable)
-            popupWindow.isOutsideTouchable = false;
-            popupWindow.animationStyle = R2.style.Animation;
+            popupWindow.isOutsideTouchable = false
+            popupWindow.animationStyle = R2.style.Animation
 
             val calendarView = popupView.findViewById<View>(R2.id.calendarView) as CalendarView
             val caloriesScoreTextView = popupView.findViewById<View>(R2.id.calTextViewData) as TextView
             val proteinsScoreTextView = popupView.findViewById<View>(R2.id.proTextViewData) as TextView
 
-            popupWindow.setOnDismissListener(PopupWindow.OnDismissListener {
+            popupWindow.setOnDismissListener {
                 navView.visibility = View.VISIBLE
                 navView.startAnimation(slide_up)
                 toggleMenu(popupView)
                 hideSystemUI()
-            })
+            }
             calendarView.setEvents(events)
 
             val min = Calendar.getInstance()
@@ -347,6 +346,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         isMenuVisible = isMenuVisible.not()
     }
 
+    @RequiresApi(Build.VERSION_CODES.R)
     fun createItemCountDialog(listToChange: MutableList<Food>, position: Int){
 
         fun PopupWindow.dimBehind() {
@@ -395,7 +395,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
         itemcCountEditText.hint = "${listToChange[position].count}db"
 
-        var itemCount = 1
+        var itemCount: Int
 
         checkBtn.setOnClickListener{
             if(itemcCountEditText.text != null){
@@ -436,11 +436,11 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             popupWindow.dismiss()
         }
 
-        popupWindow.setOnDismissListener(PopupWindow.OnDismissListener {
+        popupWindow.setOnDismissListener {
             navView.visibility = View.VISIBLE
             navView.startAnimation(slide_up)
-            hideSystemUI()
-        })
+            this.hideSystemUI()
+        }
     }
 
 
@@ -474,7 +474,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
     private fun getLists(){
         val sh = getPreferences(Context.MODE_APPEND)
-        val gson = Gson();
+        val gson = Gson()
         val typeOfObjectsList: Type = object : TypeToken<List<Food?>?>() {}.type
 
         BreakfastList = gson.fromJson(sh.getString("breakfastList", gson.toJson(BreakfastList).toString()), typeOfObjectsList)
@@ -500,7 +500,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         events.clear()
 
         for (result in dayResults){
-            var calendarTemp = calendar.clone() as Calendar
+            val calendarTemp = calendar.clone() as Calendar
             calendarTemp.set(result.year, result.month, result.day)
             if(result.isSuccess) {
                 events.add(EventDay(calendarTemp, R2.drawable.ic_check_green))
@@ -509,16 +509,14 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             }
         }
 
-        val calendars: List<Calendar> = ArrayList()
-
         var yearIndex = startingYear
         var monthIndex = startingMonth
         var dayIndex = startingDay
         while ((yearIndex != currentYear) || (monthIndex != currentMonth) || (dayIndex != currentDay)){
-            var calendarTemp = calendar.clone() as Calendar
+            val calendarTemp = calendar.clone() as Calendar
             calendarTemp.set(yearIndex, monthIndex, dayIndex)
             events.add(EventDay(calendarTemp, R2.drawable.ic_cancel_red))
-            var calendarTempAfter = calendarTemp.clone() as Calendar
+            val calendarTempAfter = calendarTemp.clone() as Calendar
             calendarTempAfter.add(Calendar.DATE, 1)
             yearIndex = calendarTempAfter.get(Calendar.YEAR)
             monthIndex = calendarTempAfter.get(Calendar.MONTH)
@@ -534,10 +532,10 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
     override fun onPause() {
         super.onPause()
         val sharedPreferences = getPreferences(Context.MODE_APPEND)
-        val gson = Gson();
+        val gson = Gson()
         val myEdit = sharedPreferences.edit()
 
-        var TrimmedBreakfastList = BreakfastList
+        val TrimmedBreakfastList = BreakfastList
 
         for(breakfast in TrimmedBreakfastList) {
             if (breakfast.count != 1){
@@ -546,7 +544,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             }
         }
 
-        var TrimmedLunchList = LunchList
+        val TrimmedLunchList = LunchList
 
         for(lunch in TrimmedLunchList) {
             if (lunch.count != 1){
@@ -555,7 +553,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             }
         }
 
-        var TrimmedSnacksList = LunchList
+        val TrimmedSnacksList = LunchList
 
         for(snack in TrimmedSnacksList) {
             if (snack.count != 1){
@@ -605,7 +603,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             }
         }
 
-        var calendarTemp: Calendar = Calendar.getInstance()
+        val calendarTemp: Calendar = Calendar.getInstance()
         calendarTemp.set(newResult.year, newResult.month, newResult.day)
 
         for(event in events){
@@ -627,7 +625,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
         // Save dayResults as preferences since its footprint is smaller:
         val sh = getPreferences(Context.MODE_APPEND)
-        val gson = Gson();
+        val gson = Gson()
         val myEdit = sh.edit()
 
         myEdit.remove("resultList")
