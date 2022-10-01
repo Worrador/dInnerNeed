@@ -138,9 +138,37 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
 
             var allFoodsList: MutableList<Food> = mutableListOf<Food>()
 
-            allFoodsList.addAll(myActivity.BreakfastList)
-            allFoodsList.addAll(myActivity.LunchList)
-            allFoodsList.addAll(myActivity.SnacksList)
+
+            var TrimmedBreakfastList = myActivity.BreakfastList
+
+            for(breakfast in TrimmedBreakfastList) {
+                if (breakfast.count != 1){
+                    breakfast.name = breakfast.name.substringBefore(delimiter = " (${breakfast.count}db)", missingDelimiterValue = breakfast.name)
+                    breakfast.count = 1
+                }
+            }
+
+            var TrimmedLunchList = myActivity.LunchList
+
+            for(lunch in TrimmedLunchList) {
+                if (lunch.count != 1){
+                    lunch.name = lunch.name.substringBefore(delimiter = " (${lunch.count}db)", missingDelimiterValue = lunch.name)
+                    lunch.count = 1
+                }
+            }
+
+            var TrimmedSnacksList = myActivity.LunchList
+
+            for(snack in TrimmedSnacksList) {
+                if (snack.count != 1){
+                    snack.name = snack.name.substringBefore(delimiter = " (${snack.count}db)", missingDelimiterValue = snack.name)
+                    snack.count = 1
+                }
+            }
+
+            allFoodsList.addAll(TrimmedBreakfastList)
+            allFoodsList.addAll(TrimmedLunchList)
+            allFoodsList.addAll(TrimmedSnacksList)
             allFoodsList.add(Food("Semmi",0,0.0))
             resultOptions = arrayOf(Pair(0.0,0.0), Pair(0.0,0.0), Pair(0.0,0.0), Pair(0.0,0.0))
 

@@ -546,6 +546,24 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             }
         }
 
+        var TrimmedLunchList = LunchList
+
+        for(lunch in TrimmedLunchList) {
+            if (lunch.count != 1){
+                lunch.name = lunch.name.substringBefore(delimiter = " (${lunch.count}db)", missingDelimiterValue = lunch.name)
+                lunch.count = 1
+            }
+        }
+
+        var TrimmedSnacksList = LunchList
+
+        for(snack in TrimmedSnacksList) {
+            if (snack.count != 1){
+                snack.name = snack.name.substringBefore(delimiter = " (${snack.count}db)", missingDelimiterValue = snack.name)
+                snack.count = 1
+            }
+        }
+
         myEdit.remove("breakfastList")
         myEdit.commit()
         myEdit.putString("breakfastList", gson.toJson(TrimmedBreakfastList))
@@ -553,12 +571,12 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
         myEdit.remove("lunchList")
         myEdit.commit()
-        myEdit.putString("lunchList", gson.toJson(LunchList))
+        myEdit.putString("lunchList", gson.toJson(TrimmedLunchList))
         myEdit.commit()
 
         myEdit.remove("snackList")
         myEdit.commit()
-        myEdit.putString("snackList", gson.toJson(SnacksList))
+        myEdit.putString("snackList", gson.toJson(TrimmedSnacksList))
         myEdit.commit()
 
         myEdit.remove("calorieGoal")
