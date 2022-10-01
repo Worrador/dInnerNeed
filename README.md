@@ -2,6 +2,7 @@
 The goal of this app is to provide a way of keeping track of your calorie and protein intake.
 
 - You can add items to your breakfast, lunch and snacks page.
+- Long pressing any item enables you to set the count of this item for the current session.
 - On the last page you can get the name of the suggested food for your dinner in order to meet your requirements of calories and proteins. Here, you can save your results.
 - By tapping the app icon in the app bar in the middle, a sliding menu appears with two items.
 - By selecting the left item you can adjust your calorie and protein goal.
