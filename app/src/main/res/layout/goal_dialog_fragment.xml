@@ -110,6 +110,123 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:orientation="horizontal"
             android:weightSum="2"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:textColor="?attr/colorSecondary"
+                android:text="Zsír cél:"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="15dp"
+                android:gravity="left"
+                android:textSize="25sp"
+                android:inputType="number"/>
+
+            <EditText
+                android:id="@+id/editTextNumber3"
+                android:focusable="true"
+                android:layout_width="wrap_content"
+                android:textColorHint="@color/grey"
+                android:textColor="@color/dark_green"
+                android:layout_weight="1"
+                android:hint="65"
+                android:ems="4"
+                android:gravity="center"
+                android:textSize="25sp"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorSecondaryVariant"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:textColor="?attr/colorSecondary"
+                android:text="Rost cél:"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="15dp"
+                android:gravity="left"
+                android:textSize="25sp"
+                android:inputType="number"/>
+
+            <EditText
+                android:id="@+id/editTextNumber4"
+                android:focusable="true"
+                android:layout_width="wrap_content"
+                android:textColorHint="@color/grey"
+                android:textColor="@color/dark_green"
+                android:layout_weight="1"
+                android:hint="25"
+                android:ems="4"
+                android:gravity="center"
+                android:textSize="25sp"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorSecondaryVariant"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:textColor="?attr/colorSecondary"
+                android:text="Szénhidrát cél:"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="15dp"
+                android:gravity="left"
+                android:textSize="25sp"
+                android:inputType="number"/>
+
+            <EditText
+                android:id="@+id/editTextNumber5"
+                android:focusable="true"
+                android:layout_width="wrap_content"
+                android:textColorHint="@color/grey"
+                android:textColor="@color/dark_green"
+                android:layout_weight="1"
+                android:hint="200"
+                android:ems="4"
+                android:gravity="center"
+                android:textSize="25sp"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorSecondaryVariant"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="horizontal"
+            android:weightSum="2"
             android:layout_marginTop="20dp"
             android:gravity="center"
             app:layout_constraintStart_toStartOf="parent"

@@ -118,6 +118,111 @@
                     android:gravity="center"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorSecondaryVariant"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/zsirTextView"
+                    android:layout_width="wrap_content"
+                    android:textColor="?attr/colorSecondary"
+                    android:text="Zsír:"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingStart="15dp"
+                    android:gravity="left"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/zsirTextViewData"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/dark_green"
+                    android:layout_weight="1"
+                    android:text="45 / 65"
+                    android:ems="4"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorSecondaryVariant"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/rostTextView"
+                    android:layout_width="wrap_content"
+                    android:textColor="?attr/colorSecondary"
+                    android:text="Rost:"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingStart="15dp"
+                    android:gravity="left"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/rostTextViewData"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/dark_green"
+                    android:layout_weight="1"
+                    android:text="18 / 25"
+                    android:ems="4"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorSecondaryVariant"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/szenhidratTextView"
+                    android:layout_width="wrap_content"
+                    android:textColor="?attr/colorSecondary"
+                    android:text="Szénhidrát:"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingStart="15dp"
+                    android:gravity="left"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/szenhidratTextViewData"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/dark_green"
+                    android:layout_weight="1"
+                    android:text="180 / 200"
+                    android:ems="4"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>

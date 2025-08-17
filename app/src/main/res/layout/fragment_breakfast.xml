@@ -79,6 +79,54 @@
             app:autoSizeTextType="uniform"
             app:layout_constraintTop_toBottomOf="@+id/breakfast_list_view" />
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textView_zsir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="6dp"
+            android:layout_marginBottom="85dp"
+            android:layout_toEndOf="@+id/textView_proteins"
+            android:hint="@string/inputFoodZsir_title"
+            android:maxEms="4"
+            android:inputType="numberDecimal"
+            android:maxLines="2"
+            android:visibility="invisible"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintTop_toBottomOf="@+id/breakfast_list_view" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textView_rost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="6dp"
+            android:layout_marginBottom="85dp"
+            android:layout_toEndOf="@+id/textView_zsir"
+            android:hint="@string/inputFoodRost_title"
+            android:maxEms="4"
+            android:inputType="numberDecimal"
+            android:maxLines="2"
+            android:visibility="invisible"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintTop_toBottomOf="@+id/breakfast_list_view" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textView_szenhidrat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="6dp"
+            android:layout_marginBottom="85dp"
+            android:layout_toEndOf="@+id/textView_rost"
+            android:hint="@string/inputFoodSzenhidrat_title"
+            android:maxEms="4"
+            android:inputType="numberDecimal"
+            android:maxLines="2"
+            android:visibility="invisible"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintTop_toBottomOf="@+id/breakfast_list_view" />
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/deleteBtn"
             android:layout_width="wrap_content"

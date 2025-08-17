@@ -8,9 +8,15 @@
     <string name="inputFoodName_title">Név</string>
     <string name="inputFoodCalories_title">Kalória</string>
     <string name="inputFoodProtein_title">Fehérje</string>
+    <string name="inputFoodZsir_title">Zsír</string>
+    <string name="inputFoodRost_title">Rost</string>
+    <string name="inputFoodSzenhidrat_title">Szénhidrát</string>
     <string name="result_title">Mutasd mit hamizzak!</string>
     <string name="calories_counter_title">Kalória:</string>
     <string name="proteins_counter_title">Fehérje:</string>
+    <string name="zsir_counter_title">Zsír:</string>
+    <string name="rost_counter_title">Rost:</string>
+    <string name="szenhidrat_counter_title">Szénhidrát:</string>
 
 
     <string name="material_calendar_monday">H</string>

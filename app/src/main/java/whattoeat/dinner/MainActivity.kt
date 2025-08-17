@@ -68,9 +68,16 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
     var calorieGoal = 1800
     var isCountingCalories = true
     var proteinGoal = 50
+    var zsirGoal = 65
+    var rostGoal = 25
+    var szenhidratGoal = 200
     private var currentFragmentidx = 0
     private lateinit var calTextView: TextView
     private lateinit var proTextView: TextView
+    // Note: New nutrient fields will be added to layout later
+    // zsirTextView = binding.editViewZsirCounter
+    // rostTextView = binding.editViewRostCounter
+    // szenhidratTextView = binding.editViewSzenhidratCounter
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,6 +92,10 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
         calTextView = binding.editViewCaloriesCounter
         proTextView = binding.editViewProteinsCounter
+        // Note: New nutrient fields will be added to layout later
+        // zsirTextView = binding.editViewZsirCounter
+        // rostTextView = binding.editViewRostCounter
+        // szenhidratTextView = binding.editViewSzenhidratCounter
         leftSide = binding.leftSide
         rightSide = binding.rightSide
 
@@ -143,9 +154,15 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             val checkBtn = popupView.findViewById<View>(R2.id.checkBtn) as Button
             val caloriesEditText = popupView.findViewById<View>(R2.id.editTextNumber1) as EditText
             val proteinsEditText = popupView.findViewById<View>(R2.id.editTextNumber2) as EditText
+            val zsirEditText = popupView.findViewById<View>(R2.id.editTextNumber3) as EditText
+            val rostEditText = popupView.findViewById<View>(R2.id.editTextNumber4) as EditText
+            val szenhidratEditText = popupView.findViewById<View>(R2.id.editTextNumber5) as EditText
 
             caloriesEditText.hint = "${calorieGoal}kcal"
             proteinsEditText.hint = "${proteinGoal}g"
+            zsirEditText.hint = "${zsirGoal}g"
+            rostEditText.hint = "${rostGoal}g"
+            szenhidratEditText.hint = "${szenhidratGoal}g"
 
             popupWindow.setOnDismissListener{
                 navView.visibility = View.VISIBLE
@@ -155,7 +172,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             }
 
             checkBtn.setOnClickListener{
-                if((caloriesEditText.text != null) && (proteinsEditText.text != null)){
+                if((caloriesEditText.text != null) && (proteinsEditText.text != null) && (zsirEditText.text != null) && (rostEditText.text != null) && (szenhidratEditText.text != null)){
                     try {
                         calorieGoal = caloriesEditText.text.toString().toInt()
                         if(calorieGoal == 0){
@@ -164,6 +181,9 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
                             isCountingCalories = true
                         }
                         proteinGoal = proteinsEditText.text.toString().toInt()
+                        zsirGoal = zsirEditText.text.toString().toInt()
+                        rostGoal = rostEditText.text.toString().toInt()
+                        szenhidratGoal = szenhidratEditText.text.toString().toInt()
                     }catch (e: Exception)
                     {}
                 }
@@ -204,6 +224,9 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             val calendarView = popupView.findViewById<View>(R2.id.calendarView) as CalendarView
             val caloriesScoreTextView = popupView.findViewById<View>(R2.id.calTextViewData) as TextView
             val proteinsScoreTextView = popupView.findViewById<View>(R2.id.proTextViewData) as TextView
+            val zsirScoreTextView = popupView.findViewById<View>(R2.id.zsirTextViewData) as TextView
+            val rostScoreTextView = popupView.findViewById<View>(R2.id.rostTextViewData) as TextView
+            val szenhidratScoreTextView = popupView.findViewById<View>(R2.id.szenhidratTextViewData) as TextView
 
             popupWindow.setOnDismissListener {
                 navView.visibility = View.VISIBLE
@@ -231,16 +254,25 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
                     var calString = "Nincs adat"
                     var proString = "Nincs adat"
+                    var zsirString = "Nincs adat"
+                    var rostString = "Nincs adat"
+                    var szenhidratString = "Nincs adat"
 
                     for (result in dayResults){
                         if((result.year == clickedDayCalendarYear) && (result.month == clickedDayCalendarMonth) && (result.day == clickedDayCalendarDay)){
                             calString = result.scoredCalories
                             proString = result.scoredProteins
+                            zsirString = result.scoredZsir
+                            rostString = result.scoredRost
+                            szenhidratString = result.scoredSzenhidrat
                             break
                         }
                     }
                     caloriesScoreTextView.text = calString
                     proteinsScoreTextView.text = proString
+                    zsirScoreTextView.text = zsirString
+                    rostScoreTextView.text = rostString
+                    szenhidratScoreTextView.text = szenhidratString
                 }
             })
 
@@ -256,16 +288,25 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
             var calString = "Nincs adat"
             var proString = "Nincs adat"
+            var zsirString = "Nincs adat"
+            var rostString = "Nincs adat"
+            var szenhidratString = "Nincs adat"
 
             for (result in dayResults){
                 if((result.year == clickedDayCalendarYear) && (result.month == clickedDayCalendarMonth) && (result.day == clickedDayCalendarDay)){
                     calString = result.scoredCalories
                     proString = result.scoredProteins
+                    zsirString = result.scoredZsir
+                    rostString = result.scoredRost
+                    szenhidratString = result.scoredSzenhidrat
                     break
                 }
             }
             caloriesScoreTextView.text = calString
             proteinsScoreTextView.text = proString
+            zsirScoreTextView.text = zsirString
+            rostScoreTextView.text = rostString
+            szenhidratScoreTextView.text = szenhidratString
         }
 
 
@@ -456,16 +497,24 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         }
     }
 
-    fun setMacros(calories: Int, proteins: Double){
+    fun setMacros(calories: Int, proteins: Double, zsir: Double, rost: Double, szenhidrat: Double){
         if((calories >= 0) && (proteins >= 0.0)) {
             calTextView.text = "$calories"
             proTextView.text = "$proteins"
+            // Note: New nutrient fields will be added to layout later
+            // zsirTextView.text = "$zsir"
+            // rostTextView.text = "$rost"
+            // szenhidratTextView.text = "$szenhidrat"
             leftSide.visibility = View.VISIBLE
             rightSide.visibility = View.VISIBLE
         }else
         {
             calTextView.text = ""
             proTextView.text = ""
+            // Note: New nutrient fields will be added to layout later
+            // zsirTextView.text = ""
+            // rostTextView.text = ""
+            // szenhidratTextView.text = ""
             leftSide.visibility = View.INVISIBLE
             rightSide.visibility = View.INVISIBLE
 
@@ -488,6 +537,9 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
         calorieGoal = sh.getInt("calorieGoal", calorieGoal)
         proteinGoal = sh.getInt("proteinGoal", proteinGoal)
+        zsirGoal = sh.getInt("zsirGoal", zsirGoal)
+        rostGoal = sh.getInt("rostGoal", rostGoal)
+        szenhidratGoal = sh.getInt("szenhidratGoal", szenhidratGoal)
 
         startingYear = sh.getInt("startingYear", currentYear)
         startingMonth = sh.getInt("startingMonth", currentMonth)
@@ -586,6 +638,21 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         myEdit.remove("proteinGoal")
         myEdit.commit()
         myEdit.putInt("proteinGoal", proteinGoal)
+        myEdit.commit()
+
+        myEdit.remove("zsirGoal")
+        myEdit.commit()
+        myEdit.putInt("zsirGoal", zsirGoal)
+        myEdit.commit()
+
+        myEdit.remove("rostGoal")
+        myEdit.commit()
+        myEdit.putInt("rostGoal", rostGoal)
+        myEdit.commit()
+
+        myEdit.remove("szenhidratGoal")
+        myEdit.commit()
+        myEdit.putInt("szenhidratGoal", szenhidratGoal)
         myEdit.commit()
 
         myEdit.remove("isCountingCalories")

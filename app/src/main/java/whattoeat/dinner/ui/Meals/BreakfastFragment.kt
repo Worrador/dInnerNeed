@@ -57,6 +57,9 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
         val nameText: TextView = binding.textView
         val caloriesText: TextView = binding.textViewCalories
         val proteinsText: TextView = binding.textViewProteins
+        val zsirText: TextView = binding.textViewZsir
+        val rostText: TextView = binding.textViewRost
+        val szenhidratText: TextView = binding.textViewSzenhidrat
         val cancelBtn: FloatingActionButton = binding.cancelBtn
         val checkBtn: FloatingActionButton = binding.checkBtn
         val addBtn: FloatingActionButton = binding.addBtn
@@ -74,6 +77,12 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
             caloriesText.text = ""
             proteinsText.visibility = View.INVISIBLE
             proteinsText.text = ""
+            zsirText.visibility = View.INVISIBLE
+            zsirText.text = ""
+            rostText.visibility = View.INVISIBLE
+            rostText.text = ""
+            szenhidratText.visibility = View.INVISIBLE
+            szenhidratText.text = ""
             checkBtn.visibility = View.INVISIBLE
             cancelBtn.visibility = View.INVISIBLE
             addBtn.visibility = View.VISIBLE
@@ -89,6 +98,9 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
                 nameText.visibility = View.VISIBLE
                 caloriesText.visibility = View.VISIBLE
                 proteinsText.visibility = View.VISIBLE
+                zsirText.visibility = View.VISIBLE
+                rostText.visibility = View.VISIBLE
+                szenhidratText.visibility = View.VISIBLE
             }
             calculateAddedMacros()
             addBtn.visibility = View.INVISIBLE
@@ -115,12 +127,12 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
 
         checkBtn.setOnClickListener {
             if(isDataAddition){
-                val isGoodInputs = !TextUtils.isEmpty(nameText.text) && !TextUtils.isEmpty(caloriesText.text) && !TextUtils.isEmpty(proteinsText.text)
+                val isGoodInputs = !TextUtils.isEmpty(nameText.text) && !TextUtils.isEmpty(caloriesText.text) && !TextUtils.isEmpty(proteinsText.text) && !TextUtils.isEmpty(zsirText.text) && !TextUtils.isEmpty(rostText.text) && !TextUtils.isEmpty(szenhidratText.text)
                 if(isGoodInputs){
                     Toast.makeText(
                         context,
                         "Hozzáadva!", Toast.LENGTH_SHORT).show()
-                    myActivity.BreakfastList.add(Food(nameText.text.toString(), caloriesText.text.toString().toInt(), proteinsText.text.toString().toDouble()))
+                    myActivity.BreakfastList.add(Food(nameText.text.toString(), caloriesText.text.toString().toInt(), proteinsText.text.toString().toDouble(), zsirText.text.toString().toDouble(), rostText.text.toString().toDouble(), szenhidratText.text.toString().toDouble()))
                     setDefaultVisibility()
                     this.generateListView()
                 }else{
@@ -202,12 +214,18 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
 
         addedCalories = 0
         addedProteins = 0.0
+        var addedZsir = 0.0
+        var addedRost = 0.0
+        var addedSzenhidrat = 0.0
 
         for (pos in mainViewModel.clickedPosListBreakfast){
             addedCalories += myActivity.BreakfastList[pos].calories * myActivity.BreakfastList[pos].count
             addedProteins += myActivity.BreakfastList[pos].proteins * myActivity.BreakfastList[pos].count
+            addedZsir += myActivity.BreakfastList[pos].zsir * myActivity.BreakfastList[pos].count
+            addedRost += myActivity.BreakfastList[pos].rost * myActivity.BreakfastList[pos].count
+            addedSzenhidrat += myActivity.BreakfastList[pos].szenhidrat * myActivity.BreakfastList[pos].count
         }
-        myActivity.setMacros(addedCalories, addedProteins)
+        myActivity.setMacros(addedCalories, addedProteins, addedZsir, addedRost, addedSzenhidrat)
     }
 
     override fun onDestroyView() {

@@ -42,6 +42,9 @@ class SnacksFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGestu
         val nameText: TextView = binding.textView
         val caloriesText: TextView = binding.textViewCalories
         val proteinsText: TextView = binding.textViewProteins
+        val zsirText: TextView = binding.textViewZsir
+        val rostText: TextView = binding.textViewRost
+        val szenhidratText: TextView = binding.textViewSzenhidrat
         val cancelBtn: FloatingActionButton = binding.cancelBtn
         val checkBtn: FloatingActionButton = binding.checkBtn
         val addBtn: FloatingActionButton = binding.addBtn
@@ -59,6 +62,12 @@ class SnacksFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGestu
             caloriesText.text = ""
             proteinsText.visibility = View.INVISIBLE
             proteinsText.text = ""
+            zsirText.visibility = View.INVISIBLE
+            zsirText.text = ""
+            rostText.visibility = View.INVISIBLE
+            rostText.text = ""
+            szenhidratText.visibility = View.INVISIBLE
+            szenhidratText.text = ""
             checkBtn.visibility = View.INVISIBLE
             cancelBtn.visibility = View.INVISIBLE
             addBtn.visibility = View.VISIBLE
@@ -74,6 +83,9 @@ class SnacksFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGestu
                 nameText.visibility = View.VISIBLE
                 caloriesText.visibility = View.VISIBLE
                 proteinsText.visibility = View.VISIBLE
+                zsirText.visibility = View.VISIBLE
+                rostText.visibility = View.VISIBLE
+                szenhidratText.visibility = View.VISIBLE
             }
             calculateAddedMacros()
             addBtn.visibility = View.INVISIBLE
@@ -112,12 +124,12 @@ class SnacksFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGestu
 
         checkBtn.setOnClickListener {
             if(isDataAddition){
-                val isGoodInputs = !TextUtils.isEmpty(nameText.text) && !TextUtils.isEmpty(caloriesText.text) && !TextUtils.isEmpty(proteinsText.text)
+                val isGoodInputs = !TextUtils.isEmpty(nameText.text) && !TextUtils.isEmpty(caloriesText.text) && !TextUtils.isEmpty(proteinsText.text) && !TextUtils.isEmpty(zsirText.text) && !TextUtils.isEmpty(rostText.text) && !TextUtils.isEmpty(szenhidratText.text)
                 if(isGoodInputs){
                     Toast.makeText(
                         context,
                         "Hozzáadva!", Toast.LENGTH_SHORT).show()
-                    myActivity.SnacksList.add(Food(nameText.text.toString(), caloriesText.text.toString().toInt(), proteinsText.text.toString().toDouble()))
+                    myActivity.SnacksList.add(Food(nameText.text.toString(), caloriesText.text.toString().toInt(), proteinsText.text.toString().toDouble(), zsirText.text.toString().toDouble(), rostText.text.toString().toDouble(), szenhidratText.text.toString().toDouble()))
                     setDefaultVisibility()
                     generateListView()
                 }else{
@@ -198,12 +210,18 @@ class SnacksFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGestu
 
         addedCalories = 0
         addedProteins = 0.0
+        var addedZsir = 0.0
+        var addedRost = 0.0
+        var addedSzenhidrat = 0.0
 
         for (pos in mainViewModel.clickedPosListSnacks){
             addedCalories += myActivity.SnacksList[pos].calories * myActivity.SnacksList[pos].count
             addedProteins += myActivity.SnacksList[pos].proteins * myActivity.SnacksList[pos].count
+            addedZsir += myActivity.SnacksList[pos].zsir * myActivity.SnacksList[pos].count
+            addedRost += myActivity.SnacksList[pos].rost * myActivity.SnacksList[pos].count
+            addedSzenhidrat += myActivity.SnacksList[pos].szenhidrat * myActivity.SnacksList[pos].count
         }
-        myActivity.setMacros(addedCalories, addedProteins)
+        myActivity.setMacros(addedCalories, addedProteins, addedZsir, addedRost, addedSzenhidrat)
     }
 
     override fun onDestroyView() {
