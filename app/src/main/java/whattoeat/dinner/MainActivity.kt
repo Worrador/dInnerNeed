@@ -223,25 +223,26 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             calendarView.setMinimumDate(min)
             calendarView.setMaximumDate(max)
 
-            calendarView.setOnDayClickListener { eventDay ->
-                val clickedDayCalendarYear = eventDay.calendar.get(Calendar.YEAR)
-                val clickedDayCalendarMonth = eventDay.calendar.get(Calendar.MONTH)
-                val clickedDayCalendarDay = eventDay.calendar.get(Calendar.DATE)
+            calendarView.setOnDayClickListener(object : com.applandeo.materialcalendarview.listeners.OnDayClickListener {
+                override fun onDayClick(eventDay: EventDay) {
+                    val clickedDayCalendarYear = eventDay.calendar.get(Calendar.YEAR)
+                    val clickedDayCalendarMonth = eventDay.calendar.get(Calendar.MONTH)
+                    val clickedDayCalendarDay = eventDay.calendar.get(Calendar.DATE)
 
-                var calString = "Nincs adat"
-                var proString = "Nincs adat"
+                    var calString = "Nincs adat"
+                    var proString = "Nincs adat"
 
-                for (result in dayResults){
-                    if((result.year == clickedDayCalendarYear) && (result.month == clickedDayCalendarMonth) && (result.day == clickedDayCalendarDay)){
-                        calString = result.scoredCalories
-                        proString = result.scoredProteins
-                        break
+                    for (result in dayResults){
+                        if((result.year == clickedDayCalendarYear) && (result.month == clickedDayCalendarMonth) && (result.day == clickedDayCalendarDay)){
+                            calString = result.scoredCalories
+                            proString = result.scoredProteins
+                            break
+                        }
                     }
+                    caloriesScoreTextView.text = calString
+                    proteinsScoreTextView.text = proString
                 }
-                caloriesScoreTextView.text = calString
-                proteinsScoreTextView.text = proString
-
-            }
+            })
 
             // show the popup window
             // which view you pass in doesn't matter, it is only used for the window tolken
@@ -657,55 +658,57 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
     // All the below methods are GestureDetector.OnGestureListener members
     // Except onFling, all must "return false" if Boolean return type
     // and "return" if no return type
-    override fun onDown(e: MotionEvent?): Boolean {
+    override fun onDown(e: MotionEvent): Boolean {
         return false
     }
 
-    override fun onShowPress(e: MotionEvent?) {
+    override fun onShowPress(e: MotionEvent) {
         return
     }
 
-    override fun onSingleTapUp(e: MotionEvent?): Boolean {
+    override fun onSingleTapUp(e: MotionEvent): Boolean {
         return false
     }
 
-    override fun onScroll(e1: MotionEvent?, e2: MotionEvent?, distanceX: Float, distanceY: Float): Boolean {
+    override fun onScroll(e1: MotionEvent?, e2: MotionEvent, distanceX: Float, distanceY: Float): Boolean {
         return false
     }
 
-    override fun onLongPress(e: MotionEvent?) {
+    override fun onLongPress(e: MotionEvent) {
         return
     }
 
-    override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+    override fun onFling(e1: MotionEvent?, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
         try {
-            val diffY = e2.y - e1.y
-            val diffX = e2.x - e1.x
-            if (abs(diffX) > abs(diffY)) {
-                if (abs(diffX) > swipeThreshold && abs(velocityX) > swipeVelocityThreshold) {
+            if (e1 != null) {
+                val diffY = e2.y - e1.y
+                val diffX = e2.x - e1.x
+                if (abs(diffX) > abs(diffY)) {
+                    if (abs(diffX) > swipeThreshold && abs(velocityX) > swipeVelocityThreshold) {
 
-                    if(navView.menu.getItem(0).isChecked)
-                        currentFragmentidx = 0
-                    else if(navView.menu.getItem(1).isChecked)
-                        currentFragmentidx = 1
-                    else if(navView.menu.getItem(2).isChecked)
-                        currentFragmentidx = 2
-                    else if(navView.menu.getItem(3).isChecked)
-                        currentFragmentidx = 3
+                        if(navView.menu.getItem(0).isChecked)
+                            currentFragmentidx = 0
+                        else if(navView.menu.getItem(1).isChecked)
+                            currentFragmentidx = 1
+                        else if(navView.menu.getItem(2).isChecked)
+                            currentFragmentidx = 2
+                        else if(navView.menu.getItem(3).isChecked)
+                            currentFragmentidx = 3
 
-                    if (diffX > 0) {
+                        if (diffX > 0) {
 
-                        if(currentFragmentidx > 0){
-                            currentFragmentidx -= 1
+                            if(currentFragmentidx > 0){
+                                currentFragmentidx -= 1
+                            }
                         }
-                    }
-                    else {
-                        if(currentFragmentidx < 3){
-                            currentFragmentidx += 1
+                        else {
+                            if(currentFragmentidx < 3){
+                                currentFragmentidx += 1
+                            }
                         }
+                        val navItem: MenuItem  = navView.menu.getItem(currentFragmentidx)
+                        navItem.onNavDestinationSelected(navController)
                     }
-                    val navItem: MenuItem  = navView.menu.getItem(currentFragmentidx)
-                    navItem.onNavDestinationSelected(navController)
                 }
             }
         }

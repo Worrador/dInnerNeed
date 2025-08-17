@@ -213,33 +213,33 @@ class LunchFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGestur
 
 
     override fun onTouch(v: View?, e: MotionEvent?): Boolean {
-        return gestureDetector.onTouchEvent(e)
+        return e?.let { gestureDetector.onTouchEvent(it) } ?: false
     }
 
     // All the below methods are GestureDetector.OnGestureListener members
     // Except onFling, all must "return false" if Boolean return type
     // and "return" if no return type
-    override fun onDown(e: MotionEvent?): Boolean {
+    override fun onDown(e: MotionEvent): Boolean {
         return false
     }
 
-    override fun onShowPress(e: MotionEvent?) {
+    override fun onShowPress(e: MotionEvent) {
         return
     }
 
-    override fun onSingleTapUp(e: MotionEvent?): Boolean {
+    override fun onSingleTapUp(e: MotionEvent): Boolean {
         return false
     }
 
-    override fun onScroll(e1: MotionEvent?, e2: MotionEvent?, distanceX: Float, distanceY: Float): Boolean {
+    override fun onScroll(e1: MotionEvent?, e2: MotionEvent, distanceX: Float, distanceY: Float): Boolean {
         return false
     }
 
-    override fun onLongPress(e: MotionEvent?) {
+    override fun onLongPress(e: MotionEvent) {
         return
     }
 
-    override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+    override fun onFling(e1: MotionEvent?, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
         val myActivity = (activity as MainActivity?)!!
         return myActivity.onFling(e1, e2, velocityX, velocityY)
     }
