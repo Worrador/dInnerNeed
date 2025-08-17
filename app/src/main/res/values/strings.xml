@@ -18,6 +18,12 @@
     <string name="rost_counter_title">Rost:</string>
     <string name="szenhidrat_counter_title">Szénhidrát:</string>
 
+    <!-- CSV Import -->
+    <string name="import_csv_button">CSV importálása</string>
+    <string name="csv_import_success">CSV sikeresen importálva!</string>
+    <string name="csv_import_error">Hiba a CSV importálásakor</string>
+    <string name="csv_format_error">Hibás CSV formátum</string>
+    <string name="csv_no_file_selected">Nincs kiválasztott fájl</string>
 
     <string name="material_calendar_monday">H</string>
     <string name="material_calendar_tuesday">K</string>

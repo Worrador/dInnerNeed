@@ -584,6 +584,10 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
     override fun onPause() {
         super.onPause()
+        saveData()
+    }
+
+    fun saveData() {
         val sharedPreferences = getPreferences(Context.MODE_APPEND)
         val gson = Gson()
         val myEdit = sharedPreferences.edit()
@@ -606,7 +610,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             }
         }
 
-        val TrimmedSnacksList = LunchList
+        val TrimmedSnacksList = SnacksList
 
         for(snack in TrimmedSnacksList) {
             if (snack.count != 1){

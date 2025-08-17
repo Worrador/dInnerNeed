@@ -33,6 +33,16 @@
             android:background="@color/grey"
             />
 
+        <!-- Import CSV Button - shown when no foods in list -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/import_csv_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/import_csv_button"
+            android:visibility="gone"
+            style="@style/Widget.MaterialComponents.Button" />
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textView"
             android:layout_width="wrap_content"
