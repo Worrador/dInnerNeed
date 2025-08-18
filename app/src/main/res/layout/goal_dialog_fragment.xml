@@ -42,7 +42,7 @@
                 android:autofillHints="1800"
                 android:padding="15dp"
                 android:gravity="left"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:inputType="number"/>
 
             <EditText
@@ -55,7 +55,7 @@
                 android:hint="1800"
                 android:ems="4"
                 android:gravity="center"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:layout_height="wrap_content"
                 android:autofillHints="1800"
                 android:inputType="number"/>
@@ -83,7 +83,7 @@
                 android:padding="15dp"
                 android:autofillHints="1800"
                 android:gravity="left"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:inputType="number"/>
 
             <EditText
@@ -95,7 +95,7 @@
                 android:focusable="true"
                 android:hint="50"
                 android:ems="4"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:gravity="center"
                 android:layout_height="wrap_content"
                 android:autofillHints="1800"
@@ -123,7 +123,7 @@
                 android:layout_weight="1"
                 android:padding="15dp"
                 android:gravity="left"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:inputType="number"/>
 
             <EditText
@@ -136,7 +136,7 @@
                 android:hint="65"
                 android:ems="4"
                 android:gravity="center"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:layout_height="wrap_content"
                 android:inputType="number"/>
         </LinearLayout>
@@ -162,7 +162,7 @@
                 android:layout_weight="1"
                 android:padding="15dp"
                 android:gravity="left"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:inputType="number"/>
 
             <EditText
@@ -175,7 +175,7 @@
                 android:hint="25"
                 android:ems="4"
                 android:gravity="center"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:layout_height="wrap_content"
                 android:inputType="number"/>
         </LinearLayout>
@@ -201,7 +201,7 @@
                 android:layout_weight="1"
                 android:padding="15dp"
                 android:gravity="left"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:inputType="number"/>
 
             <EditText
@@ -214,7 +214,7 @@
                 android:hint="200"
                 android:ems="4"
                 android:gravity="center"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:layout_height="wrap_content"
                 android:inputType="number"/>
         </LinearLayout>

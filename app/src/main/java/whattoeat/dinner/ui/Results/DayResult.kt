@@ -1,6 +1,6 @@
 package whattoeat.dinner.ui.Results
 
-class DayResult (year : Int, month : Int, day : Int, scoredCalories : String, scoredProteins : String, scoredZsir : String, scoredRost : String, scoredSzenhidrat : String, isSuccess : Boolean) {
+class DayResult (year : Int, month : Int, day : Int, scoredCalories : String, scoredProteins : String, scoredZsir : String, scoredRost : String, scoredSzenhidrat : String, selectedFood : String, isSuccess : Boolean) {
     var year : Int
     var month : Int
     var day : Int
@@ -9,6 +9,7 @@ class DayResult (year : Int, month : Int, day : Int, scoredCalories : String, sc
     var scoredZsir : String
     var scoredRost : String
     var scoredSzenhidrat : String
+    var selectedFood : String
     var isSuccess : Boolean
 
     init{
@@ -20,6 +21,7 @@ class DayResult (year : Int, month : Int, day : Int, scoredCalories : String, sc
         this.scoredZsir = scoredZsir
         this.scoredRost = scoredRost
         this.scoredSzenhidrat = scoredSzenhidrat
+        this.selectedFood = selectedFood
         this.isSuccess = isSuccess
     }
 

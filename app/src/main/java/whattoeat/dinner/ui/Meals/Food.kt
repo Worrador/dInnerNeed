@@ -1,11 +1,11 @@
 package whattoeat.dinner.ui.Meals
 
-class Food(name: String, calories: Int, proteins: Double, zsir: Double, rost: Double, szenhidrat: Double, count : Int = 1) {
-    var name = name
-    val calories = calories
-    val proteins = proteins
-    val zsir = zsir
-    val rost = rost
-    val szenhidrat = szenhidrat
-    var count = count
-}
+data class Food(
+    var name: String,
+    val calories: Int,
+    val proteins: Double,
+    val zsir: Double,
+    val rost: Double,
+    val szenhidrat: Double,
+    var count: Int = 1
+)

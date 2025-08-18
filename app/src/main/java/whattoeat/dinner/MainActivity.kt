@@ -440,39 +440,46 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         var itemCount: Int
 
         checkBtn.setOnClickListener{
-            if(itemcCountEditText.text != null){
-                itemCount =  itemcCountEditText.text.toString().toInt()
-                if(itemCount == 1){
-                    listToChange[position].name = listToChange[position].name.substringBefore(delimiter = " (${listToChange[position].count}db)", missingDelimiterValue = listToChange[position].name)
-                }else {
-                    listToChange[position].name = listToChange[position].name.substringBefore(
-                        delimiter = " (${listToChange[position].count}db)",
-                        missingDelimiterValue = listToChange[position].name
-                    ).plus(" (${itemCount}db)")
-                }
-                listToChange[position].count = itemCount
+            val inputText = itemcCountEditText.text.toString().trim()
+            if(inputText.isNotEmpty()){
+                try {
+                    itemCount = inputText.toInt()
+                    if(itemCount > 0) {
+                        if(itemCount == 1){
+                            listToChange[position].name = listToChange[position].name.substringBefore(delimiter = " (${listToChange[position].count}db)", missingDelimiterValue = listToChange[position].name)
+                        }else {
+                            listToChange[position].name = listToChange[position].name.substringBefore(
+                                delimiter = " (${listToChange[position].count}db)",
+                                missingDelimiterValue = listToChange[position].name
+                            ).plus(" (${itemCount}db)")
+                        }
+                        listToChange[position].count = itemCount
 
-                var navItem1: MenuItem = navView.menu.getItem(0)
-                var navItem2: MenuItem = navView.menu.getItem(0)
+                        var navItem1: MenuItem = navView.menu.getItem(0)
+                        var navItem2: MenuItem = navView.menu.getItem(0)
 
-                if(navView.menu.getItem(0).isChecked) {
-                    navItem1 = navView.menu.getItem(1)
-                    navItem2 = navView.menu.getItem(0)
+                        if(navView.menu.getItem(0).isChecked) {
+                            navItem1 = navView.menu.getItem(1)
+                            navItem2 = navView.menu.getItem(0)
+                        }
+                        else if(navView.menu.getItem(1).isChecked) {
+                            navItem1 = navView.menu.getItem(2)
+                            navItem2 = navView.menu.getItem(1)
+                        }
+                        else if(navView.menu.getItem(2).isChecked) {
+                            navItem1 = navView.menu.getItem(3)
+                            navItem2 = navView.menu.getItem(2)
+                        }
+                        else if(navView.menu.getItem(3).isChecked) {
+                            navItem1 = navView.menu.getItem(2)
+                            navItem2 = navView.menu.getItem(3)
+                        }
+                        navItem1.onNavDestinationSelected(navController)
+                        navItem2.onNavDestinationSelected(navController)
+                    }
+                } catch (e: NumberFormatException) {
+                    // Handle invalid number input - do nothing, just dismiss the dialog
                 }
-                else if(navView.menu.getItem(1).isChecked) {
-                    navItem1 = navView.menu.getItem(2)
-                    navItem2 = navView.menu.getItem(1)
-                }
-                else if(navView.menu.getItem(2).isChecked) {
-                    navItem1 = navView.menu.getItem(3)
-                    navItem2 = navView.menu.getItem(2)
-                }
-                else if(navView.menu.getItem(3).isChecked) {
-                    navItem1 = navView.menu.getItem(2)
-                    navItem2 = navView.menu.getItem(3)
-                }
-                navItem1.onNavDestinationSelected(navController)
-                navItem2.onNavDestinationSelected(navController)
             }
 
             popupWindow.dismiss()
@@ -500,11 +507,11 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
     fun setMacros(calories: Int, proteins: Double, zsir: Double, rost: Double, szenhidrat: Double){
         if((calories >= 0) && (proteins >= 0.0)) {
             calTextView.text = "$calories"
-            proTextView.text = "$proteins"
+            proTextView.text = "%.1f".format(proteins)
             // Note: New nutrient fields will be added to layout later
-            // zsirTextView.text = "$zsir"
-            // rostTextView.text = "$rost"
-            // szenhidratTextView.text = "$szenhidrat"
+            // zsirTextView.text = "%.1f".format(zsir)
+            // rostTextView.text = "%.1f".format(rost)
+            // szenhidratTextView.text = "%.1f".format(szenhidrat)
             leftSide.visibility = View.VISIBLE
             rightSide.visibility = View.VISIBLE
         }else
