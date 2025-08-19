@@ -38,7 +38,7 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
     )
 
     private val binding get() = _binding!!
-    private var allCalories = 0
+    private var allCalories = 0.0
     private var allProteins = 0.0
     private var allZsir = 0.0
     private var allRost = 0.0
@@ -55,7 +55,7 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
     }
 
     private fun formatNumber(value: Double): String {
-        return value.toInt().toString()
+        return String.format("%.2f", value).replace('.', ',')
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -106,10 +106,10 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
             Configuration.UI_MODE_NIGHT_UNDEFINED -> {}
         }
 
-        myActivity.setMacros(-1, -1.0, -1.0, -1.0, -1.0)
+        myActivity.setMacros(-1.0, -1.0, -1.0, -1.0, -1.0)
 
         fun calculateNutrition(){
-            allCalories = 0
+            allCalories = 0.0
             allProteins = 0.0
             allZsir = 0.0
             allRost = 0.0
@@ -168,27 +168,27 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
             val TrimmedBreakfastList = myActivity.BreakfastList
 
             for(breakfast in TrimmedBreakfastList) {
-                if (breakfast.count != 1){
-                    breakfast.name = breakfast.name.substringBefore(delimiter = " (${breakfast.count}db)", missingDelimiterValue = breakfast.name)
-                    breakfast.count = 1
+                if (breakfast.count != 1.0){
+                    breakfast.name = breakfast.name.substringBefore(delimiter = " (${breakfast.count}db)", missingDelimiterValue = breakfast.name).substringBefore(delimiter = " [", missingDelimiterValue = breakfast.name)
+                    breakfast.count = 1.0
                 }
             }
 
             val TrimmedLunchList = myActivity.LunchList
 
             for(lunch in TrimmedLunchList) {
-                if (lunch.count != 1){
-                    lunch.name = lunch.name.substringBefore(delimiter = " (${lunch.count}db)", missingDelimiterValue = lunch.name)
-                    lunch.count = 1
+                if (lunch.count != 1.0){
+                    lunch.name = lunch.name.substringBefore(delimiter = " (${lunch.count}db)", missingDelimiterValue = lunch.name).substringBefore(delimiter = " [", missingDelimiterValue = lunch.name)
+                    lunch.count = 1.0
                 }
             }
 
             val TrimmedSnacksList = myActivity.SnacksList
 
             for(snack in TrimmedSnacksList) {
-                if (snack.count != 1){
-                    snack.name = snack.name.substringBefore(delimiter = " (${snack.count}db)", missingDelimiterValue = snack.name)
-                    snack.count = 1
+                if (snack.count != 1.0){
+                    snack.name = snack.name.substringBefore(delimiter = " (${snack.count}db)", missingDelimiterValue = snack.name).substringBefore(delimiter = " [", missingDelimiterValue = snack.name)
+                    snack.count = 1.0
                 }
             }
 
@@ -282,38 +282,38 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
                 foodsResults.add(firstName)
             }
 
-            resultOptions[0] = NutritionResult(allCalories.toDouble(), allProteins, allZsir, allRost, allSzenhidrat)
-            resultOptions[1] = NutritionResult(allCalories.toDouble()+firstCal, allProteins+firstPro, allZsir+firstZsir, allRost+firstRost, allSzenhidrat+firstSzenhidrat)
-            resultOptions[2] = NutritionResult(allCalories.toDouble()+secondCal, allProteins+secondPro, allZsir+secondZsir, allRost+secondRost, allSzenhidrat+secondSzenhidrat)
-            resultOptions[3] = NutritionResult(allCalories.toDouble()+thirdCal, allProteins+thirdPro, allZsir+thirdZsir, allRost+thirdRost, allSzenhidrat+thirdSzenhidrat)
+            resultOptions[0] = NutritionResult(allCalories, allProteins, allZsir, allRost, allSzenhidrat)
+            resultOptions[1] = NutritionResult(allCalories+firstCal, allProteins+firstPro, allZsir+firstZsir, allRost+firstRost, allSzenhidrat+firstSzenhidrat)
+            resultOptions[2] = NutritionResult(allCalories+secondCal, allProteins+secondPro, allZsir+secondZsir, allRost+secondRost, allSzenhidrat+secondSzenhidrat)
+            resultOptions[3] = NutritionResult(allCalories+thirdCal, allProteins+thirdPro, allZsir+thirdZsir, allRost+thirdRost, allSzenhidrat+thirdSzenhidrat)
 
             if(first < 2 * goalDiffMaxPercentage){
-                textToBeDisplayed = "Sikerülhet elérni a célodat, mert már " + getColoredSpanned("$allCalories/${myActivity.calorieGoal}", "#d1e659") +
+                textToBeDisplayed = "Sikerülhet elérni a célodat, mert már " + getColoredSpanned("${formatNumber(allCalories)}/${myActivity.calorieGoal}", "#d1e659") +
                         " kalóriát, " + getColoredSpanned("${formatNumber(allProteins)}/${myActivity.proteinGoal}", "#d1e659") +
                         " fehérjét, " + getColoredSpanned("${formatNumber(allZsir)}/${myActivity.zsirGoal}", "#d1e659") +
                         " zsírt, " + getColoredSpanned("${formatNumber(allRost)}/${myActivity.rostGoal}", "#d1e659") +
                         " rostot és " + getColoredSpanned("${formatNumber(allSzenhidrat)}/${myActivity.szenhidratGoal}", "#d1e659") +
                         " szénhidrátot vittél be!<br/><br/>Ehhez a következő(k) közül válassz:<br/><br/>"
                 textToBeDisplayed += getColoredSpanned("1. $firstName ", "#42a543") +
-                        getColoredSpannedLittle("(${(allCalories.toDouble()+firstCal).toInt()}/${myActivity.calorieGoal}, ${formatNumber(allProteins+firstPro)}/${myActivity.proteinGoal}, ${formatNumber(allZsir+firstZsir)}/${myActivity.zsirGoal}, ${formatNumber(allRost+firstRost)}/${myActivity.rostGoal}, ${formatNumber(allSzenhidrat+firstSzenhidrat)}/${myActivity.szenhidratGoal})<br/>", "#d1e659")
+                        getColoredSpannedLittle("(${formatNumber(allCalories+firstCal)}/${myActivity.calorieGoal}, ${formatNumber(allProteins+firstPro)}/${myActivity.proteinGoal}, ${formatNumber(allZsir+firstZsir)}/${myActivity.zsirGoal}, ${formatNumber(allRost+firstRost)}/${myActivity.rostGoal}, ${formatNumber(allSzenhidrat+firstSzenhidrat)}/${myActivity.szenhidratGoal})<br/>", "#d1e659")
                 if(second < 2 * goalDiffMaxPercentage){
                     if (secondName.isNotEmpty()) {
                         foodsResults.add(secondName)
                     }
                     textToBeDisplayed += getColoredSpanned("2. $secondName ", "#42a543") +
-                            getColoredSpannedLittle("(${(allCalories.toDouble()+secondCal).toInt()}/${myActivity.calorieGoal}, ${formatNumber(allProteins+secondPro)}/${myActivity.proteinGoal}, ${formatNumber(allZsir+secondZsir)}/${myActivity.zsirGoal}, ${formatNumber(allRost+secondRost)}/${myActivity.rostGoal}, ${formatNumber(allSzenhidrat+secondSzenhidrat)}/${myActivity.szenhidratGoal})<br/>", "#d1e659")
+                            getColoredSpannedLittle("(${formatNumber(allCalories+secondCal)}/${myActivity.calorieGoal}, ${formatNumber(allProteins+secondPro)}/${myActivity.proteinGoal}, ${formatNumber(allZsir+secondZsir)}/${myActivity.zsirGoal}, ${formatNumber(allRost+secondRost)}/${myActivity.rostGoal}, ${formatNumber(allSzenhidrat+secondSzenhidrat)}/${myActivity.szenhidratGoal})<br/>", "#d1e659")
                     if(third < 2 * goalDiffMaxPercentage){
                         if (thirdName.isNotEmpty()) {
                             foodsResults.add(thirdName)
                         }
                         textToBeDisplayed += getColoredSpanned("3. $thirdName ", "#42a543") +
-                                getColoredSpannedLittle("(${(allCalories.toDouble()+thirdCal).toInt()}/${myActivity.calorieGoal}, ${formatNumber(allProteins+thirdPro)}/${myActivity.proteinGoal}, ${formatNumber(allZsir+thirdZsir)}/${myActivity.zsirGoal}, ${formatNumber(allRost+thirdRost)}/${myActivity.rostGoal}, ${formatNumber(allSzenhidrat+thirdSzenhidrat)}/${myActivity.szenhidratGoal})", "#d1e659")
+                                getColoredSpannedLittle("(${formatNumber(allCalories+thirdCal)}/${myActivity.calorieGoal}, ${formatNumber(allProteins+thirdPro)}/${myActivity.proteinGoal}, ${formatNumber(allZsir+thirdZsir)}/${myActivity.zsirGoal}, ${formatNumber(allRost+thirdRost)}/${myActivity.rostGoal}, ${formatNumber(allSzenhidrat+thirdSzenhidrat)}/${myActivity.szenhidratGoal})", "#d1e659")
                     }
                 }
                 Glide.with(this).load(R.drawable.bravocado).into(gifView)
                 isSuccess = true
             }else{
-                textToBeDisplayed += "Sajnos ma már nem tudod elérni a célodat, mert " + getColoredSpanned("$allCalories/${myActivity.calorieGoal}", "#dd1324") +
+                textToBeDisplayed += "Sajnos ma már nem tudod elérni a célodat, mert " + getColoredSpanned("${formatNumber(allCalories)}/${myActivity.calorieGoal}", "#dd1324") +
                         " kalóriát, " + getColoredSpanned("${formatNumber(allProteins)}/${myActivity.proteinGoal}", "#dd1324") +
                         " fehérjét, " + getColoredSpanned("${formatNumber(allZsir)}/${myActivity.zsirGoal}", "#dd1324") +
                         " zsírt, " + getColoredSpanned("${formatNumber(allRost)}/${myActivity.rostGoal}", "#dd1324") +
@@ -321,7 +321,7 @@ class ResultsFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGest
                         " szénhidrátot vittél be." +
                         "<br/><br/>Mindenesetre a legjobb választás a(z): " + getColoredSpanned(
                     firstName, "#42a543") + " lenne. <br/><br/>Ezzel " +
-                        getColoredSpanned("${(allCalories.toDouble()+firstCal).toInt()}/${myActivity.calorieGoal}", "#d1e659") +
+                        getColoredSpanned("${formatNumber(allCalories+firstCal)}/${myActivity.calorieGoal}", "#d1e659") +
                         " kalóriát, " + getColoredSpanned("${formatNumber(allProteins+firstPro)}/${myActivity.proteinGoal}", "#d1e659") +
                         " fehérjét, " + getColoredSpanned("${formatNumber(allZsir+firstZsir)}/${myActivity.zsirGoal}", "#d1e659") +
                         " zsírt, " + getColoredSpanned("${formatNumber(allRost+firstRost)}/${myActivity.rostGoal}", "#d1e659") +

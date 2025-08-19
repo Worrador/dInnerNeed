@@ -35,7 +35,7 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
 
     private lateinit var mainViewModel : MainViewModel
 
-    private var addedCalories = 0
+    private var addedCalories = 0.0
     private var addedProteins = 0.0
 
     // CSV Import functionality
@@ -334,7 +334,7 @@ class BreakfastFragment : Fragment(), View.OnTouchListener, GestureDetector.OnGe
             ViewModelProvider(this)[MainViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
 
-        addedCalories = 0
+        addedCalories = 0.0
         addedProteins = 0.0
         var addedZsir = 0.0
         var addedRost = 0.0

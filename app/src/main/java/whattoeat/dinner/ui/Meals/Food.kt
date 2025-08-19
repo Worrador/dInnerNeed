@@ -7,5 +7,6 @@ data class Food(
     val zsir: Double,
     val rost: Double,
     val szenhidrat: Double,
-    var count: Int = 1
+    var count: Double = 1.0,
+    var weight: Double = 100.0  // Base weight in grams (default 100g)
 )

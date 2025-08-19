@@ -7,6 +7,8 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.graphics.LightingColorFilter
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.*
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
@@ -428,33 +430,96 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         popupWindow.animationStyle = R2.style.Animation
 
         // show the popup window
-        // which view you pass in doesn't matter, it is only used for the window tolken
         popupWindow.showAtLocation(binding.root, Gravity.CENTER, 0, -150)
         popupWindow.dimBehind()
 
         val checkBtn = popupView.findViewById<View>(R2.id.checkBtn) as Button
-        val itemcCountEditText = popupView.findViewById<View>(R2.id.editTextNumber1) as EditText
+        val countEditText = popupView.findViewById<View>(R2.id.editTextNumber1) as EditText
+        val gramsEditText = popupView.findViewById<View>(R2.id.editTextGrams) as EditText
 
-        itemcCountEditText.hint = "${listToChange[position].count}db"
+        val food = listToChange[position]
+        val currentCount = food.count
+        val currentGrams = if (food.weight > 0) currentCount * food.weight else 100.0 // Default to 100g if weight is 0
 
-        var itemCount: Int
+        // Set initial values
+        countEditText.hint = String.format("%.1f", currentCount).replace('.', ',')
+        gramsEditText.hint = String.format("%.0f", currentGrams).replace('.', ',') + "g"
+
+        var isUpdatingFromCount = false
+        var isUpdatingFromGrams = false
+
+        // Convert count to grams
+        countEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                if (isUpdatingFromGrams) return
+
+                val input = s.toString().replace(',', '.').trim()
+                if (input.isNotEmpty()) {
+                    try {
+                        val count = input.toDouble()
+                        if (count > 0 && food.weight > 0) {  // Add check for food.weight > 0
+                            val grams = count * food.weight
+                            isUpdatingFromCount = true
+                            gramsEditText.setText(String.format("%.0f", grams).replace('.', ','))
+                            isUpdatingFromCount = false
+                        }
+                    } catch (e: NumberFormatException) {
+                        // Invalid input, do nothing
+                    }
+                }
+            }
+        })
+
+        // Convert grams to count
+        gramsEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                if (isUpdatingFromCount) return
+
+                val input = s.toString().replace(',', '.').trim()
+                if (input.isNotEmpty()) {
+                    try {
+                        val grams = input.toDouble()
+                        if (grams > 0 && food.weight > 0) {  // Add check for food.weight > 0
+                            val count = grams / food.weight
+                            isUpdatingFromGrams = true
+                            countEditText.setText(String.format("%.2f", count).replace('.', ','))
+                            isUpdatingFromGrams = false
+                        }
+                    } catch (e: NumberFormatException) {
+                        // Invalid input, do nothing
+                    }
+                }
+            }
+        })
 
         checkBtn.setOnClickListener{
-            val inputText = itemcCountEditText.text.toString().trim()
-            if(inputText.isNotEmpty()){
-                try {
-                    itemCount = inputText.toInt()
-                    if(itemCount > 0) {
-                        if(itemCount == 1){
-                            listToChange[position].name = listToChange[position].name.substringBefore(delimiter = " (${listToChange[position].count}db)", missingDelimiterValue = listToChange[position].name)
-                        }else {
-                            listToChange[position].name = listToChange[position].name.substringBefore(
-                                delimiter = " (${listToChange[position].count}db)",
-                                missingDelimiterValue = listToChange[position].name
-                            ).plus(" (${itemCount}db)")
-                        }
-                        listToChange[position].count = itemCount
+            val countInput = countEditText.text.toString().replace(',', '.').trim()
 
+            if(countInput.isNotEmpty()){
+                try {
+                    val newCount = countInput.toDouble()
+                    if(newCount > 0) {
+                        // Update food name display
+                        val baseName = food.name.substringBefore(" (").substringBefore(" [")
+
+                        food.name = if (newCount == 1.0) {
+                            baseName
+                        } else {
+                            val grams = newCount * food.weight
+                            if (food.weight > 0) {
+                                "$baseName [${String.format("%.1f", newCount).replace('.', ',')}x / ${String.format("%.0f", grams).replace('.', ',')}g]"
+                            } else {
+                                "$baseName [${String.format("%.1f", newCount).replace('.', ',')}x]"
+                            }
+                        }
+
+                        food.count = newCount
+
+                        // Refresh the current fragment
                         var navItem1: MenuItem = navView.menu.getItem(0)
                         var navItem2: MenuItem = navView.menu.getItem(0)
 
@@ -504,9 +569,9 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         }
     }
 
-    fun setMacros(calories: Int, proteins: Double, zsir: Double, rost: Double, szenhidrat: Double){
+    fun setMacros(calories: Double, proteins: Double, zsir: Double, rost: Double, szenhidrat: Double){
         if((calories >= 0) && (proteins >= 0.0)) {
-            calTextView.text = "$calories"
+            calTextView.text = "${calories.toInt()}"
             proTextView.text = "%.1f".format(proteins)
             // Note: New nutrient fields will be added to layout later
             // zsirTextView.text = "%.1f".format(zsir)
@@ -537,6 +602,9 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         BreakfastList = gson.fromJson(sh.getString("breakfastList", gson.toJson(BreakfastList).toString()), typeOfObjectsList)
         LunchList = gson.fromJson(sh.getString("lunchList", gson.toJson(LunchList).toString()), typeOfObjectsList)
         SnacksList = gson.fromJson(sh.getString("snackList", gson.toJson(SnacksList)), typeOfObjectsList)
+
+        // Fix existing foods that don't have weight property
+        fixLegacyFoods()
 
         BreakfastList.sortBy { it.name }
         LunchList.sortBy { it.name }
@@ -584,6 +652,21 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         }
     }
 
+    private fun fixLegacyFoods() {
+        // Fix existing foods that don't have weight property (loaded as 0.0)
+        fun fixFoodList(foodList: MutableList<Food>) {
+            for (food in foodList) {
+                if (food.weight == 0.0) {
+                    food.weight = 100.0  // Set default weight for legacy foods
+                }
+            }
+        }
+
+        fixFoodList(BreakfastList)
+        fixFoodList(LunchList)
+        fixFoodList(SnacksList)
+    }
+
     override fun onResume() {
         super.onResume()
         getLists()
@@ -602,27 +685,27 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         val TrimmedBreakfastList = BreakfastList
 
         for(breakfast in TrimmedBreakfastList) {
-            if (breakfast.count != 1){
-                breakfast.name = breakfast.name.substringBefore(delimiter = " (${breakfast.count}db)", missingDelimiterValue = breakfast.name)
-                breakfast.count = 1
+            if (breakfast.count != 1.0){
+                breakfast.name = breakfast.name.substringBefore(delimiter = " (${breakfast.count}db)", missingDelimiterValue = breakfast.name).substringBefore(delimiter = " [", missingDelimiterValue = breakfast.name)
+                breakfast.count = 1.0
             }
         }
 
         val TrimmedLunchList = LunchList
 
         for(lunch in TrimmedLunchList) {
-            if (lunch.count != 1){
-                lunch.name = lunch.name.substringBefore(delimiter = " (${lunch.count}db)", missingDelimiterValue = lunch.name)
-                lunch.count = 1
+            if (lunch.count != 1.0){
+                lunch.name = lunch.name.substringBefore(delimiter = " (${lunch.count}db)", missingDelimiterValue = lunch.name).substringBefore(delimiter = " [", missingDelimiterValue = lunch.name)
+                lunch.count = 1.0
             }
         }
 
         val TrimmedSnacksList = SnacksList
 
         for(snack in TrimmedSnacksList) {
-            if (snack.count != 1){
-                snack.name = snack.name.substringBefore(delimiter = " (${snack.count}db)", missingDelimiterValue = snack.name)
-                snack.count = 1
+            if (snack.count != 1.0){
+                snack.name = snack.name.substringBefore(delimiter = " (${snack.count}db)", missingDelimiterValue = snack.name).substringBefore(delimiter = " [", missingDelimiterValue = snack.name)
+                snack.count = 1.0
             }
         }
 
